@@ -42,8 +42,7 @@ Yes. Based on whatever parents and children pages you are on, the menu will chan
 As of version 1.1 this will automatically generate class names for each level for menu system. You can add classes to your theme's style.css file to style it accourdingly. You may want to use something like margins to set the levels apart.
 
 == Screenshots ==
-
-1. This screenshot shows what the widget looks like
+1. This is a screenshot of what the widget looks like.
 
 
 == Changelog ==
