@@ -4,8 +4,8 @@ Donate link: http://lipeimagination.info/contact/
 Tags: menus, sidebar menu, heirchy 
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 1.4
-Version: 1.4
+Stable tag: 1.4.4
+Version: 1.4.4
 
 == Description ==
 
@@ -39,10 +39,16 @@ As of version 1.1 this will automatically generate class names for each level fo
 
 == Screenshots ==
 
-screenshot-1.PNG
+1. The Simple to use widget
 
 
 == Changelog ==
+
+= 1.4.4 =
+* Cleaned up the way the plugin displays
+* Added class to match normal widgets
+* Removed the <div> completely when no menu present
+
 
 = 1.4 =
 * Removed Menu from pages with no children
