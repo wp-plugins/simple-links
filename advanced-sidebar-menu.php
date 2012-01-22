@@ -4,7 +4,7 @@ Plugin Name: Advanced Sidebar Menu
 Plugin URI: http://www.vimm.com
 Description: Creates dynamic menu based on child/parent relationship.
 Author: Mat Lipe
-Version: 1.4.4
+Version: 1.5
 Author URI: http://www.vimm.com
 
     email: mat@lipeimagination.info
@@ -62,9 +62,8 @@ class advanced_sidebar_menu extends WP_Widget {
 	function widget($args, $instance) {
 	 		 global $wpdb;
 	 		 global $p;
-	  		global $post;
+	  		 global $post;
 		   
-		//makes the custom menu	
            
 	    	 #-- if the post has parrents
 			if($post->ancestors){
@@ -81,8 +80,12 @@ class advanced_sidebar_menu extends WP_Widget {
 				$p = $post->ID;
 			}
 		
+			#-- Makes this work with all table prefixes
+			#-- Added 1/22/12
+			global $table_prefix;
+			
 
-			$result = $wpdb->get_results( "SELECT ID FROM wp_posts WHERE post_parent = $p AND post_type='page' Order by menu_order" );
+			$result = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $p AND post_type='page' Order by menu_order" );
 	
     		#---- if there are no children do not display the parent unless it is check to do so
     		if($result != false || $instance['include_childless_parent'] == 'checked' ){
@@ -90,41 +93,48 @@ class advanced_sidebar_menu extends WP_Widget {
 				  //Start the menu 
 				echo '<div id="'.$args['widget_id'].'" class="advanced-sidebar-menu widget">';
 				
-				
 		    	echo   '<ul class="parent-sidebar-menu" >'; 
 				#-- if the checkbox to include parent is checked
     			if( $instance['include_parent'] == 'checked' ){
 		     		 $parent_toggle = TRUE;
-
 				#-- list the parent page
        	 			wp_list_pages("sort_column=menu_order&title_li=&echo=1&depth=1&include=".$p);
-					echo '<ul class="child-sidebar-menu">';
+       	 			
 				}
 			}
 
-              //=----------------------------------- makes the link list -----------------------------------------
+              //=----------------------------------- makes the Child Pages list -----------------------------------------
+              
+		//If there are children start the Child Sidebar Menu
+       if( $result != FALSE ){
+		  echo '<ul class="child-sidebar-menu">';
+       	 				
 		foreach($result as $pID){
+			
+			
          	 #--echo the current page from the $result
 			wp_list_pages("sort_column=menu_order&title_li=&echo=1&depth=1&include=".$pID->ID);
           
 	      		#-- if the link that was just listed is the current page we are on
-			if($pID->ID == $post->ID or $pID->ID == $post->post_parent or in_array($pID->ID, $post->ancestors) ){
+			if($pID->ID == $post->ID or $pID->ID == $post->post_parent or @in_array($pID->ID, $post->ancestors) ){
 		
-			 	#-- Create a new menu with all the children under it
-				echo '<ul class="grandchild-sidebar-menu">';
+				$kids = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = ".$pID->ID." AND post_type='page' " );
+				if( $kids != FALSE ){
+				
+			 		#-- Create a new menu with all the children under it
+					echo '<ul class="grandchild-sidebar-menu">';
 
-				wp_list_pages("sort_column=menu_order&title_li=&echo=1&depth=3&child_of=".$pID->ID);
+						wp_list_pages("sort_column=menu_order&title_li=&echo=1&depth=3&child_of=".$pID->ID);
 	
-				echo '</ul>';
-		   
+					echo '</ul>';
+				}
 			}
-    
-		}
-	   		#-- if the options above echoed the parent and therefore added another ul
-		if( $parent_toggle == TRUE ){
-	 		 echo '</ul>';
-		}
+		 }
+		 
+		 #-- Close the First Level menu
+		 echo '</ul><!-- End child-sidebar-menu -->';
 		
+       }
 		  #-- If there was a menu close it off
 		if($result != false || $instance['include_childless_parent'] == 'checked' ){
 		     

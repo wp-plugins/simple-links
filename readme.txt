@@ -4,8 +4,8 @@ Donate link: http://lipeimagination.info/contact/
 Tags: menus, sidebar menu, heirchy 
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 1.4.4
-Version: 1.4.4
+Stable tag: 1.4.5
+Version: 1.4.5
 
 == Description ==
 
@@ -37,12 +37,13 @@ Yes. Based on whatever parents and children pages you are on, the menu will chan
 
 As of version 1.1 this will automatically generate class names for each level for menu system. You can add classes to your theme's style.css file to style it accourdingly. You may want to use something like margins to set the levels apart.
 
-== Screenshots ==
-
-1. The Simple to use widget
-
 
 == Changelog ==
+
+= 1.4.5 =
+* Added compatibility for sites with non wp_ prefix tables
+* Removed All traces of Each menu level if no pages to list
+* Removed Error created by some search forms
 
 = 1.4.4 =
 * Cleaned up the way the plugin displays
