@@ -4,8 +4,8 @@ Donate link: http://lipeimagination.info/contact/
 Tags: menus, sidebar menu, heirchy 
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 1.4.5
-Version: 1.4.5
+Stable tag: 1.5
+Version: 1.5
 
 == Description ==
 
