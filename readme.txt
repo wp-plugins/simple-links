@@ -3,9 +3,9 @@ Contributors: Mat Lipe
 Donate link: http://lipeimagination.info/contact/
 Tags: menus, sidebar menu, heirchy 
 Requires at least: 3.1
-Tested up to: 3.2.1
-Stable tag: 2.0.1
-Version: 2.0.1
+Tested up to: 3.3.1
+Stable tag: 2.1
+Version: 2.1
 
 == Description ==
 
@@ -48,6 +48,9 @@ You may want to use something like margins to set the levels apart.
 
 == Changelog ==
 
+= 2.1 =
+* Added default syling.
+
 = 2.0 =
 * Brought back the ability to exclude pages with support for excluding single pages from the menu.
 * Added the ability to display all levels of child pages always.
@@ -79,7 +82,7 @@ You may want to use something like margins to set the levels apart.
 
 
 == Screenshots ==
-1. The widget Menu as of 2.0
+1. The widget Menu as of 2.0.
 
 == Upgrade Notice ==
 
