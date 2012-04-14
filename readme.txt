@@ -1,21 +1,24 @@
 === Plugin Name ===
 Contributors: Mat Lipe
 Donate link: http://lipeimagination.info/contact/
-Tags: menus, sidebar menu, heirchy 
+Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.3.1
-Stable tag: 2.1
-Version: 2.1
+Stable tag: 3.0
+Version: 3.0
 
 == Description ==
 
-Creates a widget that can be dragged into a sidebar which automatically generates a menu based on the parent/child relationship 
+Creates a widget that automatically generates a menu based on the parent/child relationship of pages.
 of the pages. When on a top level page, it displays a menu of the all of the top level pages and a menu of all of the pages that 
 are children of the current page. Keeps the sidebar menu clean and usable.
 
+As of Version 3.0 it also creates a widget that does the same functionality for Categories as well.
+
 Has the ability to exclude page from the menu.
 As of 2.0 it also allows for display of all the child pages always.
-You may also select the level of pages to display with this option
+You may also select the level of pages to display with this option.
+
 
 
 
@@ -27,9 +30,16 @@ e.g.
 
 1. Upload the `advanced-sidbebar-menu` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Drag the Sidebar Menu widget into a sidebar.
+1. Drag the "Advanced Sidebar Pages Menu" widget Or the "Advanced Sidebar Categories Menu" widget into a sidebar.
 
 == Frequently Asked Questions ==
+
+= How do you edit the output or built in css? =
+
+Create a folder in your child theme named "advanced-sidebar-menu" copy any of the files from the "views" folder into
+the folder you just created. You may edit the files at will to change the output or css?
+You must have the option checked to use the built in CSS (in the widget) to be able to edit the css file in this way.
+The Others will work always.
 
 = Does this support multiple instances? =
 
@@ -47,6 +57,11 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+
+= 3.0 =
+* Added a categories menu widget with the same functionality as the pages widget
+* Added the ability to edit "views" files through your child theme to edit output and css
+* Cleanedup the output
 
 = 2.1 =
 * Added default syling.
@@ -85,6 +100,11 @@ You may want to use something like margins to set the levels apart.
 1. The widget Menu as of 2.0.
 
 == Upgrade Notice ==
+
+= 3.0 =
+This Version will add a widget for displaying categories as well, 
+better functionality, a cleaner output, and the ability to customize the output/css
+through your child theme.
 
 = 2.0 =
 This Version will give you better control over the menu and styling ability.
