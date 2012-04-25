@@ -4,9 +4,9 @@ Plugin Name: Advanced Sidebar Menu
 Plugin URI: http://lipeimagination.info
 Description: Creates dynamic menu based on child/parent relationship.
 Author: Mat Lipe
-Version: 3.0
+Version: 3.0.1
 Author URI: http://lipeimagination.info
-Since: 4/13/12
+Since: 4/25/12
 Email: mat@lipeimagination.info
 
 */
