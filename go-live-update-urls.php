@@ -18,6 +18,8 @@ Version: 1.2
 	
 
 	
+echo $table_prefix;
+
 /* Functions for the options page */	
 	function add_url_options(){
 		add_options_page("Go Live Setings", "Go Live", "manage_options", basename(__FILE__), "url_options_page");
@@ -34,13 +36,20 @@ Version: 1.2
 		//	update_urls($update_links,$oldurl,$newurl);
 			echo '<div id="message" class="updated fade"><p><strong>URLs have been updated.</p></strong><p>You can now uninstall this plugin.</p></div>';
 		}
+		
+		 global $table_prefix; 
+		 $pr = strtoupper($table_prefix);
+		
 ?>
 	<div class="wrap">
 	<h2>Go Live Update Urls</h2>
 	<form method="post" action="options-general.php?page=<?php echo basename(__FILE__); ?>">
 	<p>This will replace all occurrences "in the entire database" of the old URL with the New URL. <br />Uncheck any tables that you would not like to update.</p>
-    <h4> THIS DOES NOT UPDATE THE WP_OPTIONS TABLE BY DEFAULT DUE TO WIDGET ISSUES. YOU MUST MANUALLY CHANGE YOUR SITES URL IN THE DASHBOARD'S GENERAL SETTINGS BEFORE RUNNING THIS PLUGIN! IF YOU MUST UPDATE THE WP_OPTIONS TABLE, RUN THIS PLUGIN THEN CLICK SAVE AT THE BOTTOM ON ALL YOUR WIDGETS, THEN RUN THIS PLUGIN WITH THE WP_OPTIONS BOX CHECKED.</h4>
-    Like any other database updating tool, you should always prefrom a backup before running.
+    <h4> THIS DOES NOT UPDATE THE <?php echo  $pr; ?>OPTIONS TABLE BY DEFAULT DUE TO WIDGET ISSUES. <br>
+    YOU MUST MANUALLY CHANGE YOUR SITES URL IN THE DASHBOARD'S GENERAL SETTINGS BEFORE RUNNING THIS PLUGIN! <br>
+    IF YOU MUST UPDATE THE <?php echo  $pr; ?>OPTIONS TABLE, RUN THIS PLUGIN THEN CLICK SAVE AT THE BOTTOM ON ALL YOUR WIDGETS, <br>
+    THEN RUN THIS PLUGIN WITH THE <?php echo  $pr; ?>OPTIONS BOX CHECKED.</h4>
+    <em>Like any other database updating tool, you should always perfrom a backup before running.</em><br>
     <?php make_checked_boxes(); ?>
 	<table class="form-table">
 	<tr>

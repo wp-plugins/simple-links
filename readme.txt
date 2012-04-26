@@ -3,8 +3,8 @@ Contributors: Mat Lipe
 Donate link: http://lipeimagination.info/contact/
 Tags: Go Live, Urls, Domain Changes 
 Requires at least: 3.1
-Tested up to: 3.3.1
-Stable tag: 1.2
+Tested up to: 3.3.2
+Stable tag: 1.2.1
 
 == Description ==
 
@@ -38,12 +38,11 @@ Under the settings menu in the dashboard there will be a "Go Live" link.
 
 There are a few plugins out there that use certain values in the wp-options table which will break of they are changed manually in the database. Sometimes widgets will disappear. If you have some values that must be changed in the wp_options, I have found that you can prevent the disappearing widget problem by going through all of your widgets and clicking save on the bottom of them after you have changed the domain in general settings. You may then run the Update with the wp_options checked. This method is not fool proof, but it has worked on a few instances I have seen an actual need for updated the wp_options table manually.
 
-== Screenshots ==
-
-1. What the menu looks like version 1.1
-
 
 == Changelog ==
+
+= 1.2.1 =
+* Added support for other prefixes besides wp_
 
 = 1.2 =
 * Added the wp_options to the available tables to be updated and unchecked the table by default.
@@ -52,6 +51,9 @@ There are a few plugins out there that use certain values in the wp-options tabl
 * Removed the wp-options table from the tables to be updated.
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+This Version will uncheck your options table by default for the wp_options as well as other table prefixes.
 
 = 1.2 =
 This Version will add the wp_options to the available tables and uncheck the table by default.
