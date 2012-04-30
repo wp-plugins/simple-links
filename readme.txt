@@ -4,7 +4,7 @@ Donate link: http://lipeimagination.info/contact/
 Tags: Go Live, Urls, Domain Changes 
 Requires at least: 3.1
 Tested up to: 3.3.2
-Stable tag: 1.2.1
+Stable tag: 1.2.1.1
 
 == Description ==
 
