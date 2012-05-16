@@ -3,9 +3,9 @@ Contributors: Mat Lipe
 Donate link: http://lipeimagination.info/contact/
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
-Tested up to: 3.3.1
-Stable tag: 3.0.1
-Version: 3.0.1
+Tested up to: 3.3.2
+Stable tag: 3.0.2
+Version: 3.0.2
 
 == Description ==
 
@@ -57,6 +57,10 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+
+= 3.0.2 =
+*Bugfixes
+
 
 = 3.0 =
 * Added a categories menu widget with the same functionality as the pages widget

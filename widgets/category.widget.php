@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 4/13/12
+           * @since 5/16/12
            * @package Advanced Sidebar Menu
            *
            */
@@ -86,7 +86,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
 
 		/* Create the widget. */
-		$this->WP_Widget( 'advanced_sidebar_menu_category', 'Advanced Sidebar Categories Menu', $widget_ops, $control_ops );
+		$this->WP_Widget( 'advanced_sidebar_menu_category', 'Advanced Sidebar Categories Menu', $widget_ops );
 		}
 
 

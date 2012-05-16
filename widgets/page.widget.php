@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 4/13/12
+           * @since 5/16/12
            * @package Advanced Sidebar Menu
            *
            */
@@ -84,7 +84,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 
 
 		/* Create the widget. */
-		$this->WP_Widget( 'advanced_sidebar_menu', 'Advanced Sidebar Pages Menu', $widget_ops, $control_ops );
+		$this->WP_Widget( 'advanced_sidebar_menu', 'Advanced Sidebar Pages Menu', $widget_ops);
 		}
 
 
