@@ -1,6 +1,7 @@
 === Plugin Name ===
 Contributors: Mat Lipe
-Donate link: http://lipeimagination.info/contact/
+Donate link: Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Lipe%20Imagination&item_number=Meteor%20Slides%20Enhancement&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest
+
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.3.2
@@ -101,7 +102,8 @@ You may want to use something like margins to set the levels apart.
 
 
 == Screenshots ==
-1. The widget Menu as of 2.0.
+
+1. The widget Menu as of 2
 
 == Upgrade Notice ==
 
