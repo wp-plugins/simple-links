@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.3.2
-Stable tag: 3.0.2
-Version: 3.0.2
+Stable tag: 3.2.0
+Version: 3.2.0
 
 == Description ==
 
@@ -58,6 +58,11 @@ You may want to use something like margins to set the levels apart.
 
 == Changelog ==
 
+= 3.2.0 =
+* Added ability to have categories show on single post pages
+* Improved the code structure
+
+
 = 3.0.2 =
 *Bugfixes
 
@@ -105,6 +110,11 @@ You may want to use something like margins to set the levels apart.
 1. The widget Menu as of 2
 
 == Upgrade Notice ==
+
+= 3.2 = 
+This will add the ability to display the categories on single post pages.
+If you are using the category_list.php view you will most likely get an error message to remove a couple lines.
+These lines are no longer needed for the structure in this new version.
 
 = 3.0 =
 This Version will add a widget for displaying categories as well, 

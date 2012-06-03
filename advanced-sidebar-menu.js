@@ -1,10 +1,10 @@
 
-<!-- Added this tag for easy includes -->
-<script type="text/javascript">
+
 //This will change the style display to block
 //For the element that is sent to it
 //Use the id or inline tags for this
-function reveal_element( this_element_id ){
+function asm_reveal_element( this_element_id ){
+
 	//If the toggle has already been clicked to show
 	//This will hide it
 	if( document.getElementById( this_element_id ).style.display == 'none' ){
@@ -14,6 +14,11 @@ function reveal_element( this_element_id ){
 	} else {
 		document.getElementById( this_element_id ).style.display = 'none';
 	}
+
 }
 
-</script>
+
+
+
+
+

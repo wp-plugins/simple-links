@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 5/16/12
+           * @since 6/3/12
            * @package Advanced Sidebar Menu
            *
            */
@@ -16,7 +16,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 #-----------------------------------------------------------------------------------------------------------------------------------
 	  // this creates the widget form for the dashboard
 	function form( $instance ) {
-				  		require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
+			//	  		require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
 			?>
 			
 			
@@ -39,7 +39,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
             	
             <p> Always Display Child Pages <input id="<?php echo $this->get_field_name('display_all'); ?>" 
             	name="<?php echo $this->get_field_name('display_all'); ?>" type="checkbox" value="checked" 
-            	onclick="javascript:reveal_element( 'levels-<?php echo $this->get_field_name('levels'); ?>' )"
+            	onclick="javascript:asm_reveal_element( 'levels-<?php echo $this->get_field_name('levels'); ?>' )"
             	<?php echo $instance['display_all']; ?>/></p>
             
             <span id="levels-<?php echo $this->get_field_name('levels'); ?>" style="<?php 
@@ -131,7 +131,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			
 				if( $instance['css'] == 'checked' ){
 					echo '<style type="text/css">';
-					include( advanced_sidebar_menu_file_hyercy( 'sidebar-menu.css' ) );
+					include( advanced_sidebar_menu_functions::file_hyercy('sidebar-menu.css' ) );
 			
 					echo '</style>';
 			
@@ -140,7 +140,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			
 			
 				#-- Bring in the output
-    			require( advanced_sidebar_menu_file_hyercy( 'page_list.php' ) );
+    			require( advanced_sidebar_menu_functions::file_hyercy( 'page_list.php' ) );
 				
 			}
 			}
