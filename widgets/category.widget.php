@@ -127,8 +127,9 @@ class advanced_sidebar_menu_category extends WP_Widget {
 		#-- Create a usable array of the excluded pages
 		$exclude = explode(',', $instance['exclude']);
 		$cat_ids = array();
-		$asm_cat_widget_count = false; //keeps track of how many widgets this created
+		$asm_once = $asm_cat_widget_count = false; //keeps track of how many widgets this created
 		$count = null;
+		
 		
 		
 		//If on a single page create an array of each category and create a list for each
@@ -164,7 +165,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
              	$cat_ancestors[] = $cat_id ; }
        		 while ($cat_id );
        
-       
+            
        		 $cat_ancestors = array_reverse( $cat_ancestors );
        		 $top_cat = $cat_ancestors [1];
        
@@ -176,18 +177,15 @@ class advanced_sidebar_menu_category extends WP_Widget {
         		if( !empty($all ) || ($instance['include_childless_parent'] == 'checked' && !in_array($top_cat, $exclude))  ){
         		
         			
-        		
-        			#!! Bring in the output from either the child theme or this folder
-        			
         			//Creates a new widget for each category the single page has if the options are selected to do so
 					if( !$asm_once || ($instance['new_widget'] == 'widget') ){
 
 						echo '<div id="'.$args['widget_id']. $count .'" class="advanced-sidebar-menu widget advanced-sidebar-category">
 								<div class="widget-wrap">';
 
-							$count++;
-							$asm_once = true;
-							$close = true;
+							$count++; // To change the id of the widget if there are multiple
+							$asm_once = true;  //There has been a div
+							$close = true; //The div should be closed at the end
 							if($instance['new_widget'] == 'list'){ $close = false;} //If this is a list leave it open for possible late ones
 
 					} else {

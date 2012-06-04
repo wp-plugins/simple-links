@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.3.2
-Stable tag: 3.2.0
-Version: 3.2.0
+Stable tag: 3.2.1
+Version: 3.2.1
 
 == Description ==
 
@@ -13,7 +13,10 @@ Creates a widget that automatically generates a menu based on the parent/child r
 of the pages. When on a top level page, it displays a menu of the all of the top level pages and a menu of all of the pages that 
 are children of the current page. Keeps the sidebar menu clean and usable.
 
-As of Version 3.0 it also creates a widget that does the same functionality for Categories as well.
+As of Version 3.2 you have the option to display the categories on single post page when using the categories widget.
+
+
+As of Version 3.0 it also creates a widget that does the same functionality for Categories.
 
 Has the ability to exclude page from the menu.
 As of 2.0 it also allows for display of all the child pages always.
@@ -33,6 +36,10 @@ e.g.
 1. Drag the "Advanced Sidebar Pages Menu" widget Or the "Advanced Sidebar Categories Menu" widget into a sidebar.
 
 == Frequently Asked Questions ==
+
+= How do you get the categories to display on single post pages? =
+
+There is a checkbox in the widget options as of version 3.2 that will display the same structure for the categories the post is in.
 
 = How do you edit the output or built in css? =
 
@@ -57,6 +64,9 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+
+= 3.2.1 =
+* Fix a possible bug that may display a * Notice * error if there is nothing to display and the  error reporting is set to strict when using the categories widget.
 
 = 3.2.0 =
 * Added ability to have categories show on single post pages
