@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 6/3/12
+           * @since 6/4/12
            * @package Advanced Sidebar Menu
            *
            */
@@ -126,7 +126,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 	function widget($args, $instance) {
 		#-- Create a usable array of the excluded pages
 		$exclude = explode(',', $instance['exclude']);
-		$cat_ids = array();
+		$cat_ids = $already_top = array();
 		$asm_once = $asm_cat_widget_count = false; //keeps track of how many widgets this created
 		$count = null;
 		
@@ -138,6 +138,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 			foreach( get_the_category() as $id => $cat ){
 				$cat_ids[] = $cat->term_id;
 			}
+			
 		//IF on a category page get the id of the category
 		} elseif( is_category() ){
 		    $cat_ids[] = get_query_var('cat');	
@@ -166,8 +167,18 @@ class advanced_sidebar_menu_category extends WP_Widget {
        		 while ($cat_id );
        
             
+       		 //Reverse the array to start at the last
        		 $cat_ancestors = array_reverse( $cat_ancestors );
-       		 $top_cat = $cat_ancestors [1];
+       		 //forget the [0] because the parent of top parent is always 0
+       		 $top_cat = $cat_ancestors[1];
+  
+       		 
+       		 //Keeps track or already used top levels so this won't double up
+       		 if( in_array( $top_cat, $already_top ) ){
+       		 	continue;
+       		 }
+       		 $already_top[] = $top_cat;
+       		 
        
          	//Check for children
         	$all = get_categories( array( 'child_of' => $top_cat ) );
