@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.4.1
-Stable tag: 3.2.3
+Stable tag: 3.2.5
 Version: 3.2.5
 
 == Description ==
