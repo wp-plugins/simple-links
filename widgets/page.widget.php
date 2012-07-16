@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 6/3/12
+           * @since 7/16/12
            * @package Advanced Sidebar Menu
            *
            */
@@ -18,9 +18,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 	function form( $instance ) {
 			//	  		require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
 			?>
-			
-			
-			
+
             <p> Include Parent Page <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
             	name="<?php echo $this->get_field_name('include_parent'); ?>" type="checkbox" value="checked" 
             	<?php echo $instance['include_parent']; ?>/></p>
@@ -92,50 +90,37 @@ class advanced_sidebar_menu_page extends WP_Widget {
 
     // adds the output to the widget area on the page
 	function widget($args, $instance) {
+		if( is_page() ){
 			
-			if( is_page() ){
-			
-	 		 global $wpdb;
-	 		 global $p;
-	  		 global $post;
+	 		 global $wpdb, $post, $table_prefix;
 	  		 
 	  		 #-- Create a usable array of the excluded pages
 	  		 $exclude = explode(',', $instance['exclude']);
-		   
-           
-	    	 #-- if the post has parrents
+		 
+	    	 #-- if the post has parents
 			if($post->ancestors){
-			
-				$parent = $wpdb->get_var( "SELECT post_parent from wp_posts WHERE ID=".$post->ID );
-			 
-				//--- If there is a parent of the post set $p to it and check if there is a parent as well
-				while($parent != FALSE){
-						$p = $parent;
-				    	$parent = $wpdb->get_var( "SELECT post_parent from wp_posts WHERE ID=".$parent);
-				}
-		
+	 		 	$top_parent = end( $post->ancestors );
 			} else {
 				#--------- If this is the parent ------------------------------------------------
-				$p = $post->ID;
+				$top_parent = $post->ID;
 			}
-		
-			#-- Makes this work with all table prefixes
-			#-- Added 1/22/12
-			global $table_prefix;
-			
 
-			$result = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $p AND post_type='page' Order by menu_order" );
-	   
+			/**
+			 * Must be done this way to prevent doubling up of pages
+			 */
+			$child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_type='page' AND post_status='publish' Order by menu_order" );
+			
+			//for depreciation
+			$p = $top_parent;
+			$result = $child_pages;
+		
 			#---- if there are no children do not display the parent unless it is check to do so
-			if($result != false || ( $instance['include_childless_parent'] == 'checked' && !in_array($p, $exclude) )  ){
+			if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){
 			
 				if( $instance['css'] == 'checked' ){
 					echo '<style type="text/css">';
-					include( advanced_sidebar_menu_functions::file_hyercy('sidebar-menu.css' ) );
-			
+						include( advanced_sidebar_menu_functions::file_hyercy('sidebar-menu.css' ) );
 					echo '</style>';
-			
-			
 				}
 			
 			
@@ -143,7 +128,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
     			require( advanced_sidebar_menu_functions::file_hyercy( 'page_list.php' ) );
 				
 			}
-			}
+		}
 	} #== /widget()
 	
 } #== /Clas
