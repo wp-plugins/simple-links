@@ -4,25 +4,37 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.4.1
-Stable tag: 3.2.5
-Version: 3.2.5
+Stable tag: 3.3.0
+Version: 3.3.0
 
 == Description ==
 
-Creates a widget that automatically generates a menu based on the parent/child relationship of pages.
-of the pages. When on a top level page, it displays a menu of the all of the top level pages and a menu of all of the pages that 
-are children of the current page. Keeps the sidebar menu clean and usable.
+Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
+Keeps the menu clean and usable.
 
-As of Version 3.2 you have the option to display the categories on single post page when using the categories widget.
+Includes Page options:
+   1. Add a title to the widget
+   2. Include the highest level parent page
+   3. Include the highest level parent page even with no Children
+   4. Use built in styling (very plain styling currently but plans for more advanced in near future versions)
+   5. Exclude pages
+   6. Always display child Pages
+   7. Number of levels of child pages to display
+  
+Includes Category Options:
+   1. Add a title to the widget
+   2. Include Parent Category
+   3. Include Parent Even with no Children
+   4. Use Built in Styling
+   5. Display Categories on Single Posts
+   6. To display each Single Posts Category in a new widget or in same list
+   7. Exclude Categories
+   8. Always display child categories
+   9. Levels of Categories to display
+   
 
-
-As of Version 3.0 it also creates a widget that does the same functionality for Categories.
-
-Has the ability to exclude page from the menu.
-As of 2.0 it also allows for display of all the child pages always.
-You may also select the level of pages to display with this option.
-
-
+There is also built in functionality to overright the output of the widgets and the css to customize this and still be upgrade safe.
+   
 
 
 == Installation ==
@@ -64,6 +76,11 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+= 3.3.0 =
+* Added the ability to have a widget title
+* Redesigned the entire structure to prepare for future changes
+
+
 = 3.2.5 =
 * Bugfixes
 
@@ -120,11 +137,13 @@ You may want to use something like margins to set the levels apart.
 * Added support for separate css classes on each level of the menu.
 
 
-== Screenshots ==
-
-1. The widget Menu as of 2
 
 == Upgrade Notice ==
+
+= 3.3.0 =
+If you customized the output previously you may want to redo it on this version to take advantage of the new structure.
+IF you are are using the page_list.php view you will most likely get an error message to remove a couple lines.
+These lines are no longer needed for the structure in this version.
 
 = 3.2.3 = 
 This will add the ability to display the categories on single post pages.

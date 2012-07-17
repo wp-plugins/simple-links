@@ -20,7 +20,9 @@ class advanced_sidebar_menu_category extends WP_Widget {
 	function form( $instance ) {
 				  	//	 require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
 			?>
-			
+			 <p> Title <br>
+             <input id="<?php echo $this->get_field_name('title'); ?>" 
+            	name="<?php echo $this->get_field_name('title'); ?>" size="50" type="text" value="<?php echo $instance['title']; ?>"/></p>
 			
 			
             <p> Include Parent Category <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
@@ -36,7 +38,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 			name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['css']; ?>/></p>
 					
-			<p> Display Categories on Single Post Page's <input id="<?php echo $this->get_field_name('single'); ?>"
+			<p> Display Categories on Single Posts <input id="<?php echo $this->get_field_name('single'); ?>"
 			name="<?php echo $this->get_field_name('single'); ?>" type="checkbox" value="checked" 
 			onclick="javascript:asm_reveal_element( 'new-widget-<?php echo $this->get_field_name('new_widget'); ?>' )"
 					<?php echo $instance['single']; ?>/></p>	
@@ -105,6 +107,8 @@ class advanced_sidebar_menu_category extends WP_Widget {
 			$instance['css'] = strip_tags($new_instance['css']);
 			$instance['single'] = strip_tags($new_instance['single']);  //Display on single pages
 			$instance['new_widget'] = strip_tags($new_instance['new_widget']); //Create a new widget for each single category
+			$instance['title'] = strip_tags($new_instance['title']);
+			
 			return $instance;
 		}
 
@@ -124,6 +128,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
     // adds the output to the widget area on the page
 	function widget($args, $instance) {
+		global $asm;
 		#-- Create a usable array of the excluded pages
 		$exclude = explode(',', $instance['exclude']);
 		$cat_ids = $already_top = array();
@@ -181,11 +186,13 @@ class advanced_sidebar_menu_category extends WP_Widget {
        		 
        
          	//Check for children
-        	$all = get_categories( array( 'child_of' => $top_cat ) );
-
+        	$all_categories = get_categories( array( 'child_of' => $top_cat ) );
+            
+        	//for depreciation
+        	$all = $all_categories; 
         	
             	//If there are any child categories or the include childless parent is checked
-        		if( !empty($all ) || ($instance['include_childless_parent'] == 'checked' && !in_array($top_cat, $exclude))  ){
+        		if( !empty($all_categories ) || ($instance['include_childless_parent'] == 'checked' && !in_array($top_cat, $exclude))  ){
         		
         			
         			//Creates a new widget for each category the single page has if the options are selected to do so
@@ -204,8 +211,9 @@ class advanced_sidebar_menu_category extends WP_Widget {
 					}
 					
 					
+						$asm->set_widget_vars( $instance, $top_cat, $exclude, $cat_ancestors );
         			     //Bring in the view
-        					require( advanced_sidebar_menu_functions::file_hyercy( 'category_list.php' ) );
+        				require( $asm->file_hyercy( 'category_list.php' ) );
         					
         			
         			if( $close ){
