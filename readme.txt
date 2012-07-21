@@ -13,25 +13,27 @@ Creates a widget for both page and categories that will display the current page
 Keeps the menu clean and usable.
 
 Includes Page options:
-   1. Add a title to the widget
-   2. Include the highest level parent page
-   3. Include the highest level parent page even with no Children
-   4. Use built in styling (very plain styling currently but plans for more advanced in near future versions)
-   5. Exclude pages
-   6. Always display child Pages
-   7. Number of levels of child pages to display
-  
+<ol>
+   <li>Add a title to the widget</li>
+   <li>Include the highest level parent page</li>
+   <li>Include the highest level parent page even with no Children</li>
+  <li>Use built in styling (very plain styling currently but plans for more advanced in near future versions)</li>
+   <li>Exclude pages</li>
+   <li>Always display child Pages</li>
+   <li>Number of levels of child pages to display</li>
+</ol>  
 Includes Category Options:
-   1. Add a title to the widget
-   2. Include Parent Category
-   3. Include Parent Even with no Children
-   4. Use Built in Styling
-   5. Display Categories on Single Posts
-   6. To display each Single Posts Category in a new widget or in same list
-   7. Exclude Categories
-   8. Always display child categories
-   9. Levels of Categories to display
-   
+<ol>
+   <li>Add a title to the widget</li>
+   <li>Include Parent Category</li>
+   <li>Include Parent Even with no Children</li>
+  <li>Use Built in Styling</li>
+  <li>Display Categories on Single Posts</li>
+   <li>To display each Single Posts Category in a new widget or in same list</li>
+   <li>Exclude Categories</li>
+  <li>Always display child categories</li>
+   <li>Levels of Categories to display</li>
+</ol>    
 
 There is also built in functionality to overright the output of the widgets and the css to customize this and still be upgrade safe.
    
@@ -46,6 +48,13 @@ e.g.
 1. Upload the `advanced-sidbebar-menu` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Drag the "Advanced Sidebar Pages Menu" widget Or the "Advanced Sidebar Categories Menu" widget into a sidebar.
+
+
+== Screenshots ==
+
+1. Screenshot of the Page widget and options
+2. Screenshot of the Categories widget and options
+
 
 == Frequently Asked Questions ==
 
