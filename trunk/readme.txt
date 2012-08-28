@@ -7,7 +7,7 @@ Tested up to: 3.4.1
 Stable tag: 1.0
 License: GPLv2
 
-Replacement for Wordpress\' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
+Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
 
 == Description ==
 
@@ -35,9 +35,6 @@ Some of the features this plugin offers:
 == Upgrade Notice ==
 This is the first version so not upgrade notice yet. 
 
-== Installation ==
-
-Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 == Frequently Asked Questions ==
 
 Developer Documentation Coming Soon
