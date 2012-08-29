@@ -4,7 +4,7 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 8/21/12
+                      * @since 8/29/12
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
@@ -86,7 +86,7 @@ class simple_links_admin{
 	 * Adds the output to the custom post list columns created by post_list_columns()
 	 * @param string $column column name
 	 * @param int $postID
-	 * @since 8/21/12
+	 * @since 8/29/12
 	 * @uses called by __construct()
 	 */
 	function post_list_columns_output( $column, $postID ){
@@ -98,7 +98,10 @@ class simple_links_admin{
 			case 'category':
 				global $simple_links_func;
 				
-				echo implode(' , ', $simple_links_func->get_link_categories( $postID ) );
+				$cats = $simple_links_func->get_link_categories( $postID );
+				if( is_array( $cats ) ){
+				    echo implode(' , ', $cats );
+				}
 				break;
 		}
 	}
@@ -712,7 +715,7 @@ class simple_links_admin{
 	
 	/**
 	 * The Additional_fields Meta box
-	 * @since 8/27/12
+	 * @since 8/29/12
 	 * @uses called by the add_meta_box function
 	 */
 	function additional_fields(){
@@ -722,8 +725,10 @@ class simple_links_admin{
 	 //Set the array for additional fields
 	 $this->additional_fields = json_decode( get_option('link_additional_fields'), true );
 
-	 foreach( $this->additional_fields as $field ){
-	      printf( 'Field Name: <input type="text" name="link_additional_field[]" value="%s"><br>', $field );
+	 if( is_array( $this->additional_fields ) ){
+	 	foreach( $this->additional_fields as $field ){
+	 		printf( 'Field Name: <input type="text" name="link_additional_field[]" value="%s"><br>', $field );
+	 	}
 	 }
 	
 	

@@ -3,7 +3,7 @@
 Plugin Name: Simple Links
 Plugin URI: http://lipeimagination.info
 Description: Replacement for Wordpress Links with added features
-Version: 1.0.0
+Version: 1.0.1
 Author: Mat Lipe
 Author URI: http://lipeimagination.info
 */
