@@ -36,12 +36,20 @@ Some of the features this plugin offers:
 This is the first version so not upgrade notice yet. 
 
 == Frequently Asked Questions ==
+Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin once this plugin is installed. You will find documentation on the "widgets", "pages", "posts", "simple links settings", etc pages on using this plugin.
 
-Developer Documentation Coming Soon
+The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">Click Here</a> which is the same as the plugin link.
+
+For Developers Docs See this section of the same page <a href="http://lipeimagination.info/simple-links-docs/#developers">Click Here</a>
+
+For other question start a support thread and myself of someone from the community can probably help you out.
+
 == Screenshots ==
 1. The Widget Options
 
 2. The Shortcode Generating Form
 
 == Changelog ==
+1.0.1 = fixed a couple notification level errors.
+
 1.0 = Release first version into the wild
