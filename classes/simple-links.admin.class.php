@@ -4,7 +4,7 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 8/29/12
+                      * @since 8/31/12
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
@@ -442,15 +442,23 @@ class simple_links_admin{
 	    remove_menu_page('link-manager.php');
 	    	
 	    //Remove the Add link in the admin bar
-	    add_action( 'wp_before_admin_bar_render', function(){
-	    	global $wp_admin_bar;
-	    	$wp_admin_bar->remove_menu('new-link');
-	    		
-	    });
-	    
-
+	    /** Changed to different structure on 8/31/12 **/
+	    add_action( 'wp_before_admin_bar_render', array( $this, 'remove_new_link_menu') );
+		
 	}
 	
+	/**
+	 * Remove original links manager link
+	 * @since 8/31/12
+	 * @uses called by remove_links();
+	 */
+	function remove_new_link_menu() {
+		global $wp_admin_bar;
+		$wp_admin_bar->remove_menu( 'new-link' );
+	
+	}
+	
+
 	
 	
 	/**
