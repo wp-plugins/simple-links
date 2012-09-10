@@ -3,8 +3,8 @@ Contributors: Mat Lipe
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Simple%20Links%20&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3
-Tested up to: 3.4.1
-Stable tag: 1.0.2
+Tested up to: 3.4.2
+Stable tag: 1.0.3
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -33,7 +33,12 @@ Some of the features this plugin offers:
 </div>
 
 == Upgrade Notice ==
-1.0.2 Fixes a couple of bugs for PHP version 5.2.7 
+
+= 1.0.3 = 
+* Improves the placement of output when using shortcode
+
+= 1.0.2 =
+* Fixes a couple of bugs for PHP version 5.2.7 
 
 == Frequently Asked Questions ==
 Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin once this plugin is installed. You will find documentation on the "widgets", "pages", "posts", "simple links settings", etc pages on using this plugin.
@@ -50,6 +55,9 @@ For other question start a support thread and myself of someone from the communi
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 1.0.3 =
+Improved the Placement of the output when using shortcodes
+
 1.0.1 = fixed a couple notification level errors.
 
 1.0 = Release first version into the wild

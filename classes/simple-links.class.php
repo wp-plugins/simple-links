@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 8/27/12
+                  * @since 9/9/12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -55,9 +55,10 @@ class simple_links extends mat_post_type_tax{
 	
 	/**
 	 * Creates the shortcode output
+	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 8/27/12
+	 * @since 9/9/12
 	 * @param $atts = 'title' => string, 
 	 * 				  'category' => csv,  
 	 *                'orderby' => string, 
@@ -214,7 +215,7 @@ class simple_links extends mat_post_type_tax{
 		
 		//The output can be filtered here
 		$output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links, $atts );
-		echo apply_filters( 'simple_links_shortcode_output', $output, $links, $atts );
+		return apply_filters( 'simple_links_shortcode_output', $output, $links, $atts );
 		
 	}
 	
