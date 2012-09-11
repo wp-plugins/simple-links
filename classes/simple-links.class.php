@@ -111,8 +111,7 @@ class simple_links extends mat_post_type_tax{
 		if( $atts['fields'] != false ){
 			$atts['fields'] = explode(',', $atts['fields'] );
 		}
-		
-		
+
 		
 		//Get us started
 		$args = array(
@@ -123,12 +122,14 @@ class simple_links extends mat_post_type_tax{
 				   'simple_link_category'   =>  $atts['category']
 				);
 		
+		
+		$atts['orderby'] = str_replace('"', '', $atts['orderby']);
+		
 		//The order by
-		if( $atts['orderby'] != false ){
-			if( $atts['orderby'] == 'name' ){
-				$args['orderby'] = 'post_title';
-			}
+		if( $atts['orderby'] == 'name' ){
+			     $args['orderby'] = 'title';
 		}
+		
 		
 		//print_r( $args );
 		
