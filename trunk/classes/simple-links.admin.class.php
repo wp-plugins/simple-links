@@ -4,7 +4,7 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 8/31/12
+                      * @since 9/11/12
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
@@ -798,7 +798,7 @@ class simple_links_admin{
 	
 	/**
 	 * The link Ordering Page
-	 * @since 8/15/12
+	 * @since 9/11/12
 	 */
 	function link_ordering_page(){
 		echo '<div class="wrap">';
@@ -832,7 +832,7 @@ class simple_links_admin{
 		
 		
 			//Retrieve all the links
-			$links = get_posts( 'post_type=simple_link&orderby=menu_order&order=ASC' );
+			$links = get_posts( 'post_type=simple_link&orderby=menu_order&order=ASC&numberposts=200' );
 		
 			echo '<ul class="draggable-children" id="SL-drag-ordering">';
 		
