@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 9/9/12
+                  * @since 9/11/12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -58,7 +58,7 @@ class simple_links extends mat_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 9/9/12
+	 * @since 9/11/12
 	 * @param $atts = 'title' => string, 
 	 * 				  'category' => csv,  
 	 *                'orderby' => string, 
@@ -111,7 +111,8 @@ class simple_links extends mat_post_type_tax{
 		if( $atts['fields'] != false ){
 			$atts['fields'] = explode(',', $atts['fields'] );
 		}
-
+		
+		
 		
 		//Get us started
 		$args = array(
@@ -119,22 +120,21 @@ class simple_links extends mat_post_type_tax{
 				   'orderby'                =>  $atts['orderby'],
 		           'order'                  =>  $atts['order'],
 				   'numberposts'            =>  $atts['count'],
-				   'simple_link_category'   =>  $atts['category']
+				   'simple_link_category'   =>  $atts['category'],
+				   'posts_per_page'         =>  $atts['count'],  //Fixes the themes desire to override these
+			       'posts_per_archive_page' =>  $atts['count']   //Fixes the themes desire to override these
 				);
-		
-		
-		$atts['orderby'] = str_replace('"', '', $atts['orderby']);
 		
 		//The order by
 		if( $atts['orderby'] == 'name' ){
-			     $args['orderby'] = 'title';
+				$args['orderby'] = 'title';
 		}
-		
-		
-		//print_r( $args );
-		
+
+		//print_r( $args, true );
+
 		//Retrieve the links
 		$links = get_posts( $args );
+
 		
 		if( !$links ){ 
 			return;
