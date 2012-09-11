@@ -2,7 +2,7 @@
                           /**
                            * Simple links admin jquery
                            * @author Mat Lipe
-                           * @since 8/17/12
+                           * @since 9/11/12
                            */
 
 var isSimpleLinks = false;
@@ -11,18 +11,38 @@ var isSimpleLinks = false;
 jQuery(document).ready(function ($) {
  
 	//A boolean to make sure we are on the right page
-	
 	if( $('input[type="hidden"][name="post_type"]').val() == 'simple_link' ){
 		isSimpleLinks = true;
+	} else {
+	    if( $('input[type="hidden"][name="taxonomy"]').val() == 'simple_link_category' ){
+	        isSimpleLinks = true;
+	    }
 	}
 
-	
+
+    SLcatPage.init(isSimpleLinks);	
 	SLeditPage.init(isSimpleLinks);
 	SLsortPage.init();
 	SLsettings.init();
 
 });
 var $ = jQuery;
+
+
+/**
+ * Link Categories Settings Page
+ * @since 9/11/12 
+ */
+var SLcatPage = {
+   
+   init: function( good ){
+       if( !good ) return
+       
+      $('#tag-slug, label[for="tag-slug"], #addtag p').remove();
+      $('#edittag input[id="slug"], label[for="slug"], #edittag p.description').remove();
+  }   
+    
+};
 
 
 /**
