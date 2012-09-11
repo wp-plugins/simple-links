@@ -44,13 +44,17 @@ Some of the features this plugin offers:
 * Fixes a couple of bugs for PHP version 5.2.7 
 
 == Frequently Asked Questions ==
-Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin once this plugin is installed. You will find documentation on the "widgets", "pages", "posts", "simple links settings", etc pages on using this plugin.
+*Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin once this plugin is installed. You will find documentation on the "widgets", "pages", "posts", "simple links settings", etc pages on using this plugin.
 
-The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">Click Here</a> which is the same as the plugin link.
+* Can I still use the Wp Links after this plugin is installed?
+The old wp links will still work until a future version of Wordpress. It is going to be deprecated but there is not a definite date yet. It is possible this will happen in December. You can use the old link system for as long as it still exists. Unfortunately, any new links you add to the Simple Links will not show up in the wp links. The database for the old system is left intact (at least until Wordpress removes it). If Wordpress removes the old wp links widget,  Simple Links has an option to replace the old widgets with a replica one. As long as the database table for the old links remains intact the replica widget will work. If the database table is removed by Wordpress, the replica widget will no longer work, so it is a good idea to convert everything to Simple Links as soon as possible.
 
-For Developers Docs See this section of the same page <a href="http://lipeimagination.info/simple-links-docs/#developers">Click Here</a>
 
-For other question start a support thread and myself of someone from the community can probably help you out.
+*The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">Click Here</a> which is the same as the plugin link.
+
+*For Developers Docs See this section of the same page <a href="http://lipeimagination.info/simple-links-docs/#developers">Click Here</a>
+
+*For other question start a support thread and myself of someone from the community can probably help you out.
 
 == Screenshots ==
 1. The Widget Options
