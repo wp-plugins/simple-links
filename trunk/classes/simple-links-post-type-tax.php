@@ -4,7 +4,7 @@
                        * Registers Post type
                        * Creates a Meta Data box, Creates the fields and handles the saving
                        * @author Mat Lipe <mat@lipeimagination.info>
-                       * @since 8/10/12
+                       * @since 9/21/12
                        * @uses Extend this class into the the class registering the post types
                        * @uses Make sure to call a parent::__construct()
                        * @uses Add class arrays named  %post_type&_meta_fields = array();
@@ -12,8 +12,8 @@
                        * @uses This will automatically have a callback to add data when the post type is registered. Remove in args if not needed
                        * @package Mat's Framework
                        */
-if( !class_exists( 'mat_post_type_tax' ) ){                     
-class mat_post_type_tax{
+if( !class_exists( 'SL_post_type_tax' ) ){                     
+class SL_post_type_tax{
 	
 	/**
 	 * Registers the Post Types and Taxonomies automatically

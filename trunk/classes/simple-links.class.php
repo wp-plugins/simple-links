@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 9/11/12
+                  * @since 9/21/12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -10,7 +10,7 @@
                   */
 
 if( !class_exists( 'simple_links' ) ){
-class simple_links extends mat_post_type_tax{
+class simple_links extends SL_post_type_tax{
 	
 	public $additional_fields = array();
 
