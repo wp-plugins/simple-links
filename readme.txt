@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3
 Tested up to: 3.4.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -33,6 +33,10 @@ Some of the features this plugin offers:
 </div>
 
 == Upgrade Notice ==
+= 1.0.6 =
+* Fixes Naming Conflict when using some of our themes *
+* Not critical if not using a Lipe Imagination theme *
+
 = 1.0.5 =
 * Important Update *
 * Fixes some bugs with the shortcodes output *
