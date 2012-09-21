@@ -66,6 +66,9 @@ The old wp links will still work until a future version of Wordpress. It is goin
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 1.0.5 =
+Fixed an important bug with ordering and count
+
 = 1.0.3 =
 Improved the Placement of the output when using shortcodes
 
