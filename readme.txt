@@ -2,9 +2,9 @@
 Contributors: Mat Lipe 
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Simple%20Links%20&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: Link Manager, Links List, Link Organization
-Requires at least: 3.3
+Requires at least: 3.3.1
 Tested up to: 3.4.2
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -33,6 +33,10 @@ Some of the features this plugin offers:
 </div>
 
 == Upgrade Notice ==
+= 1.0.7 =
+* Fixes Notice Level Error when using Wordpress Versions 3.0 - 3.3 
+
+
 = 1.0.6 =
 * Fixes Naming Conflict when using some of our themes *
 * Not critical if not using a Lipe Imagination theme *

@@ -154,7 +154,7 @@ class simple_links extends SL_post_type_tax{
 		
 		    //Go through each link
 			foreach( $links as $link ){
-				$meta = get_post_meta($link->ID);
+				$meta = get_post_meta($link->ID, false);
 				
 				//Escape Hatch
 				if( !is_object( $link ) ){

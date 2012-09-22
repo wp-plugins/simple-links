@@ -133,7 +133,7 @@ class SL_links_main extends WP_Widget {
 		
 		//Go through each link
 		foreach( $links as $link ){
-			$meta = get_post_meta($link->ID);
+			$meta = get_post_meta($link->ID, false);
 			
 			//Escape Hatch
 			if( !is_object( $link ) ){
