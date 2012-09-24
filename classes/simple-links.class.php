@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 9/21/12
+                  * @since 9/24/12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -58,7 +58,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 9/11/12
+	 * @since 9/24/12
 	 * @param $atts = 'title' => string, 
 	 * 				  'category' => csv,  
 	 *                'orderby' => string, 
@@ -83,23 +83,25 @@ class simple_links extends SL_post_type_tax{
 	function shortcode( $atts ){
 		$output = '';
 		$defaults = array(  'title'      => false,
-				  			'category'   => false,
-		               		'orderby'    => 'menu_order',
-		               		'count'    	 => 100,
-		                	'show_image' => false,
-		                	'image_size' => 'post-thumbnail',
-				            'order'      => 'ASC',
-				            'fields'     => false,
+				  	  'category'   => false,
+		               	  'orderby'    => 'menu_order',
+		               	  'count'    	 => 100,
+		                	  'show_image' => false,
+		                	  'image_size' => 'post-thumbnail',
+				        'order'      => 'ASC',
+				        'fields'     => false,
 		                    'description'=> false,
-							'separator'  =>  '-',
-				 			'id'         => false
+					  'separator'  =>  '-',
+				        'id'         =>  false
 		                );
 		//for filtering this function
 		$unfilterd_atts = $atts;
 		
 		//Call this filter to change the atts pre compile
 		$atts = apply_filters('simple_links_shortcode_atts', $atts);
-		$atts = apply_filters('simple_links_shortcode_atts_' . $atts['id'], $atts);
+		if( isset( $atts['id'] ) ){
+		    $atts = apply_filters('simple_links_shortcode_atts_' . $atts['id'], $atts);
+		}
 		
 		
 		
@@ -118,7 +120,7 @@ class simple_links extends SL_post_type_tax{
 		$args = array(
 				   'post_type'              =>  'simple_link',
 				   'orderby'                =>  $atts['orderby'],
-		           'order'                  =>  $atts['order'],
+		               'order'                  =>  $atts['order'],
 				   'numberposts'            =>  $atts['count'],
 				   'simple_link_category'   =>  $atts['category'],
 				   'posts_per_page'         =>  $atts['count'],  //Fixes the themes desire to override these
@@ -146,8 +148,12 @@ class simple_links extends SL_post_type_tax{
 			
 		}
 		
-		
-		$output .= '<ul class="simple-links-list" id="' . $atts['id'] . '">';
+		//Start the UL
+		if( $atts['id'] ){
+		    $output .= '<ul class="simple-links-list" id="' . $atts['id'] . '">';
+		} else {
+		    $output .= '<ul class="simple-links-list">';
+		}
 		
 		$links['title'] = $atts['title'];
 		
@@ -215,7 +221,9 @@ class simple_links extends SL_post_type_tax{
 		$atts = $unfilterd_atts;
 		
 		//The output can be filtered here
-		$output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links, $atts );
+		if( isset( $atts['id'] ) ){
+		    $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links, $atts );
+		}
 		return apply_filters( 'simple_links_shortcode_output', $output, $links, $atts );
 		
 	}
