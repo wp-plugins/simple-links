@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 8/27/12
+                    * @since 9/30/12
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -25,7 +25,7 @@ class SL_links_main extends WP_Widget {
 			    'post_type'              =>  'simple_link',
 				'orderby'                =>  'menu_order',
 				'order'                  =>  'DESC',
-				'numberposts'            =>  '99',
+				'numberposts'            =>  '-1',
 				'simple_link_category'   => '0'
 			);
 			
@@ -56,7 +56,7 @@ class SL_links_main extends WP_Widget {
 	
 	/**
 	 * The output of the widget to the site
-	 * @since 8/27/12
+	 * @since 9/30/12
 	 * @see WP_Widget::widget()
 	 * @param $args the widget necessaties like $before_widget and $title
 	 * @param $instance all the settings for this particular widget
@@ -101,6 +101,9 @@ class SL_links_main extends WP_Widget {
 		
 		//Parse the query vars along with the defaults
         $query_args = wp_parse_args($instance, $this->defaults);
+        
+        
+            //print_r( $query_args );
 		
 		//Retrieve the links
 		$links = get_posts( $query_args );
@@ -143,7 +146,7 @@ class SL_links_main extends WP_Widget {
 			//Adds the meta to the main object for people using filters
 			$link->meta = $meta;
 
-			$output .= '<li class="simple-links-shortcode-item">';
+			$output .= '<li class="simple-links-widget-item">';
 		
 			//Add the image
 			if( $instance['show_image']){
@@ -265,7 +268,7 @@ class SL_links_main extends WP_Widget {
        <br><br>
        <strong>Number of Links:</strong>
         	<select id="<?php echo $this->get_field_id( 'numberposts' ); ?>" name="<?php echo $this->get_field_name( 'numberposts' ); ?>">
-        		<option value="">All</option>
+        		<option value="-1">All</option>
         		<?php 
           		for( $i = 1; $i<50; $i++){
           			printf('<option value="%s" %s>%s</option>', $i, selected($instance['numberposts'], $i ), $i );
