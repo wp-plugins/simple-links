@@ -78,6 +78,7 @@ The old wp links will still work until a future version of Wordpress. It is goin
 
 == Changelog ==
 = 1.0.9 =
+Please hit save on all of your Simple Links Widgets after making this update.
 Small Widget Improvement and fixed issue when links number set to All"
 
 = 1.0.8 =

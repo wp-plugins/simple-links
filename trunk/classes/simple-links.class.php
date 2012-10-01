@@ -85,7 +85,7 @@ class simple_links extends SL_post_type_tax{
 		$defaults = array(  'title'      => false,
 				  	  'category'   => false,
 		               	  'orderby'    => 'menu_order',
-		               	  'count'    	 => -1,
+		               	  'count'    	 => '-1',
 		                   'show_image' => false,
 		                	  'image_size' => 'post-thumbnail',
 				        'order'      => 'ASC',
