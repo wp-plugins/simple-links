@@ -34,6 +34,7 @@ Some of the features this plugin offers:
 
 == Upgrade Notice ==
 = 1.0.9 =
+* Please hit save on all of your Simple Links Widgets after making this update"
 * Small Widget Improvement and fixed issue when links number set to All"
 
 = 1.0.8 =
