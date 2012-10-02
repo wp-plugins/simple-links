@@ -86,7 +86,7 @@ class simple_links extends SL_post_type_tax{
 				  	  'category'   => false,
 		               	  'orderby'    => 'menu_order',
 		               	  'count'    	 => '-1',
-		                    'show_image' => false,
+		                   'show_image' => false,
 		                	  'image_size' => 'post-thumbnail',
 				        'order'      => 'ASC',
 				        'fields'     => false,
@@ -124,7 +124,7 @@ class simple_links extends SL_post_type_tax{
 				   'numberposts'            =>  $atts['count'],
 				   'simple_link_category'   =>  $atts['category'],
 				   'posts_per_page'         =>  $atts['count'],  //Fixes the themes desire to override these
-			         'posts_per_archive_page' =>  $atts['count']   //Fixes the themes desire to override these
+			       'posts_per_archive_page' =>  $atts['count']   //Fixes the themes desire to override these
 				);
 		
 		//The order by
