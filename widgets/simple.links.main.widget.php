@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 9/30/12
+                    * @since 10.2.12
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -56,7 +56,7 @@ class SL_links_main extends WP_Widget {
 	
 	/**
 	 * The output of the widget to the site
-	 * @since 9/30/12
+	 * @since 10.2.12
 	 * @see WP_Widget::widget()
 	 * @param $args the widget necessaties like $before_widget and $title
 	 * @param $instance all the settings for this particular widget
@@ -101,6 +101,10 @@ class SL_links_main extends WP_Widget {
 		
 		//Parse the query vars along with the defaults
         $query_args = wp_parse_args($instance, $this->defaults);
+        
+        $query_args['posts_per_page']         = $query_args['numberposts'];  //Fixes the themes desire to override these
+        $query_args['posts_per_archive_page'] = $query_args['numberposts'];   //Fixes the themes desire to override these
+        
         
         
             //print_r( $query_args );
