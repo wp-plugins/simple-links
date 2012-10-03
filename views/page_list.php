@@ -49,7 +49,7 @@ if( $child_pages ){
 				if( $grandkids ){
 					#-- Create a new menu with all the children under it
 					echo '<ul class="grandchild-sidebar-menu">';
-							wp_list_pages("sort_column=menu_order&title_li=&echo=1&exclude=".$instance['exclude']."&depth=3&child_of=".$pID->ID);
+							wp_list_pages("sort_column=menu_order&title_li=&echo=1&exclude=".$instance['exclude']."&child_of=".$pID->ID);
 
 					echo '</ul>';
 				}

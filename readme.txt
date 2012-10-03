@@ -3,8 +3,8 @@ Contributors: Mat Lipe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Advanced%20Sidebar%20Menu&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
-Tested up to: 3.4.1
-Stable tag: 3.3.0
+Tested up to: 3.4.2
+Stable tag: 3.3.1
 Version: 3.3.0
 
 == Description ==
@@ -85,6 +85,9 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+= 3.3.1 =
+* Added unlimited number of levels displayed once on the grandchild level of pages
+
 = 3.3.0 =
 * Added the ability to have a widget title
 * Redesigned the entire structure to prepare for future changes
