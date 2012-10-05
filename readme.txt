@@ -4,17 +4,13 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.4.2
-Stable tag: 3.3.1
-Version: 3.3.0
-
-Uses the Page Or Categories Parent Child Relationship to Keep Sidebar Menus Manageable. 
+Stable tag: 3.4.0
+Version: 3.4.0
 
 == Description ==
+
 Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
 Keeps the menu clean and usable.
-
-Displays on the Parent Page and Second Level of pages until your viewer clicks on a second level page. 
-When on a Second Level page, all child pages are displayed.
 
 Includes Page options:
 <ol>
@@ -89,6 +85,9 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+= 3.4.0 =
+* Added filter support for custom post types
+
 = 3.3.1 =
 * Added unlimited number of levels displayed once on the grandchild level of pages
 

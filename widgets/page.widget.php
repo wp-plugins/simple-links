@@ -94,10 +94,26 @@ class advanced_sidebar_menu_page extends WP_Widget {
 
 #---------------------------------------------------------------------------------------------------------------------------
 
-    // adds the output to the widget area on the page
+    /**
+     * Outputs the page list
+     * @see WP_Widget::widget()
+     * @uses for custom post types send the type to the filter titled 'advanced_sidebar_menu_post_type'
+     * @since 10.5.12
+     */
 	function widget($args, $instance) {
-		
-		if( is_page() ){
+	    $single_type = 'page'; //default use is for pages
+	    
+	    //Filter this one with a 'single' for a custom post type will default to working for pages only
+	    $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page' );
+	    
+	    
+	    if( $post_type != 'page' ){
+             $single_type = 'single';
+        }
+	    
+		if( call_user_func('is_'.$single_type) ){
+             
+             extract($args);
 			
 	 		 global $wpdb, $post, $table_prefix, $asm;
 	  		 
@@ -111,11 +127,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
 				#--------- If this is the parent ------------------------------------------------
 				$top_parent = $post->ID;
 			}
-
+			
 			/**
 			 * Must be done this way to prevent doubling up of pages
 			 */
-			$child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_type='page' AND post_status='publish' Order by menu_order" );
+			$child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_status='publish' Order by menu_order" );
 			
 			//for depreciation
 			$p = $top_parent;
@@ -131,12 +147,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
 				}
 			
 				//Start the menu
-				echo '<div id="'.$args['widget_id'].'" class="advanced-sidebar-menu widget advanced-sidebar-page">
-							<div class="widget-wrap">';
+				echo $before_widget;
 			   					 $asm->set_widget_vars( $instance, $top_parent, $exclude );
 								#-- Bring in the view
     							require( $asm->file_hyercy( 'page_list.php' ) );
-				echo '</div></div><!-- end #'.$args['widget_id'].' -->';
+				echo $after_widget;
 			}
 		}
 	} #== /widget()

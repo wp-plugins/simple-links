@@ -126,9 +126,14 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
 #---------------------------------------------------------------------------------------------------------------------------
 
-    // adds the output to the widget area on the page
+    /**
+     * Outputs the categories widget to the page
+     * @since 10.5.12
+     * 
+     */
 	function widget($args, $instance) {
 		global $asm;
+		extract( $args);
 		#-- Create a usable array of the excluded pages
 		$exclude = explode(',', $instance['exclude']);
 		$cat_ids = $already_top = array();
@@ -198,8 +203,8 @@ class advanced_sidebar_menu_category extends WP_Widget {
         			//Creates a new widget for each category the single page has if the options are selected to do so
 					if( !$asm_once || ($instance['new_widget'] == 'widget') ){
 
-						echo '<div id="'.$args['widget_id']. $count .'" class="advanced-sidebar-menu widget advanced-sidebar-category">
-								<div class="widget-wrap">';
+						//Start the menu
+                        echo $before_widget;
 
 							$count++; // To change the id of the widget if there are multiple
 							$asm_once = true;  //There has been a div
@@ -218,8 +223,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
         			
         			if( $close ){
         				//End the Widget Area
-						   echo '</div>
-						    </div><!-- END #advanced-sidebar-cat-menu -->';
+						  echo $after_widget;
         			}
         		
         			
