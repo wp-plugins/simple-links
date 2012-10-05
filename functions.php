@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 7/16/12
+          * @since 10.5.12
           */
          
 
@@ -132,11 +132,11 @@ function notice_3_3( ){
 	 * 
 	 * Returns and array of all the children of a page
 	 * @param int $pID the id of the page
-	 * @since 7/19/12
+	 * @since 10.5.12
 	 */
 	function page_children( $pID ){
 		global $wpdb, $table_prefix;
-		return $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = ".$pID." AND post_type='page' AND post_status='publish'" );
+		return $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = ".$pID." AND post_status='publish'" );
 		
 	}
 	
