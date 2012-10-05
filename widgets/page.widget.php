@@ -84,7 +84,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
   	// This decides the name of the widget
 	function advanced_sidebar_menu_page( ) {
 				/* Widget settings. */
-		$widget_ops = array( 'classname' => 'sidebar-menu', 'description' => 'Creates a menu of all the pages using the child/parent relationship' );
+		$widget_ops = array( 'classname' => 'advanced-sidebar-menu', 'description' => 'Creates a menu of all the pages using the child/parent relationship' );
         $control_ops = array( 'width' => 290 );
 
 		/* Create the widget. */

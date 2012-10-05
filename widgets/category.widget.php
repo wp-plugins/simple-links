@@ -117,7 +117,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
   	// This decides the name of the widget
 	function advanced_sidebar_menu_category( ) {
 				/* Widget settings. */
-		$widget_ops = array( 'classname' => 'sidebar-menu-category', 'description' => 'Creates a menu of all the Categories using the child/parent relationship' );
+		$widget_ops = array( 'classname' => 'advanced-sidebar-menu advanced-sidebar-category', 'description' => 'Creates a menu of all the Categories using the child/parent relationship' );
         $control_ops = array( 'width' => 290 );
 		/* Create the widget. */
 		$this->WP_Widget( 'advanced_sidebar_menu_category', 'Advanced Sidebar Categories Menu', $widget_ops, $control_ops );
