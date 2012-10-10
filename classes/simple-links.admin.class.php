@@ -4,7 +4,7 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 9/11/12
+                      * @since 10.10.12
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
@@ -182,7 +182,7 @@ class simple_links_admin{
 	
 	/**
 	 * Generates all contextual help screens for this plugin
-	 * @since 8/27/12
+	 * @since 10.10.12
 	 * @uses Called at load by __construct
 	 */
 	function help(){
@@ -193,7 +193,7 @@ class simple_links_admin{
 		$shortcode_help = array(
 						'id'   			 => 'simple-links-shortcode' ,
 						'title'          => __('Simple Links Shortcode'),
-						'content'   	 => '<p><h5>You Can add a Simple Links List anywhere on the site by using the shortcode [simple-links]</h5><br>
+						'content'   	 => '<h5>You Can add a Simple Links List anywhere on the site by using the shortcode [simple-links]</h5>
 												<strong>Supported Options:</strong><br>
 												category   = "Comma separated list of Link Category Names" - defaults to all<br>
 												orderby    = "Name or Random" - defaults to link order<br>
@@ -207,17 +207,14 @@ class simple_links_admin{
 				                                id          = "An optional id for the outputed list"
 												<br>
 												e.g. [simple-links show_image="true" image_size="medium" count="12"]<br>
-												<em>Look for the puzzle button on the post and page content editors for a form that generates the shortcode for you</em>
-						                        
-						
-												</p>'
+												<em>Look for the puzzle button on the post and page content editors for a form that generates the shortcode for you</em>'
 				);
 		
 		//help for the widgets
 		$widget_help = array(
 				'id'   			 => 'simple-links-widget' ,
 				'title'          => __('Simple Links Widget'),
-				'content'   	 => '<p><h5>You May Add as Many Simple Links Widgets as You Would Like to Your Widget Areas</h5><br>
+				'content'   	 => '<h5>You May Add as Many Simple Links Widgets as You Would Like to Your Widget Areas</h5>
 				<strong>Widget Options:</strong><br>
 				Categories   = "Select with link categories to pull from"<br>
 				Order Links By   = "The Order in Which the Links will Display" - defaults to link order<br>
@@ -229,8 +226,7 @@ class simple_links_admin{
 				Include Additional Fields     = "Display values from the Link\'s Additional Fields"<br>
 				
 				Field Separator   = "And characters to display between fields and description" - defaults to "-"<br>
-				
-				</p>'
+				'
 				);
 		
 		
