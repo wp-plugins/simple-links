@@ -22,13 +22,16 @@ class simple_links extends SL_post_type_tax{
      * Since 10.11.12
      */
 	function __construct(){
-	    
 	    $this->meta_box_descriptions = array( 'web_address' 	 => __('Example','simple-links').': <code>http://wordpress.org/</code> '.__('DO NOT forget the','simple-links').' <code>http:// or https://</code>',
 											  'description'	     => __('This will be shown when someone hovers over the link, or optionally below the link','simple-links').'.',
 											  'target'           => __('Choose the target frame for your link','simple-links').'.',
 											  'additional_fields'=> __('Values entered in these fields will be available for shortcodes and Widgets','simple-links').' '
 										);
 											
+	    //Add the translate ability
+	    add_action('init', array( $this,'translate') );
+	    
+	    
 	    
 		parent::__construct();
 		
@@ -54,6 +57,16 @@ class simple_links extends SL_post_type_tax{
 		//Bring in the shortcode
 		add_shortcode('simple-links', array( $this, 'shortcode' ) );
 	
+	}
+	
+	
+	/**
+	 * Add the translate ability for I18n standards
+	 * @since 10.11.12
+	 * @uses called on __construct()
+	 */
+	function translate(){
+	    load_plugin_textdomain('simple-links', false, plugin_dir_path('simple-links.php').'/languages');
 	}
 	
 	
