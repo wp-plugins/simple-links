@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 10.10.12
+                  * @since 10.11.12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -16,16 +16,20 @@ class simple_links extends SL_post_type_tax{
 
     //The fields that will be auto generated
 	protected $simple_link_meta_fields = array( 'web_address','description','target','additional_fields' );
-	protected $meta_box_descriptions = array( 'web_address' 	 => 'Example: <code>http://wordpress.org/</code> DO NOT forget the <code>http:// or https://</code>',
-											  'description'	     => 'This will be shown when someone hovers over the link, or optionally below the link.',
-											  'target'           => 'Choose the target frame for your link.',
-											  'additional_fields'=> 'Values entered in these fields will be available for shortcodes and Widgets '
-										);
+	protected $meta_box_descriptions = array();
 											
     /**
-     * Since 8/20/12
+     * Since 10.11.12
      */
 	function __construct(){
+	    
+	    $this->meta_box_descriptions = array( 'web_address' 	 => __('Example','simple-links').': <code>http://wordpress.org/</code> '.__('DO NOT forget the','simple-links').' <code>http:// or https://</code>',
+											  'description'	     => __('This will be shown when someone hovers over the link, or optionally below the link','simple-links').'.',
+											  'target'           => __('Choose the target frame for your link','simple-links').'.',
+											  'additional_fields'=> __('Values entered in these fields will be available for shortcodes and Widgets','simple-links').' '
+										);
+											
+	    
 		parent::__construct();
 		
 		//Set the array for additional fields
@@ -418,8 +422,8 @@ class simple_links extends SL_post_type_tax{
 		
 		   //this one has a default link to settins so don't show if can't see settings
 		   if( current_user_can($simple_links_admin_func->cap_for_settings)){
-		   	       echo '<p>You may add additonal fields which will be available for all links in the 
-					 				<a href="/wp-admin/edit.php?post_type=simple_link&page=simple-link-settings">Settings</a>
+		   	       echo '<p>'.__('You may add additonal fields which will be available for all links in the ', 'simple-links' ).'
+					 				<a href="/wp-admin/edit.php?post_type=simple_link&page=simple-link-settings">'.__('Settings', 'simple-links' ).'</a>
 			  														</p>';
 		   	      
 		   }
@@ -432,20 +436,20 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * The Link Target Radio Buttons Meta Box
-	 * @since 8/13/12
+	 * @since 10.11.12
 	 */
 	function target_meta_box_output($post){
 	
 		?>
 		<p><label for="link_target_blank" class="selectit">
 		<input id="link_target_blank" type="radio" name="target" value="_blank" <?php checked( get_post_meta( $post->ID, 'target', true), '_blank' );?>>
-		<code>_blank</code> &minus; new window or tab.</label></p>
+		<code>_blank</code> &minus; <?php _e('new window or tab','simple-links');?>.</label></p>
 		<p><label for="link_target_top" class="selectit">
 		<input id="link_target_top" type="radio" name="target" value="_top" <?php checked( get_post_meta( $post->ID, 'target', true), '_top' );?>>
-		<code>_top</code> &minus; current window or tab, with no frames.</label></p>
+		<code>_top</code> &minus; <?php _e('current window or tab, with no frames','simple-links');?>.</label></p>
 		<p><label for="link_target_none" class="selectit">
 		<input id="link_target_none" type="radio" name="target" value="" <?php checked( get_post_meta( $post->ID, 'target', true), '' );?>>
-		<code>_none</code> &minus; same window or tab.</label></p>
+		<code>_none</code> &minus; <?php _e('same window or tab','simple-links');?>.</label></p>
 		<?php 
 		if( isset( $this->meta_box_descriptions['target'] ) ){
 			echo '<p>' . $this->meta_box_descriptions['target'] . '</p>';
@@ -508,15 +512,12 @@ class simple_links extends SL_post_type_tax{
 	function link_categories(){
 		self::register_taxonomy( 'simple_link_category', 'simple_link', array(
 															'labels' => array(
-																		'name'             => 'Link Categories',
-																	    'singular_name'    => 'Link Category',
-																		'all_items'        => 'Link Categories',
-																		'menu_name'        => 'Link Categories',
-																		'add_new_item'     => 'Add New Category',
-																		'update_item'      => 'Update Category'
-																		
-																		
-																	
+																		'name'             => __('Link Categories','simple-links'),
+																	    'singular_name'    => __('Link Category','simple-links'),
+																		'all_items'        => __('Link Categories','simple-links'),
+																		'menu_name'        => __('Link Categories','simple-links'),
+																		'add_new_item'     => __('Add New Category','simple-links'),
+																		'update_item'      => __('Update Category','simple-links')	
 															),
 															'show_in_nav_menus'    => false,
 															'query_var'            => 'simple_link_category'
@@ -556,12 +557,12 @@ class simple_links extends SL_post_type_tax{
 		$this->register_post_type( 'simple_link' , array(
 				                                           'menu_icon' => SIMPLE_LINKS_IMG_DIR . 'menu-icon.png',
 				                                           'labels'    => array(
-				                                           		           'singular_name' => 'Link',
-				                                           				   'all_items'     =>  'All Links',
-				                                           				   'new_item_name' =>  'New Link',
-				                                           		           'add_new_item'  =>  'Add Link',
-				                                           				   'add_new'       =>  'Add Link',
-				                                           				   'view_item'     =>  'View Link'
+				                                           		           'singular_name' =>  __('Link','simple-links'),
+				                                           				   'all_items'     =>  __('All Links','simple-links'),
+				                                           				   'new_item_name' =>  __('New Link','simple-links'),
+				                                           		           'add_new_item'  =>  __('Add Link','simple-links'),
+				                                           				   'add_new'       =>  __('Add Link','simple-links'),
+				                                           				   'view_item'     =>  __('View Link','simple-links')
 				                                           		),
 															'hierachical' => false,
 															'supports'	  => array( 'thumbnail','title','page-attributes','revisions' ),
