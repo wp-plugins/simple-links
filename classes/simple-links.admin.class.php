@@ -118,8 +118,8 @@ class simple_links_admin{
 		$output = array_slice ( $defaults, 0, 2 );
 		
 		//Add a new column and label it
-		$output['web_address' ] = 'Web Address';
-		$output['category']     = 'Link Categories';
+		$output['web_address' ] = __('Web Address','simple-links');
+		$output['category']     = __('Link Categories','simple-links');
 		
 		//Add the rest of the default back onto the array
 		$output = array_merge ( $output, array_slice( $defaults , 2 ) );
@@ -164,7 +164,7 @@ class simple_links_admin{
 			$taxonomy = 'simple_link_category';
 			$taxonomy_obj = get_taxonomy($taxonomy);
 			wp_dropdown_categories(array(
-					'show_option_all' =>  __("Show All {$taxonomy_obj->label}"),
+					'show_option_all' =>  sprintf( __('Show All %s','simple-links'), $taxonomy_obj->label),
 					'taxonomy'        =>  'simple_link_category',
 					'name'            =>  'simple_link_category',
 					'orderby'         =>  'name',
@@ -192,41 +192,39 @@ class simple_links_admin{
 		
 		$shortcode_help = array(
 						'id'   			 => 'simple-links-shortcode' ,
-						'title'          => __('Simple Links Shortcode'),
-						'content'   	 => '<h5>You Can add a Simple Links List anywhere on the site by using the shortcode [simple-links]</h5>
+						'title'          => 'Simple Links Shortcode',
+						'content'   	 => '<h5>'.__('You Can add a Simple Links List anywhere on the site by using the shortcode'). '[simple-links]</h5>
 												<strong>Supported Options:</strong><br>
-												category   = "Comma separated list of Link Category Names" - defaults to all<br>
-												orderby    = "Name or Random" - defaults to link order<br>
-												order      = "DESC or ASC" - defaults to ASC<br>
-												count      = "Number of links to show"<br>
-												show_image = "true or false" - to show the link\'s image or not<br>
-												image_size = "Any size built into Wordpress or your theme" - default to thumbnail<br>
-												fields     = "Comma separated list of the Link\'s Additional Fields to show"<br>
-												description = "true or false" - to show the description - defaults to false<br>
-												separator   = "And characters to display between fields and description" - defaults to "-"<br>
-				                                id          = "An optional id for the outputed list"
+												category   = '.__('"Comma separated list of Link Category Names" - defaults to all'). '<br>
+												orderby    = '.__('"Name or Random" - defaults to link order'). '<br>
+												order      = '.__('"DESC or ASC" - defaults to ASC'). '<br>
+												count      = '.__('"Number of links to show"'). '<br>
+												show_image = '.__('"true or false" - to show the link\'s image or not'). '<br>
+												image_size = '.__('"Any size built into Wordpress or your theme" - default to thumbnail'). '<br>
+												fields     = '.__('"Comma separated list of the Link\'s Additional Fields to show"'). '<br>
+												description = '.__('"true or false" - to show the description - defaults to false'). '<br>
+												separator   = '.__('"And characters to display between fields and description" - defaults to "-"'). '<br>
+				                                id          = '.__('"An optional id for the outputed list'). '"
 												<br>
 												e.g. [simple-links show_image="true" image_size="medium" count="12"]<br>
-												<em>Look for the puzzle button on the post and page content editors for a form that generates the shortcode for you</em>'
+												<em>'.__('Look for the puzzle button on the post and page content editors for a form that generates the shortcode for you'). '</em>'
 				);
 		
 		//help for the widgets
 		$widget_help = array(
 				'id'   			 => 'simple-links-widget' ,
-				'title'          => __('Simple Links Widget'),
-				'content'   	 => '<h5>You May Add as Many Simple Links Widgets as You Would Like to Your Widget Areas</h5>
-				<strong>Widget Options:</strong><br>
-				Categories   = "Select with link categories to pull from"<br>
-				Order Links By   = "The Order in Which the Links will Display" - defaults to link order<br>
-				Order      = "The Order in which the links will Display"<br>
-				Show Description = "Display the Link\'s Description<br>
-				Number of LInks     = "Number of links to show"<br>
-				Show Image = "Check the box to display the Link\'s Image<br>
-				Image Size = "The Size of Image to Show if the previous box is checked<br>
-				Include Additional Fields     = "Display values from the Link\'s Additional Fields"<br>
-				
-				Field Separator   = "And characters to display between fields and description" - defaults to "-"<br>
-				'
+				'title'          => 'Simple Links Widget',
+				'content'   	 => '<h5>'.__('You May Add as Many Simple Links Widgets as You Would Like to Your Widget Areas'). '</h5>
+				                    <strong>'.__('Widget Options'). ':</strong><br>
+				                Categories       = "'.__('Select with link categories to pull from'). '"<br>
+				                Order Links By   = "'.__('The Order in Which the Links will Display" - defaults to link order'). '<br>
+				                Order            = "'.__('The Order in which the links will Display'). '"<br>
+				                Show Description = "'.__('Display the Link\'s Description'). '<br>
+				                Number of LInks  = "'.__('Number of links to show'). '"<br>
+				                Show Image       = "'.__('Check the box to display the Link\'s Image'). '<br>
+				                Image Size       = "'.__('The Size of Image to Show if the previous box is checked'). '<br>
+				                Include Additional Fields     = "'.__('Display values from the Link\'s Additional Fields'). '"<br>
+				                Field Separator  = "'.__('And characters to display between fields and description" - defaults to '). '"-"<br>'
 				);
 		
 		
@@ -253,40 +251,39 @@ class simple_links_admin{
 	
 				$screen->add_help_tab( array(
 				'id'   			 => 'wordpress-links' ,
-				'title'          => __('Wordpress Links'),
-				'content'   	 => '<p>If they haven\'t already, Wordpress will be deprecating the built in links functionality.<br>
-				These settings take care of cleaning up the Built In Links right now<br>
-				By Checking "Remove the Built in Links", the Links menu will disappear along with the add new Admin Bar
-				link. <br>
-				By Checking "Replace Link Widgets with Simple Link Replica widgets, the Wordpress Link Widgets will automatically
-				be replaced with widgets labeled "Simple Links Replica". All existing "links" widgets will remain in place and uneffected
-				by deprececation. They will simply have a new title.<br>
-				Pressing the "Import Links" button will automatically copy the Wordpress Links into Simple Links. Keep in mind if you press
-				this button twice it will copy the links twice and you will have duplicates.</p>',
-				) );
+				'title'          => 'Wordpress Links',
+				'content'   	 => '<p>'.__('If they haven\'t already, Wordpress will be deprecating the built in links functionality').'.<br>
+				                        '.__('These settings take care of cleaning up the Built In Links right now'). '<br>
+				                        '.__('By Checking "Remove the Built in Links", the Links menu will disappear along with the add new Admin Bar link'). '. <br>
+				                        '.__('By Checking "Replace Link Widgets with Simple Link Replica widgets, the Wordpress Link Widgets will automatically'). '
+				                        be replaced with widgets labeled "Simple Links Replica". All existing "links" widgets will remain in place and uneffected
+				                        by deprececation. They will simply have a new title'). '.<br>
+				                       '.__(' Pressing the "Import Links" button will automatically copy the Wordpress Links into Simple Links. Keep in mind if you press
+				                        this button twice it will copy the links twice and you will have duplicates'). '.</p>'
+				 );
 	
 	
 				$screen->add_help_tab( array(
 						'id'   => 'additional_fields' ,
-						'title'       => __('Additional Fields'),
-						'content'    => '<p>You have the ability to add an unlimited number of additional fields to the links by click the "Add Another"
-						button. <br>Once you save your changes, these fields will show up on a each link\'s editing page. <br>You will have
-						the ability to select any of these fields to display using the Simple Links widgets. <br>Each widget gets it\'s
-						own list of ALL the additional fields, so you may display different fields in different widget areas. <br>These
-						fields will also be avaible by using the shortcode. For instance, if you wanted to display a field titled
-						"author" and a field titled "notes" you shortcode would look something like this
-						<br>[simple-links fields="author,notes" ]</p>',
+						'title'       => __('Additional Fields', 'simple-links'),
+						'content'    => '<p>'.__('You have the ability to add an unlimited number of additional fields to the links by click the "Add Another" button').'. <br>
+						                    '.__('Once you save your changes, these fields will show up on a each link\'s editing page').'. <br>
+				                            '.__('You will have the ability to select any of these fields to display using the Simple Links widgets').'. <br>
+				                            '.__('Each widget gets it\'s own list of ALL the additional fields, so you may display different fields in different widget areas').'. <br>
+				                            '.__('These fields will also be avaible by using the shortcode. For instance, if you wanted to display a field titled
+				                            "author" and a field titled "notes" you shortcode would look something like this').'
+				                            <br>[simple-links fields="author,notes" ]</p>',
 				) );
 	
 	
 				$screen->add_help_tab( array(
 						'id'   			 => 'permissions' ,
-						'title'          => __('Permissions'),
-						'content'   	 => '<p><strong>This is where you decided how much access editor will have</strong><br>
-						"Hide Link Ordering from Editors", will prevent editors from using the drag and drop ordering page.
-						They will still be able to change the order on the individual Link editing Pages.<br>
-						"Show Simple Link Settings to Editors" will allow editors to access the screen you are on right now
-						without restriction.</p>',
+						'title'          => __('Permissions', 'simple-links'),
+						'content'   	 => '<p><strong>'.__('This is where you decided how much access editors will have').'</strong><br>
+						'.__('"Hide Link Ordering from Editors", will prevent editors from using the drag and drop ordering page.
+						They will still be able to change the order on the individual Link editing Pages').'.<br>
+						'.__('"Show Simple Link Settings to Editors" will allow editors to access the screen you are on right now
+						without restriction').'.</p>',
 				) );
 	
 				$screen->add_help_tab( array(
@@ -314,8 +311,8 @@ class simple_links_admin{
 	
 				//Add Sidebar Content to SEtting Page
 				$screen->set_help_sidebar(
-						__( '<p>These Sections will give your a brief description of what each group of settings does.
-								Feel free to start a thread on the support forums if you would like additional help items covered in this section.</p>') );
+						__( '<p>'.__('These Sections will give your a brief description of what each group of settings does.
+								Feel free to start a thread on the support forums if you would like additional help items covered in this section').'.</p>') );
 	
 				break;
 	
@@ -392,7 +389,7 @@ class simple_links_admin{
 		
 		//This is the content that will be displayed
 		$pointer_content  = '<h3>Simple Links</h3>' ;
-		$pointer_content .= '<p>Manage your Links Here. Enjoy! </p>' ;
+		$pointer_content .= '<p>'.__('Manage your Links Here. Enjoy','simple-links').'! </p>' ;
 		
 		
 		?>
@@ -540,25 +537,15 @@ class simple_links_admin{
 		
 		
 		//The link ordering page
-		add_submenu_page( 'edit.php?post_type=simple_link','simple-link-ordering','Link Ordering',$cap_for_ordering,'simple-link-ordering', array( $this, 'link_ordering_page' ) );
+		add_submenu_page( 'edit.php?post_type=simple_link','simple-link-ordering',__('Link Ordering','simple-links'),$cap_for_ordering,'simple-link-ordering', array( $this, 'link_ordering_page' ) );
 		
 		
 		//The Settings Page
-		add_submenu_page( 'edit.php?post_type=simple_link','simple-link-settings','Settings',$this->cap_for_settings,'simple-link-settings', array( $this, 'settings' ) );
+		add_submenu_page( 'edit.php?post_type=simple_link','simple-link-settings',__('Settings','simple-links'),$this->cap_for_settings,'simple-link-settings', array( $this, 'settings' ) );
 	
 	
 	
 	}
-	
-	
-
-	
-	
-
-	
-	
-
-	
 	
 	
 	
@@ -598,18 +585,18 @@ class simple_links_admin{
 	 */
 	function wordpress_links(){
 		?>
-		<h4>These Settings Will Effect the built in Wordpress Links</h4>
+		<h4><?php _e('These Settings Will Effect the built in Wordpress Links','simple-links');?></h4>
 		<ul>
-			<li>Remove Wordpress Built in Links: <input type="checkbox" name="sl-remove-links" <?php checked(get_option('sl-remove-links')); ?> value="1" />
+			<li><?php _e('Remove Wordpress Built in Links','simple-links');?>: <input type="checkbox" name="sl-remove-links" <?php checked(get_option('sl-remove-links')); ?> value="1" />
 				<?php simple_links_questions('SL-remove-links'); ?>
 			 </li>
-			<li>Replace Link Widgets with "Simple Links Replica" widgets: <input type="checkbox" name="sl-replace-widgets" 
+			<li><?php _e('Replace Link Widgets with "Simple Links Replica" widgets','simple-links');?>: <input type="checkbox" name="sl-replace-widgets" 
 				<?php checked(get_option('sl-replace-widgets')); ?> value="1" />
 			    <?php simple_links_questions('SL-replace-widgets'); ?>
 			</li>
 			<li><br>
-			     <div class="updated" id="import-links-success" style="display:none"><p>The links have been imported Successfully</p></div>
-			     <?php submit_button('Import Links','secondary','sl-import-links', false); echo ' &nbsp; ';  simple_links_questions('SL-import-links');?>
+			     <div class="updated" id="import-links-success" style="display:none"><p><?php _e('The links have been imported Successfully','simple-links');?></p></div>
+			     <?php submit_button(__('Import Links','simple-links'),'secondary','sl-import-links', false); echo ' &nbsp; ';  simple_links_questions('SL-import-links');?>
 			</li>
 		</ul>
 	<?php 	
@@ -625,11 +612,11 @@ class simple_links_admin{
 	
 	
 		//For the Settings Additional Fields
-		add_meta_box('sl-additional-fields', 'Additional Fields', array( $this, 'additional_fields' ), 'sl-settings-boxes','advanced','core');
+		add_meta_box('sl-additional-fields', __('Additional Fields','simple-links'), array( $this, 'additional_fields' ), 'sl-settings-boxes','advanced','core');
 		//For the Settings Wordpress Links
-		add_meta_box('sl-wordpress-links', 'Wordpress Links', array( $this, 'wordpress_links' ), 'sl-settings-boxes','advanced','core');
+		add_meta_box('sl-wordpress-links', __('Wordpress Links','simple-links'), array( $this, 'wordpress_links' ), 'sl-settings-boxes','advanced','core');
 		//For the Settings Permissions
-		add_meta_box('sl-permissions', 'Permissions', array( $this, 'permissions' ), 'sl-settings-boxes','advanced','core');
+		add_meta_box('sl-permissions', __('Permissions','simple-links'), array( $this, 'permissions' ), 'sl-settings-boxes','advanced','core');
 
 	}
 	
@@ -640,12 +627,12 @@ class simple_links_admin{
 	 */
 	function permissions(){
 		?>
-		<h4>These Settings Will Effect Access to this Plugins Features</h4>
+		<h4><?php _e('These Settings Will Effect Access to this Plugins Features','simple-links');?></h4>
 		<ul>
-			<li>Hide Link Ordering From Editors: <input type="checkbox" name="sl-hide-ordering" <?php checked(get_option('sl-hide-ordering')); ?> value="1" />
+			<li><?php _e('Hide Link Ordering From Editors','simple-links');?>: <input type="checkbox" name="sl-hide-ordering" <?php checked(get_option('sl-hide-ordering')); ?> value="1" />
 			<?php simple_links_questions('SL-hide-ordering'); ?>
 			</li>
-			<li>Show Simple Link Settings to Editors: <input type="checkbox" name="sl-show-settings"
+			<li><?php _e('Show Simple Link Settings to Editors','simple-links');?>: <input type="checkbox" name="sl-show-settings"
 				<?php checked(get_option('sl-show-settings')); ?> value="1" />
 				<?php simple_links_questions('SL-show-settings'); ?>
 			</li>
@@ -676,8 +663,8 @@ class simple_links_admin{
 	
 		echo '<div class="wrap">';
 			screen_icon('simple_link');
-			?><h2>Simple Links Settings</h2>
-			    <em>Be sure to see the help menu for descriptions</em>
+			?><h2><?php _e('Simple Links Settings','simple-links');?></h2>
+			    <em><?php _e('Be sure to see the help menu for descriptions','simple-links');?></em>
 			
 			   <form action="#" method="post">
 			
@@ -724,7 +711,7 @@ class simple_links_admin{
 	 */
 	function additional_fields(){
 	
-	 ?><h4>These Fields Will Be Available on All Link's Edit Screen, Widgets, and Shortcodes.</h4><?php
+	 ?><h4><?php _e('These Fields Will Be Available on All Link\'s Edit Screen, Widgets, and Shortcodes','simple-links');?>.</h4><?php
 	 
 	 //Set the array for additional fields
 	 $this->additional_fields = json_decode( get_option('link_additional_fields'), true );
@@ -739,13 +726,13 @@ class simple_links_admin{
 	
 	//The new field
 	?>
-	Field Name: <input type="text" name="link_additional_field[] value=""><br>
+	<?php _e('Field Name','simple-links');?>: <input type="text" name="link_additional_field[] value=""><br>
 	
 	<!-- Placeholder for JQuery -->
 	<span id="link-extra-field" style="display:none">Field Name: <input type="text" name="link_additional_field[] value=""><br></span>
 	<span id="link-additional-placeholder"></span>
 	<?php
-	submit_button('Add Another','secondary', 'simple-link-additional');
+	submit_button(__('Add Another','simple-links'),'secondary', 'simple-link-additional');
 	
 	}
 	
@@ -780,7 +767,7 @@ class simple_links_admin{
 	  
 	  
 	 ?>
-	 	<div class="updated"><p>The Settings have been Updated!</p></div>
+	 	<div class="updated"><p><?php _e('The Settings have been Updated!','simple-links');?></p></div>
 	 <?php 
 	 
 	 
@@ -799,16 +786,16 @@ class simple_links_admin{
 	function link_ordering_page(){
 		echo '<div class="wrap">';
 			screen_icon('themes');
-			echo '<h2>Keeping Your Links in Order!</h2>';
+			echo '<h2>'.__('Keeping Your Links in Order','simple-links').'!</h2>';
 		
 		
 			//Create the Dropdown for by Category Sorting
 			$all_cats = get_terms('simple_link_category');
 			if( is_array( $all_cats ) ){ 
 				?>
-				<h3>Select a Link Category to Sort Links in that Category Only ( optional )</br></h3>
+				<h3><?php _e('Select a Link Category to Sort Links in that Category Only ( optional )','simple-links');?></br></h3>
 					<select id="SL-sort-cat">
-						<option value="Xall-catsX">All Categories</option>
+						<option value="Xall-catsX"><?php _e('All Categories','simple-links');?></option>
 				
 				<?php 
 				foreach( $all_cats as $cat ){
@@ -819,8 +806,8 @@ class simple_links_admin{
 			
 			} else {
 				?>
-				<h3>To Sort by Link Categories, you must Add Some Links to them.<br>
-					<a href="/wp-admin/edit-tags.php?taxonomy=simple_link_category&post_type=simple_link">Follow Me</a>
+				<h3><?php _e('To Sort by Link Categories, you must Add Some Links to them','simple-links');?>.<br>
+					<a href="/wp-admin/edit-tags.php?taxonomy=simple_link_category&post_type=simple_link"><?php _e('Follow Me','simple-links');?></a>
 				</h3>
 				<?php 
 			}
