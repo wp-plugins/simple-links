@@ -2,7 +2,7 @@
                           /**
                            * Simple links admin jquery
                            * @author Mat Lipe
-                           * @since 9/24/12
+                           * @since 10.10.12
                            */
 
 var isSimpleLinks = false;
@@ -37,6 +37,7 @@ var SLcatPage = {
    
    init: function( good ){
        if( !good ) return
+       $ = jQuery;
        
        //Remove the slug section for no conflicts later
       $('#tag-slug, label[for="tag-slug"], #addtag div p').remove();
@@ -52,6 +53,7 @@ var SLcatPage = {
  */
 var SLsettings = {
 		init: function(){
+		    $ = jQuery;
 			//Add another Row for the additional fields
 			$('#simple-link-additional').click( function(){
 				$('#link-additional-placeholder').after( $('#link-extra-field').html() );
@@ -66,13 +68,13 @@ var SLsettings = {
 
 /**
  * The link Sorting Page methods
- * @since 8/15/12
+ * @since 10.10.12
  */
 var SLsortPage = {
 		
 		
 		init : function(){
-			
+			$ = jQuery;
 			  //Settup the Draggable list
 		    $( '.draggable-children' ).sortable( {
 		  	  							placeholder: 'sortable-placeholder menu-item-depth-1',
@@ -157,6 +159,7 @@ var SLeditPage = {
 		
 		//Start the engine
 		init : function( isSimpleLinks ){
+		    $ = jQuery;
 			if( isSimpleLinks ){
 			     //remove the preview button
 				$('#preview-action, #save-action').remove();
