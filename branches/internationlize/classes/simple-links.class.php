@@ -29,7 +29,7 @@ class simple_links extends SL_post_type_tax{
 										);
 											
 	    //Add the translate ability
-	    add_action('init', array( $this,'translate') );
+	    add_action('plugins_loaded', array( $this,'translate') );
 	    
 	    
 	    
@@ -66,7 +66,7 @@ class simple_links extends SL_post_type_tax{
 	 * @uses called on __construct()
 	 */
 	function translate(){
-	    load_plugin_textdomain('simple-links', false, plugin_dir_path('simple-links.php').'/languages');
+	    load_plugin_textdomain('simple-links', false, 'simple-links/languages');
 	}
 	
 	

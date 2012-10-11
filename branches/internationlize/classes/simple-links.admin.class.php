@@ -182,7 +182,7 @@ class simple_links_admin{
 	
 	/**
 	 * Generates all contextual help screens for this plugin
-	 * @since 10.10.12
+	 * @since 10.11.12
 	 * @uses Called at load by __construct
 	 */
 	function help(){
@@ -203,7 +203,7 @@ class simple_links_admin{
 												image_size = '.__('"Any size built into Wordpress or your theme" - default to thumbnail'). '<br>
 												fields     = '.__('"Comma separated list of the Link\'s Additional Fields to show"'). '<br>
 												description = '.__('"true or false" - to show the description - defaults to false'). '<br>
-												separator   = '.__('"And characters to display between fields and description" - defaults to "-"'). '<br>
+												separator   = '.__('"Any characters to display between fields and description" - defaults to "-"'). '<br>
 				                                id          = '.__('"An optional id for the outputed list'). '"
 												<br>
 												e.g. [simple-links show_image="true" image_size="medium" count="12"]<br>
@@ -255,11 +255,8 @@ class simple_links_admin{
 				'content'   	 => '<p>'.__('If they haven\'t already, Wordpress will be deprecating the built in links functionality').'.<br>
 				                        '.__('These settings take care of cleaning up the Built In Links right now'). '<br>
 				                        '.__('By Checking "Remove the Built in Links", the Links menu will disappear along with the add new Admin Bar link'). '. <br>
-				                        '.__('By Checking "Replace Link Widgets with Simple Link Replica widgets, the Wordpress Link Widgets will automatically'). '
-				                        be replaced with widgets labeled "Simple Links Replica". All existing "links" widgets will remain in place and uneffected
-				                        by deprececation. They will simply have a new title'). '.<br>
-				                       '.__(' Pressing the "Import Links" button will automatically copy the Wordpress Links into Simple Links. Keep in mind if you press
-				                        this button twice it will copy the links twice and you will have duplicates'). '.</p>'
+				                        '.__('By Checking "Replace Link Widgets with Simple Link Replica widgets, the Wordpress Link Widgets will automatically'). 'be replaced with widgets labeled "Simple Links Replica". All existing "links" widgets will remain in place and uneffected by deprececation. They will simply have a new title'). '.<br>
+				                       '.__(' Pressing the "Import Links" button will automatically copy the Wordpress Links into Simple Links. Keep in mind if you press this button twice it will copy the links twice and you will have duplicates'). '.</p>'
 				 );
 	
 	
@@ -270,8 +267,7 @@ class simple_links_admin{
 						                    '.__('Once you save your changes, these fields will show up on a each link\'s editing page').'. <br>
 				                            '.__('You will have the ability to select any of these fields to display using the Simple Links widgets').'. <br>
 				                            '.__('Each widget gets it\'s own list of ALL the additional fields, so you may display different fields in different widget areas').'. <br>
-				                            '.__('These fields will also be avaible by using the shortcode. For instance, if you wanted to display a field titled
-				                            "author" and a field titled "notes" you shortcode would look something like this').'
+				                            '.__('These fields will also be avaible by using the shortcode. For instance, if you wanted to display a field titled "author" and a field titled "notes" you shortcode would look something like this').'
 				                            <br>[simple-links fields="author,notes" ]</p>',
 				) );
 	
@@ -280,10 +276,8 @@ class simple_links_admin{
 						'id'   			 => 'permissions' ,
 						'title'          => __('Permissions', 'simple-links'),
 						'content'   	 => '<p><strong>'.__('This is where you decided how much access editors will have').'</strong><br>
-						'.__('"Hide Link Ordering from Editors", will prevent editors from using the drag and drop ordering page.
-						They will still be able to change the order on the individual Link editing Pages').'.<br>
-						'.__('"Show Simple Link Settings to Editors" will allow editors to access the screen you are on right now
-						without restriction').'.</p>',
+						'.__('"Hide Link Ordering from Editors", will prevent editors from using the drag and drop ordering page. They will still be able to change the order on the individual Link editing Pages').'.<br>
+						'.__('"Show Simple Link Settings to Editors" will allow editors to access the screen you are on right now without restriction').'.</p>',
 				) );
 	
 				$screen->add_help_tab( array(
