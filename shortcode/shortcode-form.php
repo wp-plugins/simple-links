@@ -3,7 +3,7 @@
                                * @uses called with a template redirect using a query var send from the mce plugin
                                * @see simple_links->load_outside_page();
                                * @see js/editor_plugin.js
-                               * @since 8/27/12
+                               * @since 10.10.12
                                * @author Mat Lipe <mat@lipeimagination.info>
                                */
 
@@ -93,13 +93,13 @@ body,input{
 
 <body>
 
-      <h3>This Will Generate the Shortcode to Display Simple Links</h3>
-        <p><em>If no links match the options chosen, this will not display anything.</em></p>
+      <h3><?php _e('This Will Generate the Shortcode to Display Simple Links','simple-links');?></h3>
+        <p><em><?php _e('If no links match the options chosen, this will not display anything','simple-links');?>.</em></p>
 
-        <p>Title (optional): <input type="text" id="title"  size="50"/></p>
+        <p><?php _e('Title (optional)','simple-links');?>: <input type="text" id="title"  size="50"/></p>
         
         <fieldset>
-        <p>Categories (optional): <br><br>
+        <p><?php _e('Categories (optional)','simple-links');?>: <br><br>
         	<?php 
        		 foreach( $simple_links_func->get_categories() as $cat ){
         		printf('<input class="cat" type="checkbox" value="%s"/ > %s <br>', $cat, $cat );
@@ -109,9 +109,9 @@ body,input{
         </fieldset>
         
         
-        <p>Number of Links: 
+        <p><?php _e('Number of Links','simple-links');?>: 
         	<select id="count">
-        		<option value="">All</option>
+        		<option value=""><?php _e('All','simple-links');?></option>
         		<?php 
           		for( $i = 1; $i<30; $i++){
           			printf('<option value="%s">%s</option>', $i, $i );
@@ -120,20 +120,20 @@ body,input{
         	</select>
         </p>
         
-        <p>Order By (optional): 
+        <p><?php _e('Order By (optional)','simple-links');?>: 
         	<select id="orderby">
-        		<option value="">Link Order</option>
-        	   	<option value="name">Name</option>
-        	   	<option value="random">Random</option>
+        		<option value=""><?php _e('Link Order','simple-links');?></option>
+        	   	<option value="name"><?php _e('Name','simple-links');?></option>
+        	   	<option value="random"><?php _e('Random','simple-links');?></option>
         	</select>
         </p>
         
-        <p>Show Description <input type="checkbox" id="description" value="true" /></p>
+        <p><?php _e('Show Description','simple-links');?> <input type="checkbox" id="description" value="true" /></p>
         
         
-        <p>Show Image <input type="checkbox" id="show_image" value="true" /></p>
+        <p><?php _e('Show Image','simple-links');?> <input type="checkbox" id="show_image" value="true" /></p>
         <p>
-          Image Size  <select id="image-size">
+          <?php _e('Image Size','simple-links');?>  <select id="image-size">
           <?php 
             foreach( $simple_links_func->image_sizes() as $size ){
                 printf('<option value="%s">%s</a>', $size, $size );
@@ -142,10 +142,10 @@ body,input{
           </select>
         </p>
         
-        <p>Include Additional Fields:<br>
+        <p><?php _e('Include Additional Fields','simple-links');?>:<br>
             <?php 
             if( empty( $simple_links_func->additional_fields ) ){
-            	echo '<em>There have been no additional fields added. </em>';
+            	echo '<em>'.__('There have been no additional fields added','simple-links'). '</em>';
             } else {
             foreach( $simple_links_func->additional_fields as $field ){
             			printf( '<input class="additional" type="checkbox" value="%s">%s<br>', $field, $field );
@@ -154,8 +154,8 @@ body,input{
         ?>
         </p>
         
-        <p>Field Separator:<br> 
-        <em><small><small>HTML is Allowed and Will show up Formatted in the Editor:</small><small></em><br>
+        <p><?php _e('Field Separator','simple-links');?>:<br> 
+        <em><small><small><?php _e('HTML is Allowed and Will show up Formatted in the Editor','simple-links');?>:</small><small></em><br>
         <input type="text" value="-" id="separator" size="50"/></p>
         
       <input type="button" id="generate" class="button-primary" value="Generate">

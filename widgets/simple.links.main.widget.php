@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 10.10.12
+                    * @since 10.11.12
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -38,7 +38,7 @@ class SL_links_main extends WP_Widget {
 	function __construct() {
 		$widget_ops = array(
 				'classname'   => 'sl-links-main',
-				'description' => 'Displays a list of your Simple Links with options.'
+				'description' => __('Displays a list of your Simple Links with options.', 'simple-links')
 		);
 		
 		
@@ -244,30 +244,30 @@ class SL_links_main extends WP_Widget {
 		
 		?>
 		
-		<em>Be sure the see the Help Section in the Top Right Corner of the Screen for Questions!</em><br><br>
+		<em><?php _e('Be sure the see the Help Section in the Top Right Corner of the Screen for Questions!', 'simple-links');?></em><br><br>
 		
-		<strong>Links Title:</strong>
+		<strong><?php _e('Links Title', 'simple-links');?>:</strong>
 		<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" />
 		
 		<br><br>
 		
-		<strong>Order Links By</strong>
+		<strong><?php _e('Order Links By', 'simple-links');?></strong>
 		<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
-		    <option value="menu_order" <?php selected($instance['orderby'],'menu_order'); ?>>Link Order</option>
-		    <option value="title" <?php selected($instance['orderby'],'title'); ?>>Name</option>
-		    <option value="random" <?php selected($instance['orderby'],'random'); ?>>Random</option>
+		    <option value="menu_order" <?php selected($instance['orderby'],'menu_order'); ?>><?php _e('Link Order', 'simple-links');?></option>
+		    <option value="title" <?php selected($instance['orderby'],'title'); ?>><?php _e('Name', 'simple-links');?></option>
+		    <option value="random" <?php selected($instance['orderby'],'random'); ?>><?php _e('Random', 'simple-links');?></option>
 		</select>
 		
 		<br><br>
-		<strong>Order:</strong>
+		<strong><?php _e('Order', 'simple-links');?>:</strong>
 		<select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>">
-			<option value="ASC" <?php selected($instance['order'],'ASC'); ?>>Acending</option>
-		    <option value="DESC" <?php selected($instance['order'],'DESC'); ?>>Descending</option>
+			<option value="ASC" <?php selected($instance['order'],'ASC'); ?>><?php _e('Acending', 'simple-links');?></option>
+		    <option value="DESC" <?php selected($instance['order'],'DESC'); ?>><?php _e('Descending', 'simple-links');?></option>
 		    
 		</select>
 		
 		<br><br>
-       <strong>Categories (optional):</strong><br>
+       <strong><?php _e('Categories (optional)', 'simple-links');?>:</strong><br>
         	<?php 
        		 foreach( $simple_links_func->get_categories() as $cat ){
         		printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="1" name="%s" %s/> %s <br>', $this->get_field_name($cat), checked($instance[$cat], true, false), $cat );
@@ -275,7 +275,7 @@ class SL_links_main extends WP_Widget {
 	        ?>
        
        <br><br>
-       <strong>Number of Links:</strong>
+       <strong><?php _e('Number of Links', 'simple-links');?>:</strong>
         	<select id="<?php echo $this->get_field_id( 'numberposts' ); ?>" name="<?php echo $this->get_field_name( 'numberposts' ); ?>">
         		<option value="-1">All</option>
         		<?php 
@@ -286,19 +286,19 @@ class SL_links_main extends WP_Widget {
         	</select>
 
         <br><br>
-       <strong>Show Description</strong> 
+       <strong><?php _e('Show Description', 'simple-links');?></strong> 
        		<input type="checkbox" id="<?php echo $this->get_field_id( 'description' ); ?>" name="<?php echo $this->get_field_name( 'description' ); ?>" 
        				<?php checked($instance['description']); ?> value="1"/>
         
 		
 		<br><br>
-       <strong>Show Image</strong> 
+       <strong><?php _e('Show Image', 'simple-links');?></strong> 
        		<input type="checkbox" id="<?php echo $this->get_field_id( 'show_image' ); ?>" name="<?php echo $this->get_field_name( 'show_image' ); ?>" 
        				<?php checked($instance['show_image']); ?> value="1"/>
         
         
         <br><br>
-       <strong>Image Size :</strong>
+       <strong><?php _e('Image Size', 'simple-links');?>:</strong>
         	<select id="<?php echo $this->get_field_id( 'image_size' ); ?>" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
         		<?php 
         		foreach( $simple_links_func->image_sizes() as $size ){
@@ -308,10 +308,10 @@ class SL_links_main extends WP_Widget {
         	</select>
 		
 		<br><br>
-       <strong>Include Additional Fields:</strong><br>
+       <strong><?php _e('Include Additional Fields', 'simple-links');?>:</strong><br>
         	<?php 
 			if( empty( $simple_links_func->additional_fields ) ){
-            	echo '<em>There have been no additional fields added. </em>';
+            	echo '<em>'.__('There have been no additional fields added', 'simple-links').'</em>';
             } else {
             foreach( $simple_links_func->additional_fields as $field ){
         		printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="1" name="%s" %s/> %s <br>', $this->get_field_name($field), checked($instance[$field], true, false), $field);
@@ -320,8 +320,8 @@ class SL_links_main extends WP_Widget {
 	        ?>
 	        
 	    <br><br>    
-		<strong>Field Separator:</strong><br>
-		<em>HTML is allowed: - e.g. '&lt;br&gt;'</em><br>
+		<strong><?php _e('Field Separator', 'simple-links');?>:</strong><br>
+		<em><?php _e('HTML is allowed', 'simple-links');?>: - e.g. '&lt;br&gt;'</em><br>
 		<input type="text" id="<?php echo $this->get_field_id( 'separator' ); ?>" name="<?php echo $this->get_field_name( 'separator' ); ?>" value="<?php echo esc_attr( $instance['separator'] ); ?>" class="widefat" />
 		
 		

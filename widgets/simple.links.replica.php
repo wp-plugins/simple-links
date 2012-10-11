@@ -5,7 +5,7 @@
                      * @uses called from the admin class
                      * @author Mat Lipe <mat@lipeimagination.info>
                      * @see Stolen and modified breify from the admin
-                     * @since 8/27/12
+                     * @since 10.11.12
                      *
                      */
 
@@ -17,8 +17,7 @@ class SL_links_replica extends WP_Widget {
 		
 		$widget_ops = array(
 				'classname'   => 'sl-links-replica',
-				'description' => 'An Exact Replica of the Wordpress Links Widget to prevent Deprecation. Keeps Wordpres Links\' widgets
-								  intact and does not display Simple Links'
+				'description' => __("An Exact Replica of the Wordpress Links Widget to prevent Deprecation. Keeps Wordpres Links' widgets intact and does not display Simple Links", 'simple-links')
 		);
 		
 		$this->WP_Widget( 'links', 'Simple Links Replica', $widget_ops );
