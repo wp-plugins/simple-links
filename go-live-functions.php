@@ -114,7 +114,12 @@ function gluu_make_the_updates($oldurl, $newurl){
 					$update_query = "UPDATE ".$v." SET ".$t->COLUMN_NAME." = replace(".$t->COLUMN_NAME.", '".$double_subdomain."','".$newurl."')";
 					//Run the query
 					$wpdb->query($update_query);
+					
+					//Fix the emails breaking by being appended the new subdomain
+					$update_query = "UPDATE ".$v." SET ".$t->COLUMN_NAME." = replace(".$t->COLUMN_NAME.", '@".$newurl."','@".$oldurl."')";
+					$wpdb->query($update_query);
 				}
+
 			}
 		}
 	}
