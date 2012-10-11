@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 10.5.12
+          * @since 10.10.12
           */
          
 
@@ -12,6 +12,30 @@
 class advanced_sidebar_menu_functions{
 	     protected $bad = array();  //for 3.3 version
 	     protected $bad_file = ''; //for 3.3 version
+	     
+	     
+	     
+	     /**
+	      * Adds the class for current page item etc to the page list when using a custom post type
+	      * @param array $css the currrent css classes
+	      * @param obj $this_menu_item the page being checked
+	      * @return array
+	      * @since 10.10.12
+	      */
+	     function custom_post_type_css($css, $this_menu_item){
+	         global $post;
+	         if ( isset($post->ancestors) && in_array($this_menu_item->ID, (array)$post->ancestors) ){
+	             $css[] = 'current_page_ancestor';
+	         }
+	         if ( $this_menu_item->ID == $post->ID ){
+	             $css[] = 'current_page_item';
+	         
+	         } elseif ($this_menu_item->ID == $post->post_parent ){
+	             $css[] = 'current_page_parent';
+	         }
+	         return $css;
+	     }
+	     
 
 
 /**

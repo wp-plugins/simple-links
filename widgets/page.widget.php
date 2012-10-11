@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 7/16/12
+           * @since 10.10.12
            * @package Advanced Sidebar Menu
            *
            */
@@ -98,10 +98,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * Outputs the page list
      * @see WP_Widget::widget()
      * @uses for custom post types send the type to the filter titled 'advanced_sidebar_menu_post_type'
-     * @since 10.5.12
+     * @since 10.10.12
      */
 	function widget($args, $instance) {
 	    $single_type = 'page'; //default use is for pages
+	    global $asm;
 	    
 	    //Filter this one with a 'single' for a custom post type will default to working for pages only
 	    $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page' );
@@ -109,6 +110,8 @@ class advanced_sidebar_menu_page extends WP_Widget {
 	    
 	    if( $post_type != 'page' ){
              $single_type = 'single';
+             add_filter('page_css_class', array( $asm, 'custom_post_type_css'), 2, 4 );
+             
         }
 	    
 		if( call_user_func('is_'.$single_type) ){

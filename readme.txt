@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.4.2
-Stable tag: 3.4.2
-Version: 3.4.2
+Stable tag: 3.4.5
+Version: 3.4.5
 
 == Description ==
 
@@ -85,6 +85,7 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+
 = 3.4.0 =
 * Added filter support for custom post types
 
