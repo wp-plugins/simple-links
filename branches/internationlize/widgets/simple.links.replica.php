@@ -17,8 +17,7 @@ class SL_links_replica extends WP_Widget {
 		
 		$widget_ops = array(
 				'classname'   => 'sl-links-replica',
-				'description' => __("An Exact Replica of the Wordpress Links Widget to prevent Deprecation. Keeps Wordpres Links' widgets
-								  intact and does not display Simple Links", 'simple-links')
+				'description' => __("An Exact Replica of the Wordpress Links Widget to prevent Deprecation. Keeps Wordpres Links' widgets intact and does not display Simple Links", 'simple-links')
 		);
 		
 		$this->WP_Widget( 'links', 'Simple Links Replica', $widget_ops );
