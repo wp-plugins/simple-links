@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 10.2.12
+                    * @since 10.10.12
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -56,7 +56,7 @@ class SL_links_main extends WP_Widget {
 	
 	/**
 	 * The output of the widget to the site
-	 * @since 10.2.12
+	 * @since 10.10.12
 	 * @see WP_Widget::widget()
 	 * @param $args the widget necessaties like $before_widget and $title
 	 * @param $instance all the settings for this particular widget
@@ -83,20 +83,25 @@ class SL_links_main extends WP_Widget {
 		//Call this filter to change the Widgets Settings Pre Compile
 		$instance = apply_filters('simple_links_widget_settings_' . $widget_id, $instance);
 		$instance = apply_filters('simple_links_widget_settings', $instance);
-		
-		
+
 		//Go through all the possible categories and add the ones that are set
 		foreach( $simple_links_func->get_categories() as $cat ){
 			if( isset( $instance[$cat]) && ($instance[$cat]) ){
-				if( isset( $instance['simple_link_category'] ) ){
-					$instance['simple_link_category'] .= ',' . $cat;
-				} else {
-					$instance['simple_link_category'] = $cat;
-				}
+				    $cat = get_term_by('name', $cat, 'simple_link_category');
+				    $all_cats[] = $cat->term_id;
+				
 			}
 		}
 		
-
+		//If there are category make them into a query
+		if( isset( $all_cats ) ){
+		    $instance['tax_query'][] = array(
+		                                'taxonomy' => 'simple_link_category',
+		                                'fields'   => 'id',
+		                                'terms'    =>  $all_cats
+		        );
+		}
+		
 	//------------ Retrieve the Links	
 		
 		//Parse the query vars along with the defaults

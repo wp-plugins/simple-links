@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 10.1.12
+                  * @since 10.10.12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -58,7 +58,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 10.1.12
+	 * @since 10.10.12
 	 * @param $atts = 'title' => string, 
 	 * 				  'category' => csv,  
 	 *                'orderby' => string, 
@@ -81,17 +81,18 @@ class simple_links extends SL_post_type_tax{
 	 * 
 	 */
 	function shortcode( $atts ){
+	    global $simple_links_func;
 		$output = '';
 		$defaults = array(  'title'      => false,
 				  	  'category'   => false,
-		               	  'orderby'    => 'menu_order',
-		               	  'count'    	 => '-1',
-		                    'show_image' => false,
-		                	  'image_size' => 'post-thumbnail',
+		               'orderby'    => 'menu_order',
+		               'count'    	 => '-1',
+		               'show_image' => false,
+		                'image_size' => 'post-thumbnail',
 				        'order'      => 'ASC',
 				        'fields'     => false,
-		                    'description'=> false,
-					  'separator'  =>  '-',
+		                'description'=> false,
+					    'separator'  =>  '-',
 				        'id'         =>  false
 		                );
 		//for filtering this function
@@ -113,19 +114,42 @@ class simple_links extends SL_post_type_tax{
 		if( $atts['fields'] != false ){
 			$atts['fields'] = explode(',', $atts['fields'] );
 		}
-		
-		
+
 		
 		//Get us started
 		$args = array(
 				   'post_type'              =>  'simple_link',
 				   'orderby'                =>  $atts['orderby'],
-		               'order'                  =>  $atts['order'],
+		           'order'                  =>  $atts['order'],
 				   'numberposts'            =>  $atts['count'],
-				   'simple_link_category'   =>  $atts['category'],
+				  // 'simple_link_category'   =>  $atts['category'], //just plain silly
 				   'posts_per_page'         =>  $atts['count'],  //Fixes the themes desire to override these
-			         'posts_per_archive_page' =>  $atts['count']   //Fixes the themes desire to override these
+			       'posts_per_archive_page' =>  $atts['count']   //Fixes the themes desire to override these
 				);
+		
+		//Add the categories to the query
+		if( $atts['category'] ){
+		    $att_cats = explode(',', $atts['category']);
+		    //Go through all the possible categories and add the ones that are set
+		    foreach( $simple_links_func->get_categories() as $cat ){
+		        if( in_array($cat, $att_cats) ){
+		            $cat = get_term_by('name', $cat, 'simple_link_category');
+		            $all_cats[] = $cat->term_id;
+		        }
+		    }
+		
+		    //If there are category make them into a query
+		    if( isset( $all_cats ) ){
+		        $args['tax_query'][] = array(
+		                'taxonomy' => 'simple_link_category',
+		                'fields'   => 'id',
+		                'terms'    =>  $all_cats
+		        );
+		    }
+		}
+		
+		
+		
 		
 		//The order by
 		if( $atts['orderby'] == 'name' ){
