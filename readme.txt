@@ -5,7 +5,10 @@ Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.4.2
 Stable tag: 3.4.6
-Version: 3.4.5
+License: GPLv2
+
+Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
+Keeps the menu clean and usable.
 
 == Description ==
 
