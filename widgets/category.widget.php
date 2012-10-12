@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 6/4/12
+           * @since 10.12.12
            * @package Advanced Sidebar Menu
            *
            */
@@ -128,7 +128,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
     /**
      * Outputs the categories widget to the page
-     * @since 10.5.12
+     * @since 10.12.12
      * 
      */
 	function widget($args, $instance) {
@@ -196,8 +196,8 @@ class advanced_sidebar_menu_category extends WP_Widget {
         	//for depreciation
         	$all = $all_categories; 
         	
-            	//If there are any child categories or the include childless parent is checked
-        		if( !empty($all_categories ) || ($instance['include_childless_parent'] == 'checked' && !in_array($top_cat, $exclude))  ){
+            //If there are any child categories or the include childless parent is checked
+            if( !empty($all_categories ) || ($instance['include_childless_parent'] == 'checked' && !in_array($top_cat, $exclude))  ){
         		
         			
         			//Creates a new widget for each category the single page has if the options are selected to do so
@@ -205,30 +205,25 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
 						//Start the menu
                         echo $before_widget;
-
-							$count++; // To change the id of the widget if there are multiple
-							$asm_once = true;  //There has been a div
-							$close = true; //The div should be closed at the end
-							if($instance['new_widget'] == 'list'){ $close = false;} //If this is a list leave it open for possible late ones
+						$count++; // To change the id of the widget if there are multiple
+						$asm_once = true;  //There has been a div
+						$close = true; //The div should be closed at the end
+						if($instance['new_widget'] == 'list'){ $close = false;} //If this is a list leave it open for possible late ones
 
 					} else {
 						$close = false;
 					}
 					
-					
-						$asm->set_widget_vars( $instance, $top_cat, $exclude, $cat_ancestors );
-        			     //Bring in the view
-        				require( $asm->file_hyercy( 'category_list.php' ) );
+					$asm->set_widget_vars( $instance, $top_cat, $exclude, $cat_ancestors );
+        			//Bring in the view
+        			require( $asm->file_hyercy( 'category_list.php' ) );
         					
         			
         			if( $close ){
         				//End the Widget Area
 						  echo $after_widget;
         			}
-        		
-        			
-        		
-            
+
       			}  //End if any children or include childless parent
         } //End of each cat loop
         
@@ -236,8 +231,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
         //IF we were waiting for all the individual lists to complete
         if( !$close && $asm_once ){
         	//End the Widget Area
-						   echo '</div>
-						    </div><!-- END #advanced-sidebar-cat-menu -->';
+					echo $after_widget;
         	
         }
 			
