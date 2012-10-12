@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 10.10.12
+          * @since 10.12.12
           */
          
 
@@ -121,11 +121,11 @@ function notice_3_3( ){
 	/**
 	 * If the cat is a second level cat
 	 * @param obj $cat the cat
-	 * @since 7/16/12
+	 * @since 10.12.12
 	 */
-	function second_level_cat( $cat ){
+	function second_level_cat( $child_cat ){
 		//if this is the currrent cat or a parent of the current cat
-		if( $cat->cat_ID == get_query_var('cat' ) || in_array( $cat->cat_ID, $this->ancestors )){
+		if( $child_cat->cat_ID == get_query_var('cat' ) || in_array( $child_cat->cat_ID, $this->ancestors )){
 			$all_children = array();
 			$all_children = get_categories( array( 'child_of' => $child_cat->cat_ID ) );
 			if( !empty( $all_children ) ){
