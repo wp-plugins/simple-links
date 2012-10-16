@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 10.10.12
+           * @since 10.16.12
            * @package Advanced Sidebar Menu
            *
            */
@@ -98,52 +98,52 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * Outputs the page list
      * @see WP_Widget::widget()
      * @uses for custom post types send the type to the filter titled 'advanced_sidebar_menu_post_type'
-     * @since 10.10.12
+     * @uses change the top parent manually with the filter 'advanced_sidebar_menu_top_parent'
+     * @since 10.16.12
      */
 	function widget($args, $instance) {
-	    $single_type = 'page'; //default use is for pages
-	    global $asm;
+	    global $wpdb, $post, $table_prefix, $asm;
+
+	    extract($args);
 	    
 	    //Filter this one with a 'single' for a custom post type will default to working for pages only
 	    $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page' );
 	    
 	    
 	    if( $post_type != 'page' ){
-             $single_type = 'single';
              add_filter('page_css_class', array( $asm, 'custom_post_type_css'), 2, 4 );
              
         }
-	    
-		if( call_user_func('is_'.$single_type) ){
-             
-             extract($args);
+
 			
-	 		 global $wpdb, $post, $table_prefix, $asm;
-	  		 
-	  		 #-- Create a usable array of the excluded pages
-	  		 $exclude = explode(',', $instance['exclude']);
+	    #-- Create a usable array of the excluded pages
+	    $exclude = explode(',', $instance['exclude']);
 		 
-	    	 #-- if the post has parents
-			if($post->ancestors){
+	    #-- if the post has parents
+		if($post->ancestors){
 	 		 	$top_parent = end( $post->ancestors );
-			} else {
+		} else {
 				#--------- If this is the parent ------------------------------------------------
 				$top_parent = $post->ID;
-			}
+		}
 			
-			/**
-			 * Must be done this way to prevent doubling up of pages
-			 */
-			$child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_status='publish' Order by menu_order" );
 			
-			//for depreciation
-			$p = $top_parent;
-			$result = $child_pages;
+		//Filter for specifying the top parent
+		$top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post );
+			
+		/**
+	     * Must be done this way to prevent doubling up of pages
+		 */
+		 $child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_status='publish' AND post_type='".$post_type."' Order by menu_order" );
+			
+		//for depreciation
+		$p = $top_parent;
+		$result = $child_pages;
 		
-			#---- if there are no children do not display the parent unless it is check to do so
-			if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){
+		#---- if there are no children do not display the parent unless it is check to do so
+		if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){
 			
-				if( $instance['css'] == 'checked' ){
+			    if( $instance['css'] == 'checked' ){
 					echo '<style type="text/css">';
 						include( advanced_sidebar_menu_functions::file_hyercy('sidebar-menu.css' ) );
 					echo '</style>';
@@ -155,8 +155,8 @@ class advanced_sidebar_menu_page extends WP_Widget {
 								#-- Bring in the view
     							require( $asm->file_hyercy( 'page_list.php' ) );
 				echo $after_widget;
-			}
 		}
+
 	} #== /widget()
 	
 } #== /Clas
