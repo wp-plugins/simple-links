@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://wordpress.loc/wp-admin" />
+<title>Add Categories</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add Categories</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[contains(text(),'Link Categories')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#cb &gt; input[type=&quot;checkbox&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=action</td>
+	<td>label=Delete</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=doaction</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tag-name</td>
+	<td>Ecom</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tag-description</td>
+	<td>Sites which feature online selling and buying</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tag-name</td>
+	<td>Social Media</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tag-description</td>
+	<td>Networking online with friends or enemies</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tag-name</td>
+	<td>Mat's Adventures</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=tag-description</td>
+	<td>A category meant to have a tricky name to make sure things don't break on single quotes</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Ecom</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
