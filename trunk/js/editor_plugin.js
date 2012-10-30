@@ -2,7 +2,7 @@
         /**               
          * The MCE plugin to add Simple LInks Shortcodes
          * @author Mat Lipe <mat@lipeimagination.info>
-         * @since 8/19/12
+         * @since 10.30.12
          */
 
 (function(){
@@ -17,7 +17,7 @@
 			// Register commands
 			ed.addCommand('mceHighlight', function() {
 				ed.windowManager.open({
-					file : '/?simple_links_shortcode=form',
+					file : userSettings.url+'?simple_links_shortcode=form',
 					width : 500 + parseInt(ed.getLang('highlight.delta_width', 0)),
 					height : 750 + parseInt(ed.getLang('highlight.delta_height', 0)),
 					inline : 1,
