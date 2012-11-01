@@ -3,7 +3,7 @@
 
 
 /**
- * The Ouput of tad Advanced Sidebar Page Widget
+ * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
  * @since 10.05.12
  *

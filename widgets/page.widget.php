@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 10.16.12
+           * @since 11.1.12
            * @package Advanced Sidebar Menu
            *
            */
@@ -99,7 +99,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * @see WP_Widget::widget()
      * @uses for custom post types send the type to the filter titled 'advanced_sidebar_menu_post_type'
      * @uses change the top parent manually with the filter 'advanced_sidebar_menu_top_parent'
-     * @since 10.16.12
+     * @since 11.1.12
      */
 	function widget($args, $instance) {
 	    global $wpdb, $post, $table_prefix, $asm;
@@ -134,12 +134,12 @@ class advanced_sidebar_menu_page extends WP_Widget {
 		/**
 	     * Must be done this way to prevent doubling up of pages
 		 */
-		 $child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_status='publish' AND post_type='".$post_type."' Order by menu_order" );
+		 $child_pages = $wpdb->get_results( "SELECT ID FROM ". $wpdb->posts ." WHERE post_parent = $top_parent AND post_status='publish' AND post_type='".$post_type."' Order by menu_order" );
 			
 		//for depreciation
 		$p = $top_parent;
 		$result = $child_pages;
-		
+	
 		#---- if there are no children do not display the parent unless it is check to do so
 		if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){
 			
@@ -148,7 +148,8 @@ class advanced_sidebar_menu_page extends WP_Widget {
 						include( advanced_sidebar_menu_functions::file_hyercy('sidebar-menu.css' ) );
 					echo '</style>';
 				}
-			
+	
+				
 				//Start the menu
 				echo $before_widget;
 			   					 $asm->set_widget_vars( $instance, $top_parent, $exclude );
