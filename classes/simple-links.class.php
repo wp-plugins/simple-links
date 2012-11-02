@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 10.11.12
+                  * @since 11.2.12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -43,7 +43,10 @@ class simple_links extends SL_post_type_tax{
 		add_action('init', array( $this, 'post_type' ) );
 		
 		//Add the jquery
-		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts') );
+	    /**
+	     * Not used at the moment
+	     */
+		//add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts') );
 	
 		
 		//Add the Link Categories
@@ -545,8 +548,10 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Add the jquery to the site
+	 * @since 11.2.12
 	 */
 	function frontend_scripts(){
+
 		wp_enqueue_script(
 				apply_filters( 'simple_links_script', 'simple_links_script' ),
 				SIMPLE_LINKS_JS_DIR . 'simple_links.js',
@@ -554,7 +559,9 @@ class simple_links extends SL_post_type_tax{
 				'1.0.0'   
 		
 		);
+
 		
+
 		wp_enqueue_style(
 				apply_filters( 'simple_links_style' , 'simple_links_style' ), //The name of the style
 				SIMPLE_LINKS_CSS_DIR . 'simple.links.css'
