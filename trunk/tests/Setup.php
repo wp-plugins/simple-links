@@ -157,6 +157,7 @@ class Example extends PHPUnit_Extensions_SeleniumTestCase
 
       /**
        * Adds the Link Categories
+       * @since 11.5.12
        */
       function addCategories(){
           $this->click("xpath=(//a[contains(text(),'Link Categories')])[2]");
@@ -168,9 +169,11 @@ class Example extends PHPUnit_Extensions_SeleniumTestCase
           $this->type("id=tag-name", "Ecom");
           $this->type("id=tag-description", "Sites which feature online selling and buying");
           $this->click("id=submit");
+          $this->waitForPageToLoad("30000");
           $this->type("id=tag-name", "Social Media");
           $this->type("id=tag-description", "Networking online with friends or enemies");
           $this->click("id=submit");
+          $this->waitForPageToLoad("30000");
           $this->type("id=tag-name", "Mat's Adventures");
           $this->type("id=tag-description", "A category meant to have a tricky name to make sure things don't break on single quotes");
           $this->click("id=submit");
