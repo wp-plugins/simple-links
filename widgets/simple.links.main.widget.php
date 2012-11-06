@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 10.11.12
+                    * @since 11.6.12
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -56,7 +56,7 @@ class SL_links_main extends WP_Widget {
 	
 	/**
 	 * The output of the widget to the site
-	 * @since 10.10.12
+	 * @since 11.6.12
 	 * @see WP_Widget::widget()
 	 * @param $args the widget necessaties like $before_widget and $title
 	 * @param $instance all the settings for this particular widget
@@ -109,6 +109,13 @@ class SL_links_main extends WP_Widget {
         
         $query_args['posts_per_page']         = $query_args['numberposts'];  //Fixes the themes desire to override these
         $query_args['posts_per_archive_page'] = $query_args['numberposts'];   //Fixes the themes desire to override these
+        
+        
+        //Change the random to rand for deprection on previously saved widget with wrong value
+        if( $query_args['orderby'] == 'random' ){
+            $query_args['orderby'] = 'rand';
+        }
+        
         
         
         
@@ -236,7 +243,7 @@ class SL_links_main extends WP_Widget {
 	
 	/**
 	 * Outputs the Widget form on the Widgets Page
-	 * @since 8/27/12
+	 * @since 11.6.12
 	 * @see WP_Widget::form()
 	 */
 	function form( $instance ) {
@@ -255,7 +262,7 @@ class SL_links_main extends WP_Widget {
 		<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
 		    <option value="menu_order" <?php selected($instance['orderby'],'menu_order'); ?>><?php _e('Link Order', 'simple-links');?></option>
 		    <option value="title" <?php selected($instance['orderby'],'title'); ?>><?php _e('Name', 'simple-links');?></option>
-		    <option value="random" <?php selected($instance['orderby'],'random'); ?>><?php _e('Random', 'simple-links');?></option>
+		    <option value="rand" <?php selected($instance['orderby'],'rand'); ?>><?php _e('Random', 'simple-links');?></option>
 		</select>
 		
 		<br><br>
