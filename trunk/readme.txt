@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
 Tested up to: 3.4.2
-Stable tag: 1.5.3
+Stable tag: 1.5.5
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -33,6 +33,9 @@ Some of the features this plugin offers:
 </div>
 
 == Upgrade Notice ==
+= 1.5.5 =
+* Fixed the random order of links
+
 = 1.5.2 =
 * Fixed a js conflict with the new version of Gravity Forms
 
@@ -90,6 +93,8 @@ The old wp links will still work until a future version of Wordpress. It is goin
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 1.5.5 =
+Fixed the random ordering of links
 
 = 1.5 =
 Added internationalization support

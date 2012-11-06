@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 11.5.12
+                  * @since 11.6.12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -78,7 +78,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 11.5.12
+	 * @since 11.6.12
 	 * @param $atts = 'title' => string, 
 	 * 				  'category' => csv,  
 	 *                'orderby' => string, 
@@ -126,9 +126,15 @@ class simple_links extends SL_post_type_tax{
 		}
 		
 		
-		
 		//Create the proper atts
 		$atts = shortcode_atts( $defaults, $atts );
+		
+		
+		//Change the Random att to rand for get posts
+		if( $atts['orderby'] == 'random' ){
+		    $atts['orderby'] = 'rand';
+		}
+		
 		
 		
 		//Setup the fields
