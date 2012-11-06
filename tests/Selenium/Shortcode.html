@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://wordpress.loc/wp-admin" />
+<title>Shortcode</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Shortcode</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/wp-admin/post.php?post=64&amp;action=edit&amp;message=6</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[contains(text(),'Add New')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=title</td>
+	<td>Simple LInks Shortcode TEst</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=img.mceIcon</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>id=mce_2_ifr</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=title</td>
+	<td>Simple Links</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.cat</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@value='Social Media']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=description</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=separator</td>
+	<td>-&lt;br&gt;-</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=parent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=generate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=generate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=publish</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=publish</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=View Page</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=View Page</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Facebook</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Facebook</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Ebay</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit Page</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=img.mceIcon</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>id=mce_2_ifr</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=title</td>
+	<td>Simple Links</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@value='Social Media']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=description</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=separator</td>
+	<td>-&lt;br&gt;-</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=parent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=generate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=generate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=publish</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=publish</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=#view-post-btn &gt; a.button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=View Page</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Ebay</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Ebay</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Facebook</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
