@@ -551,10 +551,7 @@ msgid "HTML is allowed"
 msgstr ""
 
 #: widgets/simple.links.replica.php:20
-msgid ""
-"An Exact Replica of the Wordpress Links Widget to prevent Deprecation. Keeps "
-"Wordpres Links' widgets intact and does not display Simple Links"
-msgstr ""
+msgid "Now that Wordpress' Links Manager has been Deprected, this widget will be removed from a future Version of Simple Links. It is time to make the switch. YOU HAVE BEEN WARNED."
 
 #: widgets/simple.links.replica.php:78
 msgid "Select Link Category:"
@@ -615,4 +612,21 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://lipeimagination.info"
+msgstr ""
+
+
+#: widgets/simple.links.main.widget.php:302
+msgid "Remove Line Break Between Image and Link"
+msgstr ""
+
+#: shortcode/shortcode-form.php:144
+msgid "Remove Line Break Between Images and Links"
+msgstr ""
+
+#: classes/simple-links.class.php:491
+msgid "rel to this link"
+msgstr ""
+
+#: classes/simple-links.class.php:491
+msgid "Add a"
 msgstr ""

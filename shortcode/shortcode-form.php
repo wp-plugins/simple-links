@@ -3,7 +3,7 @@
                                * @uses called with a template redirect using a query var send from the mce plugin
                                * @see simple_links->load_outside_page();
                                * @see js/editor_plugin.js
-                               * @since 10.10.12
+                               * @since 12.15.12
                                * @author Mat Lipe <mat@lipeimagination.info>
                                */
 
@@ -123,7 +123,7 @@ body,input{
         <p><?php _e('Order By (optional)','simple-links');?>: 
         	<select id="orderby">
         		<option value=""><?php _e('Link Order','simple-links');?></option>
-        	   	<option value="name"><?php _e('Name','simple-links');?></option>
+        	   	<option value="title"><?php _e('Title','simple-links');?></option>
         	   	<option value="random"><?php _e('Random','simple-links');?></option>
         	</select>
         </p>
@@ -141,7 +141,7 @@ body,input{
             ?>
           </select>
         </p>
-        
+        <p><?php _e('Remove Line Break Between Image and Link','simple-links');?> <input type="checkbox" id="line_break" value="1" /></p>
         <p><?php _e('Include Additional Fields','simple-links');?>:<br>
             <?php 
             if( empty( $simple_links_func->additional_fields ) ){
