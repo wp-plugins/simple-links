@@ -182,7 +182,7 @@ class simple_links_admin{
 	
 	/**
 	 * Generates all contextual help screens for this plugin
-	 * @since 10.11.12
+	 * @since 12.15.12
 	 * @uses Called at load by __construct
 	 */
 	function help(){
@@ -196,11 +196,12 @@ class simple_links_admin{
 						'content'   	 => '<h5>'.__('You Can add a Simple Links List anywhere on the site by using the shortcode'). '[simple-links]</h5>
 												<strong>Supported Options:</strong><br>
 												category   = '.__('"Comma separated list of Link Category Names" - defaults to all'). '<br>
-												orderby    = '.__('"Name or Random" - defaults to link order'). '<br>
+												orderby    = '.__('"title or random" - defaults to link order'). '<br>
 												order      = '.__('"DESC or ASC" - defaults to ASC'). '<br>
 												count      = '.__('"Number of links to show"'). '<br>
 												show_image = '.__('"true or false" - to show the link\'s image or not'). '<br>
 												image_size = '.__('"Any size built into Wordpress or your theme" - default to thumbnail'). '<br>
+												remove_line_break = "true or false" - '.__('Remove Line Break Between Images and Links'). ' - default to false<br>
 												fields     = '.__('"Comma separated list of the Link\'s Additional Fields to show"'). '<br>
 												description = '.__('"true or false" - to show the description - defaults to false'). '<br>
 												separator   = '.__('"Any characters to display between fields and description" - defaults to "-"'). '<br>

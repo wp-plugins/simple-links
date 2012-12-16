@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 11.6.12
+                    * @since 12.15.12
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -56,7 +56,7 @@ class SL_links_main extends WP_Widget {
 	
 	/**
 	 * The output of the widget to the site
-	 * @since 11.6.12
+	 * @since 12.15.12
 	 * @see WP_Widget::widget()
 	 * @param $args the widget necessaties like $before_widget and $title
 	 * @param $instance all the settings for this particular widget
@@ -170,16 +170,17 @@ class SL_links_main extends WP_Widget {
 				$image = get_the_post_thumbnail($link->ID, $instance['image_size']);
 				//more for the filterable object
 				$link->image = $image;
-				if( $image != ''){
+				if( $image != '' && empty( $instance['line_break']) ){
 					$image .= '<br>';  //make the ones with returned image have the links below
 				}
 			}
 		
 		
-			$output .= sprintf('<a href="%s" target="%s" title="%s">%s%s</a>',
+			$output .= sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
 					$meta['web_address'][0],
 					$meta['target'][0],
 					$meta['description'][0],
+					empty( $meta['link_target_nofollow'] ) ? '': 'rel="nofollow"',
 					$image,
 					$link->post_title
 			);
@@ -243,7 +244,7 @@ class SL_links_main extends WP_Widget {
 	
 	/**
 	 * Outputs the Widget form on the Widgets Page
-	 * @since 11.6.12
+	 * @since 12.15.12
 	 * @see WP_Widget::form()
 	 */
 	function form( $instance ) {
@@ -261,7 +262,7 @@ class SL_links_main extends WP_Widget {
 		<strong><?php _e('Order Links By', 'simple-links');?></strong>
 		<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
 		    <option value="menu_order" <?php selected($instance['orderby'],'menu_order'); ?>><?php _e('Link Order', 'simple-links');?></option>
-		    <option value="title" <?php selected($instance['orderby'],'title'); ?>><?php _e('Name', 'simple-links');?></option>
+		    <option value="title" <?php selected($instance['orderby'],'title'); ?>><?php _e('Title', 'simple-links');?></option>
 		    <option value="rand" <?php selected($instance['orderby'],'rand'); ?>><?php _e('Random', 'simple-links');?></option>
 		</select>
 		
@@ -270,7 +271,6 @@ class SL_links_main extends WP_Widget {
 		<select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>">
 			<option value="ASC" <?php selected($instance['order'],'ASC'); ?>><?php _e('Acending', 'simple-links');?></option>
 		    <option value="DESC" <?php selected($instance['order'],'DESC'); ?>><?php _e('Descending', 'simple-links');?></option>
-		    
 		</select>
 		
 		<br><br>
@@ -299,6 +299,12 @@ class SL_links_main extends WP_Widget {
         
 		
 		<br><br>
+		<strong><?php _e('Remove Line Break Between Image and Link', 'simple-links');?></strong> 
+            <input type="checkbox" id="<?php echo $this->get_field_id( 'line_break' ); ?>" name="<?php echo $this->get_field_name( 'line_break' ); ?>" 
+                    <?php checked($instance['line_break']); ?> value="1"/>
+        
+        
+        <br><br>
        <strong><?php _e('Show Image', 'simple-links');?></strong> 
        		<input type="checkbox" id="<?php echo $this->get_field_id( 'show_image' ); ?>" name="<?php echo $this->get_field_name( 'show_image' ); ?>" 
        				<?php checked($instance['show_image']); ?> value="1"/>

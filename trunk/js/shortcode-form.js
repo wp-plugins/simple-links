@@ -2,7 +2,7 @@
 
                                /**
                                 * The jquery required for the shortcode MCE Form
-                                * @since 8/20/12
+                                * @since 12.15.12
                                 * @author Mat Lipe <mat@lipeimagination.info>
                                 */
 var output = '[simple-links';
@@ -99,6 +99,11 @@ jQuery(document).ready(function ($) {
               //Add the description to the shortcode
               if( $('#description').is(':checked') ){
             	  output += ' description="true"';
+              }
+              
+              //Add the line break to the code
+              if( $('#line_break').is(':checked') ){
+                  output += ' remove_line_break="true"';
               }
               
               

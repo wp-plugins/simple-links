@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 11.6.12
+                  * @since 12.15.12
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -78,18 +78,19 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 11.6.12
-	 * @param $atts = 'title' => string, 
-	 * 				  'category' => csv,  
-	 *                'orderby' => string, 
-	 *                'order'  =>  string
-	 *                'count' => int, 
-	 *                'show_image' => bool 
-	 *                'image_size' => string
-	 *                'fields'     => csv
-	 *                'description' => bool
-	 *                'separator'  => string
-	 *                'id'         => string
+	 * @since 12.15.12
+	 * @param $atts = 'title'          => string, 
+	 * 				  'category'       => csv,  
+	 *                'orderby'        => string, 
+	 *                'order'          =>  string
+	 *                'count'          => int, 
+	 *                'show_image'     => bool 
+	 *                'image_size'     => string
+	 *                'fields'         => csv
+	 *                'description'    => bool
+	 *                'separator'      => string
+	 *                'id'             => string
+     *                'remove_line_break => true
 	 * @uses the attribute may be filtered by using add_filter( 'simple_links_shortcode_atts', $atts );
 	 * @uses The output can be filtered by using the add_filter( 'simple_links_shortcode_output', $output, $links, $atts );
 	 * @uses the function filtering this output can accept 3 args.   <br>
@@ -104,17 +105,18 @@ class simple_links extends SL_post_type_tax{
 	    
 	    global $simple_links_func;
 		$output = '';
-		$defaults = array(  'title'      => false,
-				  	  'category'   => false,
-		               'orderby'    => 'menu_order',
-		               'count'    	 => '-1',
-		               'show_image' => false,
-		                'image_size' => 'thumbnail',
-				        'order'      => 'ASC',
-				        'fields'     => false,
-		                'description'=> false,
-					    'separator'  =>  '-',
-				        'id'         =>  false
+		$defaults = array(  'title'         => false,
+				  	  'category'            => false,
+		               'orderby'            => 'menu_order',
+		               'count'    	        => '-1',
+		               'show_image'         => false,
+		                'image_size'        => 'thumbnail',
+				        'order'             => 'ASC',
+				        'fields'            => false,
+		                'description'       => false,
+					    'separator'         =>  '-',
+				        'id'                =>  false,
+				        'remove_line_break' =>  false
 		                );
 		//for filtering this function
 		$unfilterd_atts = $atts;
@@ -178,7 +180,7 @@ class simple_links extends SL_post_type_tax{
 		
 		
 		
-		//The order by
+		//For Backwards Compatibility
 		if( $atts['orderby'] == 'name' ){
 				$args['orderby'] = 'title';
 		}
@@ -228,17 +230,17 @@ class simple_links extends SL_post_type_tax{
 						$image = get_the_post_thumbnail($link->ID, $atts['image_size']);
 						//more for the filterable object
 						$link->image = $image;
-						if( $image != ''){
+						if( $image != '' && !$atts['remove_line_break']){
 							$image .= '<br>';  //make the ones with returned image have the links below
 						}
 					}
 				
 				
-			 		$output .= sprintf('<a href="%s" target="%s" title="%s">%s%s</a>', 
-			 				    
+			 		$output .= sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
 			  						$meta['web_address'][0],
 			  						$meta['target'][0],
-			  						$meta['description'][0], 
+			  						$meta['description'][0],
+			  						empty( $meta['link_target_nofollow'] ) ? '': 'rel="nofollow"', 
 			 				        $image,
 			  						$link->post_title
 			  				 ); 
@@ -343,7 +345,7 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Saves the meta fields
-	 * @since 8/27/12
+	 * @since 12.15.12
 	 */
 	function meta_save(){
 		global $post;
@@ -370,7 +372,11 @@ class simple_links extends SL_post_type_tax{
 				update_post_meta( $post->ID, $field, $_POST[$field] );
 			}
 		}
-	
+        
+        //for the no follow checkbox
+        update_post_meta( $post->ID, 'link_target_nofollow', $_POST['link_target_nofollow'] );
+        
+    
 		//Escape Hatch
 		if( !isset( $_POST['link_additional_value'] ) || !is_array( $_POST['link_additional_value'] ) ){
 			return;
@@ -459,7 +465,7 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * The Link Target Radio Buttons Meta Box
-	 * @since 10.11.12
+	 * @since 12.15.12
 	 */
 	function target_meta_box_output($post){
 	
@@ -477,6 +483,14 @@ class simple_links extends SL_post_type_tax{
 		if( isset( $this->meta_box_descriptions['target'] ) ){
 			echo '<p>' . $this->meta_box_descriptions['target'] . '</p>';
 		}
+		
+		?>
+		<p>
+		<input id="link_target_nofollow" type="checkbox" name="link_target_nofollow" value="1" 
+		      <?php checked( get_post_meta( $post->ID, 'link_target_nofollow', true), 1 );?>> 
+		      &nbsp; <?php _e('Add a','simple-links');?> <code>nofollow</code> <?php _e('rel to this link','simple-links');?> 
+		</p>
+		<?php
 
 	}
 	
@@ -485,11 +499,16 @@ class simple_links extends SL_post_type_tax{
 	 * The output of the standard meta boxes and fields
 	 * @param $post
 	 * @param array $box the args sent to keep track of what fields is sent over
-	 * @since 8/13/12
+	 * @since 12.15.12
 	 */
 	function link_meta_box_output($post, $box){
 	    $box = $box['args'];
-	    printf('<input type="text" name="%s" value="%s" size="100" class="simple-links-input">', $box, get_post_meta( $post->ID, $box, true ) );
+        
+        if( $box != 'description' ){
+                 printf('<input type="text" name="%s" value="%s" size="100" class="simple-links-input">', $box, get_post_meta( $post->ID, $box, true ) );
+        } else {
+               printf('<textarea name="%s" class="simple-links-input">%s</textarea>', $box, get_post_meta( $post->ID, $box, true ) );
+        }
 	    
 	    if( isset( $this->meta_box_descriptions[$box] ) ){
 	    	printf('<p>%s</p>', $this->meta_box_descriptions[$box] );
@@ -579,7 +598,10 @@ class simple_links extends SL_post_type_tax{
 	}
 		
 
-	
+	/**
+     * Registers the Custom Post Type
+     * @since 12.15.12
+     */
 	function post_type(){
 		$this->register_post_type( 'simple_link' , array(
 				                                           'menu_icon' => SIMPLE_LINKS_IMG_DIR . 'menu-icon.png',
@@ -593,6 +615,7 @@ class simple_links extends SL_post_type_tax{
 				                                           		),
 															'hierachical' => false,
 															'supports'	  => array( 'thumbnail','title','page-attributes','revisions' ),
+															'show_in_nav_menus'=> false,
 				                                            'has_archive' => false,
 															'rewrite'     => false,
 															'register_meta_box_cb' => array( $this, 'meta_box' )

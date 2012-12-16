@@ -5,7 +5,9 @@
                      * @uses called from the admin class
                      * @author Mat Lipe <mat@lipeimagination.info>
                      * @see Stolen and modified breify from the admin
-                     * @since 10.11.12
+                     * @since 12.16.12
+                     * 
+                     * @deprecated on 12.16.12
                      *
                      */
 
@@ -17,10 +19,10 @@ class SL_links_replica extends WP_Widget {
 		
 		$widget_ops = array(
 				'classname'   => 'sl-links-replica',
-				'description' => __("An Exact Replica of the Wordpress Links Widget to prevent Deprecation. Keeps Wordpres Links' widgets intact and does not display Simple Links", 'simple-links')
+				'description' => __("Now that Wordpress' Links Manager has been Deprected, this widget will be removed from a future Version of Simple Links. It is time to make the switch. YOU HAVE BEEN WARNED.", 'simple-links')
 		);
 		
-		$this->WP_Widget( 'links', 'Simple Links Replica', $widget_ops );
+		$this->WP_Widget( 'links', 'Simple Links Replica - Deprecated', $widget_ops );
 		
 	}
 
