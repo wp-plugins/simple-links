@@ -1,5 +1,12 @@
 <?php
-class Example extends PHPUnit_Extensions_SeleniumTestCase
+
+/**
+ * Setup the simple Links for TEsting
+ * @since 1.17.13
+ * @author Mat Lipe
+ * @requires Selenium
+ */
+class Setup extends PHPUnit_Extensions_SeleniumTestCase
 {
     
     protected $captureScreenshotOnFailure = TRUE;
@@ -157,10 +164,16 @@ class Example extends PHPUnit_Extensions_SeleniumTestCase
 
       /**
        * Adds the Link Categories
-       * @since 11.5.12
+       * @since 1.17.13
        */
       function addCategories(){
-          $this->click("xpath=(//a[contains(text(),'Link Categories')])[2]");
+   
+          if( $this->isElementPresent("xpath=(//a[contains(text(),'Link Categories')])[2]") ){
+               $this->click("xpath=(//a[contains(text(),'Link Categories')])[2]");
+          } else {
+              $this->click("xpath=(//a[contains(text(),'Link Categories')])");
+          }
+          
           $this->waitForPageToLoad("30000");
           $this->click("css=#cb > input[type=\"checkbox\"]");
           $this->select("name=action", "label=Delete");

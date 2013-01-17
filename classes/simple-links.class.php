@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 12.15.12
+                  * @since 1.17.13
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -78,7 +78,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 12.15.12
+	 * @since 1.17.13
 	 * @param $atts = 'title'          => string, 
 	 * 				  'category'       => csv,  
 	 *                'orderby'        => string, 
@@ -104,7 +104,7 @@ class simple_links extends SL_post_type_tax{
 	function shortcode( $atts ){
 	    
 	    global $simple_links_func;
-		$output = '';
+		$output = $image = '';
 		$defaults = array(  'title'         => false,
 				  	  'category'            => false,
 		               'orderby'            => 'menu_order',
@@ -213,13 +213,12 @@ class simple_links extends SL_post_type_tax{
 		
 		    //Go through each link
 			foreach( $links as $link ){
+			    //Escape Hatch
+                if( !is_object( $link ) ){
+                    continue;
+                }
 				$meta = get_post_meta($link->ID, false);
-				
-				//Escape Hatch
-				if( !is_object( $link ) ){
-					continue;
-				}
-				
+
 				//Adds the meta to the main object for people using filters
 				$link->meta = $meta;
 				
