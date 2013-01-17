@@ -4,7 +4,7 @@
                        * Registers Post type
                        * Creates a Meta Data box, Creates the fields and handles the saving
                        * @author Mat Lipe <mat@lipeimagination.info>
-                       * @since 10.10.12
+                       * @since 1.17.13
                        * @uses Extend this class into the the class registering the post types
                        * @uses Make sure to call a parent::__construct()
                        * @uses Add class arrays named  %post_type&_meta_fields = array();
@@ -119,7 +119,9 @@ class SL_post_type_tax{
 	 * @param $title the name of the post type
 	 * @param [$args] the arguments to overwrite
 	 * @example register_post_type( 'newtest' , array() );
-	 * @since 7/24/12
+	 * @since 1.17.13
+     * 
+     * @see Typo fixed thanks to "WebEndev" 
 	 *
 	 **/
 	function register_post_type( $title, $args = array() ){
@@ -134,15 +136,15 @@ class SL_post_type_tax{
 	
 	
 		//If the plural title is not set make it.
-		$puralTitle = isset( $args['pluralTitle'])? $args['pluralTitle']: $this->plural_title($title);
+		$pluralTitle = isset( $args['pluralTitle'])? $args['pluralTitle']: $this->plural_title($title);
 	
 		$defaults = array(
 				'labels' => array(
-						'name'                       => $puralTitle,
+						'name'                       => $pluralTitle,
 						'singular_name'              => $title,
-						'search_items'               => sprintf( __('Search %s','simple-links'), $puralTitle ),
-						'popular_items'              => sprintf( __('Popular %s','simple-links'), $puralTitle ),
-						'all_items'                  => sprintf( __('All %s','simple-links'), $puralTitle ),
+						'search_items'               => sprintf( __('Search %s','simple-links'), $pluralTitle ),
+						'popular_items'              => sprintf( __('Popular %s','simple-links'), $pluralTitle ),
+						'all_items'                  => sprintf( __('All %s','simple-links'), $pluralTitle ),
 						'parent_item'                => sprintf( __('Parent %s','simple-links'), $title ),
 						'parent_item_colon'          => sprintf( __('Parent %s:','simple-links'), $title ),
 						'edit_item'                  => sprintf( __('Edit %s','simple-links'), $title ),
@@ -150,8 +152,8 @@ class SL_post_type_tax{
 						'add_new_item'               => sprintf( __('Add New %s' ,'simple-links'), $title),
 						'new_item_name'              => sprintf( __('New %s Name','simple-links'), $title ),
 						'separate_items_with_commas' => sprintf( __('Seperate %s with commas','simple-links'), $title ),
-						'add_or_remove_items'        => sprintf( __('Add or remove %s','simple-links'), $puralTitle ),
-						'choose_from_most_used'      => sprintf( __('Choose from the most used %s','simple-links'), $puralTitle ),
+						'add_or_remove_items'        => sprintf( __('Add or remove %s','simple-links'), $pluralTitle ),
+						'choose_from_most_used'      => sprintf( __('Choose from the most used %s','simple-links'), $pluralTitle),
 						'view_item'                  => sprintf( __('View %s','simple-links'), $title ),
 						'add_new'                    => sprintf( __('Add New %s','simple-links'), $title ),
 						'new_item'                   => sprintf( __('New %s','simple-links'), $title ),
