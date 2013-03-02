@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 11.1.12
+           * @since 3.1.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -97,9 +97,12 @@ class advanced_sidebar_menu_page extends WP_Widget {
     /**
      * Outputs the page list
      * @see WP_Widget::widget()
+     * 
      * @uses for custom post types send the type to the filter titled 'advanced_sidebar_menu_post_type'
      * @uses change the top parent manually with the filter 'advanced_sidebar_menu_top_parent'
-     * @since 11.1.12
+     * @uses change the order of the 2nd level pages with 'advanced_sidebar_menu_order_by' filter
+     * 
+     * @since 3.1.13
      */
 	function widget($args, $instance) {
 	    global $wpdb, $post, $table_prefix, $asm;
@@ -130,11 +133,14 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			
 		//Filter for specifying the top parent
 		$top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post );
+        
+        //Filter for specifiying the order by
+        $order_by = apply_filters('advanced_sidebar_menu_order_by', 'menu_order', $post );
 			
 		/**
 	     * Must be done this way to prevent doubling up of pages
 		 */
-		 $child_pages = $wpdb->get_results( "SELECT ID FROM ". $wpdb->posts ." WHERE post_parent = $top_parent AND post_status='publish' AND post_type='".$post_type."' Order by menu_order" );
+		 $child_pages = $wpdb->get_results( "SELECT ID FROM ". $wpdb->posts ." WHERE post_parent = $top_parent AND post_status='publish' AND post_type='$post_type' Order by $order_by" );
 			
 		//for depreciation
 		$p = $top_parent;

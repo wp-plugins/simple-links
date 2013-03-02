@@ -1,11 +1,8 @@
 <?php 
-
-
-
 /**
  * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
- * @since 10.05.12
+ * @since 3.1.13
  *
  *
  * @uses to edit, create a file named page_list.php and put in a folder in the your theme called 'advanced-sidebar-menu
@@ -18,7 +15,7 @@ $asm->title();
 #-- list the parent page if chosen
 if( $asm->include_parent() ){
 	echo '<ul class="parent-sidebar-menu" >';
-			 wp_list_pages("post_type=".$post_type."&sort_column=menu_order&title_li=&echo=1&depth=1&include=".$top_parent);
+			 wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&depth=1&include=".$top_parent);
 }
 
 
@@ -29,7 +26,7 @@ if( $child_pages ){
 	#-- If they want all the pages displayed always
 	if( $asm->display_all() ){
 
-		wp_list_pages("post_type=".$post_type."&sort_column=menu_order&title_li=&echo=1&child_of=".$top_parent."&depth=".$instance['levels']."&exclude=".$instance['exclude']);
+		wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&child_of=".$top_parent."&depth=".$instance['levels']."&exclude=".$instance['exclude']);
 	} else {
 
 		#-- Display children of current page's parent only
@@ -38,7 +35,7 @@ if( $child_pages ){
 				#-- If the page is not in the excluded ones
 			if( $asm->exclude( $pID->ID) ){
 					#--echo the current page from the $result
-				wp_list_pages("post_type=".$post_type."&sort_column=menu_order&title_li=&echo=1&depth=1&include=".$pID->ID);
+				wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&depth=1&include=".$pID->ID);
 			}
 
 			#-- if the link that was just listed is the current page we are on
@@ -49,7 +46,7 @@ if( $child_pages ){
 				if( $grandkids ){
 					#-- Create a new menu with all the children under it
 					echo '<ul class="grandchild-sidebar-menu">';
-							wp_list_pages("post_type=".$post_type."&sort_column=menu_order&title_li=&echo=1&exclude=".$instance['exclude']."&child_of=".$pID->ID);
+							wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&exclude=".$instance['exclude']."&child_of=".$pID->ID);
 
 					echo '</ul>';
 				}
