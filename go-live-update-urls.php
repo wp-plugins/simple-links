@@ -5,21 +5,15 @@ Plugin URI: http://lipeimagination.info/
 Description: This Plugin Updates all the URLs in the database to point to the new URL when making your site live or changing domains.
 Author: Mat Lipe
 Author URI: http://lipeimagination/
-Version: 1.5
+Version: 2.0
 */
-/*  
-    Mat Lipe (mat@lipeimagination.info);
 
-    At Lipe Imagination We believe that information should be free. 
-	Feel free to do whatever you want with this code as long as your do 
-	not replicate the name of the Plugin or try to pass off something else
-	as an actual Lipe Imagination Script.
- 
-*/
+define( 'GLUU_VIEWS_DIR', plugin_dir_path(__FILE__) . 'views/' );
+define( 'GLUU_URL_VIEWS_DIR', plugins_url('go-live-update-urls').'/views/' );
+;
+
+require('lib/GoLiveUpdateUrls.php');
 	
-//Bring in the functions
-require('go-live-functions.php');
 
-//Add the settings to the admin menu
-add_action('admin_menu', 'gluu_add_url_options');
+$GoLiveUpdateUrls = new GoLiveUpdateUrls();
 	
