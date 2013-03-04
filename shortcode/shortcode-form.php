@@ -3,19 +3,15 @@
                                * @uses called with a template redirect using a query var send from the mce plugin
                                * @see simple_links->load_outside_page();
                                * @see js/editor_plugin.js
-                               * @since 12.15.12
+                               * @since 1.6.3
                                * @author Mat Lipe <mat@lipeimagination.info>
                                */
 
 wp_head();
 
 ?> 
-<title>Add Simple Links</title><?php 
- ?>
-
-<!-- This script must be attached to move content back and forth -->
-<!-- This page should be given a proper html header -->
-<script type="text/javascript" src="/wp-includes/js/tinymce/tiny_mce_popup.js?v=3211"></script>
+<title>Add Simple Links</title>
+<script type="text/javascript" src="<?php echo includes_url(); ?>js/tinymce/tiny_mce_popup.js?v=3211"></script>
 <?php 
 
 //Bring in the JQuery

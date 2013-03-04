@@ -3,7 +3,7 @@
 Plugin Name: Simple Links
 Plugin URI: http://lipeimagination.info/simple-links-docs/
 Description: Replacement for Wordpress Links Manager with many added features.
-Version: 1.6.2
+Version: 1.6.3
 Author: Mat Lipe
 Author URI: http://lipeimagination.info
 */
