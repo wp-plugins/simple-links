@@ -6,13 +6,11 @@
           * @author Mat Lipe
           * @since 10.12.12
           */
-         
-
-
-class advanced_sidebar_menu_functions{
-	     protected $bad = array();  //for 3.3 version
-	     protected $bad_file = ''; //for 3.3 version
-	     
+class advancedSidebarMenu{
+	     private $instance; //The widget instance 
+         private $top_id; //Either the top cat or page
+         private $exclude;
+         private $ancestors; //For the category ancestors
 	     
 	     
 	     /**
@@ -37,61 +35,6 @@ class advanced_sidebar_menu_functions{
 	     }
 	     
 
-
-/**
- * Validate the views for the new structure
- * @since 7/16/12
- */
-function validate_3_3(){
-/** Note to self -- Remove this at the new version **/
-	if ( $page_file = locate_template(array('advanced-sidebar-menu/page_list.php')) ) {
-	$data = explode("\n", file_get_contents( $page_file )); //create array separate by new line
-	foreach( $data as $line => $content ){
-		$line++;
-		if( strpos( $content, 'class="advanced-sidebar-menu widget advanced-sidebar-page">' ) ){
-			$bad[$line] = htmlentities( $content );
-		}
-		if( strpos( $content, "<div class=\"widget-wrap\">"  ) ){
-			$bad[$line] = htmlentities( $content );
-		}
-		if( strpos( $content, "</div></div><!-- end of very-custom-menu -->"  ) ){
-
-			$bad[$line] = htmlentities( $content );
-		}
-	}
-	if( !empty( $bad ) ){
-		$this->bad = $bad;
-		$this->bad_file = get_bloginfo( 'stylesheet_directory' ) . '/advanced-sidebar-menu/page_list.php';
-		add_action( 'admin_notices', array( $this, 'notice_3_3') );
-	}
-}
-}
-
-
-/**
- * Adds an admin notice if there are issues with the view
- * @since 7/16/12
- */
-function notice_3_3( ){
-	echo '<div class="error">';
-	echo 'To use version 3.3 of <b>Advanced Sidebar Menu</b> you must delete the following lines from <b>"' . $this->bad_file . '"</b><br>';
-
-	foreach( $this->bad as $line => $content ){
-		echo '<b>line' . $line . ': </b> '. $content . '<br>';
-	}
-	
-	echo '</div>';
-	
-}
-	
-	
-	
-	
-	
-	private $instance; //The widget instance 
-	private $top_id; //Either the top cat or page
-	private $exclude;
-	private $ancestors; //For the category ancestors
 	
 	/**
 	 * Sets the instance of this widget to this class

@@ -128,11 +128,11 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
     /**
      * Outputs the categories widget to the page
-     * @since 10.12.12
+     * @since 3.6.13
      * 
      */
 	function widget($args, $instance) {
-		global $asm;
+		$asm = new advancedSidebarMenu;
 		extract( $args);
 		#-- Create a usable array of the excluded pages
 		$exclude = explode(',', $instance['exclude']);
@@ -161,7 +161,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 	     //Bring in the Styling
         			if( $instance['css'] == 'checked' ){
         				echo '<style type="text/css">';
-        					include( advanced_sidebar_menu_functions::file_hyercy( 'sidebar-menu.css' ) );
+        					include( $asm->file_hyercy( 'sidebar-menu.css' ) );
         		   		 echo '</style>';
         			}
 			

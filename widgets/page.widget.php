@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 3.1.13
+           * @since 3.6.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -102,10 +102,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * @uses change the top parent manually with the filter 'advanced_sidebar_menu_top_parent'
      * @uses change the order of the 2nd level pages with 'advanced_sidebar_menu_order_by' filter
      * 
-     * @since 3.1.13
+     * @since 3.6.13
      */
 	function widget($args, $instance) {
-	    global $wpdb, $post, $table_prefix, $asm;
+	    global $wpdb, $post, $table_prefix;
+        $asm = new advancedSidebarMenu;
 
 	    extract($args);
 	    
@@ -151,7 +152,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			
 			    if( $instance['css'] == 'checked' ){
 					echo '<style type="text/css">';
-						include( advanced_sidebar_menu_functions::file_hyercy('sidebar-menu.css' ) );
+						include( $asm->file_hyercy('sidebar-menu.css' ) );
 					echo '</style>';
 				}
 	
