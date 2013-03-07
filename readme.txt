@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: Go Live, Urls, Domain Changes 
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 2.0
+Stable tag: 2.1
 
 == Description ==
 
@@ -67,6 +67,7 @@ Most tables will be just fine to update. You may make a backup of your database,
 1. Screenshot of a tyical settings page. The verbage will change slightly depending on your database structure
 
 == Changelog ==
+
 = 2.0 =
 * Made updating the options table seralized safe *
 * Add extending ability of views and css *

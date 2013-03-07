@@ -2,7 +2,7 @@
 /**
  * Methods for the Go Live Update Urls Plugin
  * @author Mat Lipe
- * @since 2.0
+ * @since 2.1
  * 
  * @TODO Cleanup the Names and formatting
  */
@@ -220,7 +220,7 @@ function gluu_make_the_updates(){
      * Replaces all the occurances of a string in a multi dementional array or Object
      * 
      * @uses itself to call each level of the array
-     * @since 2.0
+     * @since 2.1
      * 
      * @param array|object|string $data to change
      * @param string $old the old string
@@ -229,11 +229,18 @@ function gluu_make_the_updates(){
      * 
      */
     function replaceTree( $data, $old, $new, $changeKeys = false ){
-        if( !($is_array = is_array( $data )) && !is_object( $data) ){
+        
+        if( is_string($data) ){
             return str_replace( $old, $new, $data );            
         }
+        
+        if( !($is_array = is_array( $data )) && !is_object($data) ){
+            return $data;
+        }
+        
             
         foreach( $data as $key => $item ){
+           
             if( $changeKeys ){
                 $key = str_replace( $old, $new, $key );
             }
