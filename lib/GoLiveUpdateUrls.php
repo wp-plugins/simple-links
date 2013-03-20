@@ -2,7 +2,7 @@
 /**
  * Methods for the Go Live Update Urls Plugin
  * @author Mat Lipe
- * @since 2.1
+ * @since 2.2
  * 
  * @TODO Cleanup the Names and formatting
  */
@@ -11,15 +11,28 @@ class GoLiveUpdateUrls{
     var $newurl = false;
     var $double_subdomain = false; //keep track if going to a subdomain
     
+    //Keys are table names, values are table columns
+   public $seralized_tables = array();
+    
+    
     /**
-     * @since 2.0
+     * @since 2.2
      */
     function __construct(){
+        global $wpdb;
+        $pf = $wpdb->base_prefix;
         //Add the settings to the admin menu
         add_action('admin_menu', array( $this,'gluu_add_url_options') );
         
         //Add the CSS
         add_action( 'admin_head', array( $this,'css') );
+        
+        //default tables with seralized issues
+        $this->seralized_tables = array( 
+                                    $pf.'options' => 'option_value', //wordpres options
+                                    $pf.'rg_form_meta' => 'display_meta' //gravity forms
+                                ); 
+                                
     }
     
     /**
@@ -61,7 +74,7 @@ class GoLiveUpdateUrls{
             $this->oldurl = trim( strip_tags( $_POST['oldurl'] ) );
             $this->newurl = trim( strip_tags( $_POST['newurl'] ) );
         
-            if( $this->gluu_make_the_updates() ){
+            if( $this->makeTheUpdates() ){
                 echo '<div id="message" class="updated fade"><p><strong>URLs have been updated.</p></strong></div>';
             } else {
                 echo '<div class="error"><p><strong>You must fill out both boxes to make the update!</p></strong></div>';
@@ -92,14 +105,14 @@ class GoLiveUpdateUrls{
    /**
     * Creates a list of checkboxes for each table
     * 
-    * @since 2.0
+    * @since 2.2
     * @uses by the view admin-tools-page.php
     * 
     * @filter 'gluu_table_checkboxes' with 2 param
     *     * $output - the html formatted checkboxes
     *     * $tables - the complete tables object
     * 
-    * 
+    * @filter apply_filters( 'gluu-seralized-tables', $this->seralized_tables ); - effect teh make the updates as well
     */
     function makeCheckBoxes(){ 
          global $wpdb;
@@ -107,12 +120,15 @@ class GoLiveUpdateUrls{
          $tables = $wpdb->get_results($god_query);
          
          $output =  '<ul id="gluu-checkboxes">';
+         
+         $seralized_tables = apply_filters( 'gluu-seralized-tables', $this->seralized_tables );
+         
           foreach($tables as $v){
-             if($v->TABLE_NAME == $wpdb->options):
+             if(in_array( $v->TABLE_NAME, array_keys($seralized_tables)) ){
                 $output .= sprintf('<li><input name="%s" type="checkbox" value="%s" checked /> %s - <strong><em>Seralized Safe</strong></em></li>',$v->TABLE_NAME,$v->TABLE_NAME,$v->TABLE_NAME);
-             else:
+             } else {
                 $output .= sprintf('<li><input name="%s" type="checkbox" value="%s" checked /> %s</li>',$v->TABLE_NAME,$v->TABLE_NAME,$v->TABLE_NAME);
-             endif;
+             }
          }
           
          $output .= '</ul>';
@@ -126,9 +142,11 @@ class GoLiveUpdateUrls{
  * Updates the datbase
  * 
  * @uses the oldurl and newurl set above
- * @since 2.27.13
+ * @since 2.2
+ * 
+ * @filters apply_filters( 'gluu-seralized-tables', $this->seralized_tables ); - effects makeCheckBoxes as well
  */
-function gluu_make_the_updates(){
+function makeTheUpdates(){
     global $wpdb;
     
     $oldurl = $this->oldurl;
@@ -145,13 +163,15 @@ function gluu_make_the_updates(){
         $this->double_subdomain = $subdomain . '.' . $newurl;  //Create a match to what the broken one will be
     }
 
+    $seralized_tables = apply_filters( 'gluu-seralized-tables', $this->seralized_tables );
+
     
     //Go throuch each table sent to be updated
     foreach($_POST as $v => $i){
         
         //Send the options table through the seralized safe Update
-        if( $v == $wpdb->options ){
-          $this->UpdateSeralizedTable($wpdb->options, 'option_value'); 
+        if( in_array($v, array_keys($seralized_tables)) ){ 
+          $this->UpdateSeralizedTable($v, $seralized_tables[$v]); 
         }
         
         if($v != 'submit' && $v != 'oldurl' && $v != 'newurl'){

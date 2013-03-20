@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: Go Live, Urls, Domain Changes 
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 2.1
+Stable tag: 2.2
 
 == Description ==
 
@@ -13,7 +13,7 @@ Goes through entire site and replaces all instances of and old url with a new on
 Some of the features this plugin offers:
 
 * Database table by table selection in case of issues
-* Supports seralized data in the options table
+* Supports seralized data in the options table 
 * Very easy to use admin page - which may be found under Tools
 
 Updates Entire Site including:
@@ -29,7 +29,8 @@ Updates Entire Site including:
 * And much more
 
 The admin screen is extendable for developers familiar with using filters or template overrides. 
-	
+
+Additonal Seralized Safe tables may be adding using the 'gluu-seralized-tables' filter checkboxes to tap into this will be coming in a future release.
 
 
 == Installation ==
@@ -58,15 +59,15 @@ Most tables will be just fine to update. You may make a backup of your database,
 
 
 
-
-
-
-
 == Screenshots ==
 
 1. Screenshot of a tyical settings page. The verbage will change slightly depending on your database structure
 
 == Changelog ==
+
+= 2.2 =
+* Added Gravity Forms Support to Seralized Safe 
+* Added a filter for additional seralized safe tables
 
 = 2.0 =
 * Made updating the options table seralized safe *
