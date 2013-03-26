@@ -4,6 +4,9 @@
  * @author Mat Lipe
  * @since 2.2
  * 
+ * 
+ * @updated 3.26.13
+ * 
  * @TODO Cleanup the Names and formatting
  */
 class GoLiveUpdateUrls{
@@ -209,6 +212,8 @@ function makeTheUpdates(){
      * 
      * @param string $table the table to go through
      * @param string $column to column in the table to go through
+     * 
+     * @since 3.26.13
      *
      */
     function UpdateSeralizedTable( $table, $column = false ){
@@ -218,19 +223,18 @@ function makeTheUpdates(){
 
         //Get all the Seralized Rows and Replace them properly
         $rows = $wpdb->get_results("SELECT $primary_key_column, $column FROM $table WHERE $column LIKE 'a:%' OR $column LIKE 'O:%'");
-        
+
         foreach( $rows as $row ){
-            if( is_bool($data = @unserialize($row->{$column})) ) continue;
+            $data = @unserialize($row->{$column});
+            if( $data === 'b:0' || $data === false ) continue;
 
             $clean = $this->replaceTree($data, $this->oldurl, $this->newurl);
             //If we switch to a submain we have to run this again to remove the doubles
             if( $this->double_subdomain ){
                   $clean = $this->replaceTree($clean, $this->double_subdomain, $this->newurl); 
             }
-            
-            //Add the newly seralized array back into the database
-            $wpdb->query("UPDATE $table SET $column='".serialize($clean)."' WHERE $primary_key_column='".$row->{$primary_key_column}."'");     
-       
+
+            $wpdb->query($wpdb->prepare( "UPDATE $table SET $column= %s WHERE $primary_key_column= %s ", serialize($clean), $row->{$primary_key_column} ) ); 
         }
     }
     
@@ -247,14 +251,16 @@ function makeTheUpdates(){
      * @param string $new the new string
      * @param bool [optional] $changeKeys to replace string in keys as well - defaults to false
      * 
+     * @since 3.26.13
+     * 
      */
     function replaceTree( $data, $old, $new, $changeKeys = false ){
         
         if( is_string($data) ){
-            return str_replace( $old, $new, $data );            
+            return trim(str_replace( $old, $new, $data ));            
         }
         
-        if( !($is_array = is_array( $data )) && !is_object($data) ){
+        if( !is_array( $data) && !is_object($data) ){
             return $data;
         }
         
@@ -265,7 +271,7 @@ function makeTheUpdates(){
                 $key = str_replace( $old, $new, $key );
             }
             
-            if( $is_array  ){
+            if( is_array( $data)  ){
                     $data[$key] = $this->replaceTree($item, $old, $new);
             } else {
                     $data->{$key} = $this->replaceTree($item, $old, $new);
