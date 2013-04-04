@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 1.17.13
+                    * @since 4.4.13
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -11,6 +11,8 @@
                     *       *   apply_filters( 'simple_links_widget_args', $args );
                     *       the Widget Settings Can be filtered using the 'simple_links_widget_settings' filter
                     *       *   apply_filters( 'simple_links_widget_settings', $instance );
+                    *       the Links object directly after get_posts()
+                    *       *   apply_filters('simple_links_widget_links_object', $links, $instance, $args );
                     *   ** All Filters can be specified for a particular widget by ID
                     *      * e.g.   add_filter( 'simple_links_widget_settings_simple-links-3')
                     * 
@@ -123,6 +125,8 @@ class SL_links_main extends WP_Widget {
         
         //Retrieve the links
         $links = get_posts( $query_args );
+        
+        $links = apply_filters('simple_links_widget_links_object', $links, $instance, $args );
         
         //Escape hatch
         if( !$links ){
