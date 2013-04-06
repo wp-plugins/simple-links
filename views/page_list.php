@@ -2,7 +2,7 @@
 /**
  * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
- * @since 3.1.13
+ * @since 4.0.0
  *
  *
  * @uses to edit, create a file named page_list.php and put in a folder in the your theme called 'advanced-sidebar-menu
@@ -37,20 +37,15 @@ if( $child_pages ){
 					#--echo the current page from the $result
 				wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&depth=1&include=".$pID->ID);
 			}
-
-			#-- if the link that was just listed is the current page we are on
-			if( $asm->page_ancestor( $pID ) ){
-
-				//Get the children of this page
-				$grandkids = $asm->page_children($pID->ID );				
-				if( $grandkids ){
-					#-- Create a new menu with all the children under it
-					echo '<ul class="grandchild-sidebar-menu">';
-							wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&exclude=".$instance['exclude']."&child_of=".$pID->ID);
-
-					echo '</ul>';
-				}
-			}
+            
+            if( !$instance['legacy_mode'] ){
+                #-- Displays all levels of granchild pages related to the current page
+			    $asm->displayGrandChildMenu($pID);
+            } else{
+                $asm->grandChildLegacyMode($pID);             
+            }      
+                    
+                
 		}
 	}
 

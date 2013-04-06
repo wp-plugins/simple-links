@@ -4,12 +4,12 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 3.6.2
-License: GPLv2
+Stable tag: 4.0.0
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
 == Description ==
+<h3>Now Supports an Unlimited Levels of Pages</h3>
 
 Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
 Keeps the menu clean and usable.
@@ -21,6 +21,7 @@ Includes Page options:
    <li>Include the highest level parent page even with no Children</li>
   <li>Use built in styling (very plain styling currently but plans for more advanced in near future versions)</li>
    <li>Exclude pages</li>
+   <li>Legacy Mode - For those who like the way it was pre version 4.0</li>
    <li>Always display child Pages</li>
    <li>Number of levels of child pages to display</li>
 </ol>  
@@ -37,7 +38,7 @@ Includes Category Options:
    <li>Levels of Categories to display</li>
 </ol>    
 
-There is also built in functionality to overright the output of the widgets and the css to customize this and still be upgrade safe.
+There is also built in functionality to overwrite the output of the widgets and the css to customize this and still be upgrade safe.
    
 
 
@@ -59,6 +60,19 @@ e.g.
 
 
 == Frequently Asked Questions ==
+
+= Version 4.0 is not displaying all my 3rd and 4th level pages always. How do I bring this back?=
+
+You will find a checkbox in the widget options for Legacy Mode. 
+
+= How do I order my links by title? =
+
+Add this to your theme's functions.php file
+<code>add_filter('advanced_sidebar_menu_order_by', 'order_by_post_title' );
+function order_by_post_title($order){
+    return 'post_title';
+}
+</code>
 
 = How do you get the categories to display on single post pages? =
 
@@ -87,6 +101,11 @@ You may want to use something like margins to set the levels apart.
 
 
 == Changelog ==
+= 4.0.0 =
+* Added support for an unlimited number of page levels
+* Change structure slightly for future enhancements
+* Added Legacy Mode for backwards compatibility
+
 
 = 3.4.0 =
 * Added filter support for custom post types
