@@ -59,8 +59,9 @@ class advancedSidebarMenu{
         //if there are no children of the current page bail
         if( !$children = $this->page_children($page->ID) ) return;
 
+        printf('<ul class="grandchild-sidebar-menu level-%s">',$count );
         foreach( $children as $child ){
-            printf('<ul class="grandchild-sidebar-menu level-%s">',$count );
+            
 
             $args = array(
                   'post_type' => $this->post_type,
@@ -78,8 +79,9 @@ class advancedSidebarMenu{
             if( $this->page_ancestor($child) ){
                $this->displayGrandChildMenu($child);
             }
-        echo '</ul>';
+        
        }
+       echo '</ul>';
         
     }
 	     
