@@ -2,7 +2,7 @@
 /**
  * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
- * @since 4.0.0
+ * @since 4.1.0
  *
  *
  * @uses to edit, create a file named page_list.php and put in a folder in the your theme called 'advanced-sidebar-menu
@@ -12,21 +12,23 @@
 
 $asm->title();
 
+$content = '';
+
 #-- list the parent page if chosen
 if( $asm->include_parent() ){
-	echo '<ul class="parent-sidebar-menu" >';
-			 wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&depth=1&include=".$top_parent);
+	$content .= '<ul class="parent-sidebar-menu" >';
+	$content .= $asm->openListItem(wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=0&depth=1&include=".$top_parent) );
 }
 
 
 //If there are children start the Child Sidebar Menu
 if( $child_pages ){
-	echo '<ul class="child-sidebar-menu">';
+	$content .= '<ul class="child-sidebar-menu">';
 
 	#-- If they want all the pages displayed always
 	if( $asm->display_all() ){
 
-		wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&child_of=".$top_parent."&depth=".$instance['levels']."&exclude=".$instance['exclude']);
+	$content .=	wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=0&child_of=".$top_parent."&depth=".$instance['levels']."&exclude=".$instance['exclude']);
 	} else {
 
 		#-- Display children of current page's parent only
@@ -35,26 +37,27 @@ if( $child_pages ){
 				#-- If the page is not in the excluded ones
 			if( $asm->exclude( $pID->ID) ){
 					#--echo the current page from the $result
-				wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&depth=1&include=".$pID->ID);
-			}
-            
-            if( !$instance['legacy_mode'] ){
-                #-- Displays all levels of granchild pages related to the current page
-			    $asm->displayGrandChildMenu($pID);
-            } else{
-                $asm->grandChildLegacyMode($pID);             
-            }      
+			   $content .=	$asm->openListItem(wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=0&depth=1&include=".$pID->ID));
+			} else {
+			    continue;
+            }
+                if( !$instance['legacy_mode'] ){
+                    #-- Displays all levels of granchild pages related to the current page
+			         $content .= $asm->displayGrandChildMenu($pID);
+                } else{
+                    $content .= $asm->grandChildLegacyMode($pID);             
+                }      
                     
-                
+            $content .= '</li>';    
 		}
 	}
 
 	#-- Close the First Level menu
-	echo '</ul><!-- End child-sidebar-menu -->';
+	$content .= '</ul><!-- End child-sidebar-menu -->';
 
 }
 if( $asm->include_parent() ) {
-	echo '</ul><!-- .parent-sidebar-menu -->';
+	$content .= '</li></ul><!-- .parent-sidebar-menu -->';
 }
 		
 

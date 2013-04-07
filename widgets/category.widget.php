@@ -5,15 +5,26 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 10.12.12
+           * @since 4.1.0
            * @package Advanced Sidebar Menu
            *
            */
-
-
-
-
 class advanced_sidebar_menu_category extends WP_Widget {
+
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+    // This decides the name of the widget
+    function __construct() {
+                /* Widget settings. */
+        $widget_ops = array( 'classname' => 'advanced-sidebar-menu advanced-sidebar-category', 'description' => 'Creates a menu of all the Categories using the child/parent relationship' );
+        $control_ops = array( 'width' => 290 );
+        /* Create the widget. */
+        $this->WP_Widget( 'advanced_sidebar_menu_category', 'Advanced Sidebar Categories Menu', $widget_ops, $control_ops );
+        }
+
+
+
 
 #-----------------------------------------------------------------------------------------------------------------------------------
 	  // this creates the widget form for the dashboard
@@ -112,30 +123,31 @@ class advanced_sidebar_menu_category extends WP_Widget {
 			return $instance;
 		}
 
-#-------------------------------------------------------------------------------------------------------------------------
 
-  	// This decides the name of the widget
-	function advanced_sidebar_menu_category( ) {
-				/* Widget settings. */
-		$widget_ops = array( 'classname' => 'advanced-sidebar-menu advanced-sidebar-category', 'description' => 'Creates a menu of all the Categories using the child/parent relationship' );
-        $control_ops = array( 'width' => 290 );
-		/* Create the widget. */
-		$this->WP_Widget( 'advanced_sidebar_menu_category', 'Advanced Sidebar Categories Menu', $widget_ops, $control_ops );
-		}
 
 
 #---------------------------------------------------------------------------------------------------------------------------
 
     /**
      * Outputs the categories widget to the page
-     * @since 3.6.13
+     * 
+     * @since 4.7.13
+     * @uses loads the views/category_list.php
+     * 
+     * @filters apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance ); 
      * 
      */
 	function widget($args, $instance) {
 		$asm = new advancedSidebarMenu;
+        $asm->instance = $instance;
+        $asm->args = $args;
+        
+        $exclude = explode(',', $instance['exclude']);
+        $asm->exclude = $exclude;
+        
 		extract( $args);
 		#-- Create a usable array of the excluded pages
-		$exclude = explode(',', $instance['exclude']);
+	
 		$cat_ids = $already_top = array();
 		$asm_once = $asm_cat_widget_count = false; //keeps track of how many widgets this created
 		$count = null;
@@ -153,10 +165,6 @@ class advanced_sidebar_menu_category extends WP_Widget {
 		} elseif( is_category() ){
 		    $cat_ids[] = get_query_var('cat');	
 		}
-		
-		//print_r( get_the_category() );
-		
-		///print_r( $cat_ids );
 		
 	     //Bring in the Styling
         			if( $instance['css'] == 'checked' ){
@@ -179,8 +187,11 @@ class advanced_sidebar_menu_category extends WP_Widget {
             
        		 //Reverse the array to start at the last
        		 $cat_ancestors = array_reverse( $cat_ancestors );
+             $asm->ancestors = $cat_ancestors;
+             
        		 //forget the [0] because the parent of top parent is always 0
        		 $top_cat = $cat_ancestors[1];
+             $asm->top_id = $top_cat;
   
        		 
        		 //Keeps track or already used top levels so this won't double up
@@ -213,12 +224,12 @@ class advanced_sidebar_menu_category extends WP_Widget {
 					} else {
 						$close = false;
 					}
-					
-					$asm->set_widget_vars( $instance, $top_cat, $exclude, $cat_ancestors );
+
         			//Bring in the view
         			require( $asm->file_hyercy( 'category_list.php' ) );
-        					
-        			
+                   
+        			echo apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );		
+      
         			if( $close ){
         				//End the Widget Area
 						  echo $after_widget;

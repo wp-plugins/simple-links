@@ -4,7 +4,9 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 4.5.13
+          * @since 4.7.13
+          * 
+          * @package Advanced Sidebar Menu
           */
 class advancedSidebarMenu{
 	  var $instance; //The widget instance 
@@ -15,12 +17,25 @@ class advancedSidebarMenu{
       var $order_by;
 	     
          
+      /**   
+       * Removes the closing </li> tag from a list item to allow for child menus inside of it
+       * 
+       * @param string $item - an <li></li> item
+       * @return string|bool
+       * @since 4.7.13
+       */
+      function openListItem($item = false){
+          if( !$item ) return false;
+          
+          return substr(trim($item), 0, -5);
+      }   
+         
       /**
        * The Old way of doing thing which displayed all 3rd levels and below when on a second level page
        * This is only here for people afraid of change who liked the old way of doing things
        * 
        * @uses used in views -> page_list.php when legacy mode is checked in widget
-       * @since 4.5.13
+       * @since 4.7.13
        */   
       function grandChildLegacyMode($pID ){
           #-- if the link that was just listed is the current page we are on
@@ -30,11 +45,13 @@ class advancedSidebarMenu{
                 $grandkids = $this->page_children($pID->ID );                
                 if( $grandkids ){
                     #-- Create a new menu with all the children under it
-                    echo '<ul class="grandchild-sidebar-menu">';
-                            wp_list_pages("post_type=".$this->post_type."&sort_column=$order_by&title_li=&echo=1&exclude=".$this->instance['exclude']."&child_of=".$pID->ID);
+                    $content .= '<ul class="grandchild-sidebar-menu">';
+                            $content .= wp_list_pages("post_type=".$this->post_type."&sort_column=$order_by&title_li=&echo=0&exclude=".$this->instance['exclude']."&child_of=".$pID->ID);
 
-                    echo '</ul>';
+                    $content .= '</ul>';
                 }
+                
+                return $content;
       }    
                   
          
@@ -48,9 +65,11 @@ class advancedSidebarMenu{
       * 
       * @uses called by the widget view page_list.php
       * @since 4.0
+      * 
+      * @since 4.7.13
       */
 	 function displayGrandChildMenu($page){
-        static $count = 1;
+        static $count = 0;
         $count++;
 
         //If the page sent is not a child of the current page
@@ -59,7 +78,7 @@ class advancedSidebarMenu{
         //if there are no children of the current page bail
         if( !$children = $this->page_children($page->ID) ) return;
 
-        printf('<ul class="grandchild-sidebar-menu level-%s">',$count );
+       $content .= sprintf('<ul class="grandchild-sidebar-menu level-%s children">',$count );
         foreach( $children as $child ){
             
 
@@ -67,21 +86,25 @@ class advancedSidebarMenu{
                   'post_type' => $this->post_type,
                   'sort_column' => $this->order_by,
                   'title_li'    => '',
-                  'echo'        => 1,
+                  'echo'        => 0,
                   'depth'       => 1,
                   'exclude'     => join(',',$this->exclude),
                   'include'     => $child->ID
                   );
                   
-            wp_list_pages($args);
+            $content .= $this->openListItem(wp_list_pages($args));
 
             //If this newly outputed child is a direct parent of the current page
             if( $this->page_ancestor($child) ){
-               $this->displayGrandChildMenu($child);
+               $content .= $this->displayGrandChildMenu($child);
             }
+            
+            $content .= '</li>';
         
        }
-       echo '</ul>';
+       $content .= '</ul>';
+       
+       return $content; 
         
     }
 	     
@@ -111,19 +134,6 @@ class advancedSidebarMenu{
 	 }
 	     
 
-	
-	/**
-	 * Sets the instance of this widget to this class
-	 * @param array $instance the widgets instance
-	 * @since 7/16/12
-	 */
-	function set_widget_vars( $instance, $top_id, $exclude, $ancestors = array() ){
-		$this->instance = $instance;
-		$this->top_id = $top_id;
-		$this->exclude = $exclude;
-		$this->ancestors = $ancestors;
-	}
-	
 	/**
 	 * 
 	 * IF this is a top level category
@@ -215,11 +225,14 @@ class advancedSidebarMenu{
    
 	/**
 	 * Echos the title of the widget to the page
-	 * @since 7/16/12
+	 * @since 4.7.13
 	 */
 	function title(){
 	    if( $this->instance['title'] != '' ){
-	     	echo '<h4 class="widgettitle">' . $this->instance['title'] . '</h4>';
+	        
+            $title = apply_filters('widget_title', $this->instance['title'], $this->args, $this->instance );
+            
+	     	echo '<h4 class="widgettitle">' . $title . '</h4>';
      	}
 		
 	}

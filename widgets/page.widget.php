@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 4.5.13
+           * @since 4.7.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -32,7 +32,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * Not of ton of options here but who need them
      * Most of the magic happens automatically
      * 
-     * @since 4.5.13
+     * @since 4.7.13
      */
 	function form( $instance ) {
          ?>
@@ -49,7 +49,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['include_childless_parent']; ?>/></p>
 						
-			<p> Use Built in Styling: <input id="<?php echo $this->get_field_name('css'); ?>"
+			<p> Use this Plugin's Styling: <input id="<?php echo $this->get_field_name('css'); ?>"
 			name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['css']; ?>/></p>
 					
@@ -108,17 +108,28 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * @uses change the top parent manually with the filter 'advanced_sidebar_menu_top_parent'
      * @uses change the order of the 2nd level pages with 'advanced_sidebar_menu_order_by' filter
      * 
-     * @since 4.5.13
+     * @filter apply_filters('advanced_sidebar_menu_page_widget_output',$content, $args, $instance );
+     *         apply_filters('advanced_sidebar_menu_order_by', 'menu_order', $post, $args, $instance );
+     *         apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post, $args, $instance );
+     *         apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
+     * 
+     * 
+     * @since 4.7.13
      */
 	function widget($args, $instance) {
 	    global $wpdb, $post, $table_prefix;
+        
+        //There will be no pages to generate on an archive page
+        if( is_archive() ) return;
+        
         $asm = new advancedSidebarMenu;
 
         $asm->instance = $instance;
+        $asm->args = $args;
 	    extract($args);
 	    
 	    //Filter this one with a 'single' for a custom post type will default to working for pages only
-	    $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page' );
+	    $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
 	    $asm->post_type = $post_type;
 	    
 	    if( $post_type != 'page' ){
@@ -143,12 +154,12 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			
 			
 		//Filter for specifying the top parent
-		$top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post );
+		$top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post, $args, $instance );
         $asm->top_id = $top_parent;
         
         
         //Filter for specifiying the order by
-        $order_by = apply_filters('advanced_sidebar_menu_order_by', 'menu_order', $post );
+        $order_by = apply_filters('advanced_sidebar_menu_order_by', 'menu_order', $post, $args, $instance );
 		$asm->order_by = $order_by;	
             
             
@@ -173,10 +184,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
 				
 				//Start the menu
 				echo $before_widget;
-			   					 
-								#-- Bring in the view
-    							require( $asm->file_hyercy( 'page_list.php' ) );
+			   			#-- Bring in the view
+    					require( $asm->file_hyercy( 'page_list.php' ) );
+                        echo apply_filters('advanced_sidebar_menu_page_widget_output',$content, $args, $instance );
 				echo $after_widget;
+                
 		}
 
 	} #== /widget()
