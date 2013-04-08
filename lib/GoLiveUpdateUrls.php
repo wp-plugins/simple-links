@@ -5,7 +5,7 @@
  * @since 2.2
  * 
  * 
- * @updated 3.26.13
+ * @updated 4.8.13
  * 
  * @TODO Cleanup the Names and formatting
  */
@@ -145,7 +145,7 @@ class GoLiveUpdateUrls{
  * Updates the datbase
  * 
  * @uses the oldurl and newurl set above
- * @since 2.2
+ * @since 4.8.13
  * 
  * @filters apply_filters( 'gluu-seralized-tables', $this->seralized_tables ); - effects makeCheckBoxes as well
  */
@@ -161,7 +161,7 @@ function makeTheUpdates(){
     }
     
     // If the new domain is the old one with a new subdomain like www
-    if( strpos($newurl, $oldurl) != false) {
+    if( strpos($newurl, $oldurl) !== false) {
         list( $subdomain ) = explode( '.', $newurl );
         $this->double_subdomain = $subdomain . '.' . $newurl;  //Create a match to what the broken one will be
     }
@@ -185,9 +185,10 @@ function makeTheUpdates(){
                 $update_query = "UPDATE ".$v." SET ".$t->COLUMN_NAME." = replace(".$t->COLUMN_NAME.", '".$oldurl."','".$newurl."')";
                 //Run the query
                 $wpdb->query($update_query);
+          
                 
                 //Fix the dub dubs if this was the old domain with a new sub
-                if( isset( $this->double_subdomain ) ){
+                if( $this->double_subdomain ){
                     $update_query = "UPDATE ".$v." SET ".$t->COLUMN_NAME." = replace(".$t->COLUMN_NAME.", '".$this->double_subdomain."','".$newurl."')";
                     //Run the query
                     $wpdb->query($update_query);
@@ -213,7 +214,7 @@ function makeTheUpdates(){
      * @param string $table the table to go through
      * @param string $column to column in the table to go through
      * 
-     * @since 3.26.13
+     * @since 4.8.13
      *
      */
     function UpdateSeralizedTable( $table, $column = false ){
@@ -225,8 +226,11 @@ function makeTheUpdates(){
         $rows = $wpdb->get_results("SELECT $primary_key_column, $column FROM $table WHERE $column LIKE 'a:%' OR $column LIKE 'O:%'");
 
         foreach( $rows as $row ){
+            if( !is_serialized($row->{$column}) ) continue;
+            
+            if( strpos($row->{$column}, $this->oldurl) === false ) continue;
+            
             $data = @unserialize($row->{$column});
-            if( $data === 'b:0' || $data === false ) continue;
 
             $clean = $this->replaceTree($data, $this->oldurl, $this->newurl);
             //If we switch to a submain we have to run this again to remove the doubles
@@ -234,7 +238,8 @@ function makeTheUpdates(){
                   $clean = $this->replaceTree($clean, $this->double_subdomain, $this->newurl); 
             }
 
-            $wpdb->query($wpdb->prepare( "UPDATE $table SET $column= %s WHERE $primary_key_column= %s ", serialize($clean), $row->{$primary_key_column} ) ); 
+           $wpdb->query($wpdb->prepare( "UPDATE $table SET $column=%s WHERE $primary_key_column=%s", @serialize($clean), $row->{$primary_key_column} ) ); 
+           
         }
     }
     
