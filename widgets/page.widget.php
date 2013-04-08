@@ -55,7 +55,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 					
 			<p> Pages to Exclude, Comma Separated: <input id="<?php echo $this->get_field_name('exclude'); ?>" 
             	name="<?php echo $this->get_field_name('exclude'); ?>" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
-            <p> Legacy Mode: (displays all 3rd level and down pages when on a second level page) <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
+            <p> Legacy Mode: (use pre 4.0 structure and css) <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
             name="<?php echo $this->get_field_name('legacy_mode'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['legacy_mode']; ?>/>
             </p>    
@@ -175,17 +175,19 @@ class advanced_sidebar_menu_page extends WP_Widget {
 		#---- if there are no children do not display the parent unless it is check to do so
 		if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){
 			
+                $legacy = isset( $instance['legacy_mode'] );
+            
 			    if( $instance['css'] == 'checked' ){
 					echo '<style type="text/css">';
-						include( $asm->file_hyercy('sidebar-menu.css' ) );
+						include( $asm->file_hyercy('sidebar-menu.css', $legacy ) );
 					echo '</style>';
 				}
 	
 				
 				//Start the menu
 				echo $before_widget;
-			   			#-- Bring in the view
-    					require( $asm->file_hyercy( 'page_list.php' ) );
+			   			#-- Bring in the 
+    					require( $asm->file_hyercy( 'page_list.php', $legacy ) );
                         echo apply_filters('advanced_sidebar_menu_page_widget_output',$content, $args, $instance );
 				echo $after_widget;
                 

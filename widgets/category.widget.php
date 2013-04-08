@@ -45,7 +45,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 			name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['include_childless_parent']; ?>/></p>
 					
-			<p> Use Built in Styling <input id="<?php echo $this->get_field_name('css'); ?>"
+			<p> Use this plugins styling <input id="<?php echo $this->get_field_name('css'); ?>"
 			name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['css']; ?>/></p>
 					
@@ -80,6 +80,15 @@ class advanced_sidebar_menu_category extends WP_Widget {
 					
 			<p> Categories to Exclude, Comma Separated:<input id="<?php echo $this->get_field_name('exclude'); ?>" 
             	name="<?php echo $this->get_field_name('exclude'); ?>" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
+            
+            
+            <p> Legacy Mode: (use pre 4.0 structure and css) <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
+            name="<?php echo $this->get_field_name('legacy_mode'); ?>" type="checkbox" value="checked" 
+                    <?php echo $instance['legacy_mode']; ?>/>
+            </p>    
+                
+            
+            
             	
             <p> Always Display Child Categories <input id="<?php echo $this->get_field_name('display_all'); ?>" 
             	name="<?php echo $this->get_field_name('display_all'); ?>" type="checkbox" value="checked" 
@@ -119,7 +128,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 			$instance['single'] = strip_tags($new_instance['single']);  //Display on single pages
 			$instance['new_widget'] = strip_tags($new_instance['new_widget']); //Create a new widget for each single category
 			$instance['title'] = strip_tags($new_instance['title']);
-			
+			$instance['legacy_mode'] = strip_tags($new_instance['legacy_mode']);
 			return $instance;
 		}
 
@@ -165,14 +174,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 		} elseif( is_category() ){
 		    $cat_ids[] = get_query_var('cat');	
 		}
-		
-	     //Bring in the Styling
-        			if( $instance['css'] == 'checked' ){
-        				echo '<style type="text/css">';
-        					include( $asm->file_hyercy( 'sidebar-menu.css' ) );
-        		   		 echo '</style>';
-        			}
-			
+
         //Go through each category there will be only one if this is a category page mulitple possible if this is single
         foreach( $cat_ids as $cat_id ){
        		 $cat_ancestors = array ();
@@ -224,9 +226,21 @@ class advanced_sidebar_menu_category extends WP_Widget {
 					} else {
 						$close = false;
 					}
+                    
+                    
+                    
+                    $legacy = isset( $instance['legacy_mode'] );
+            
+                    if( $instance['css'] == 'checked' ){
+                        echo '<style type="text/css">';
+                            include( $asm->file_hyercy('sidebar-menu.css', $legacy ) );
+                        echo '</style>';
+                    }
+    
+                    
 
         			//Bring in the view
-        			require( $asm->file_hyercy( 'category_list.php' ) );
+        			require( $asm->file_hyercy( 'category_list.php', $legacy ) );
                    
         			echo apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );		
       
