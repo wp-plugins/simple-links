@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 1.17.13
+                  * @since 4.21.13
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -599,10 +599,11 @@ class simple_links extends SL_post_type_tax{
 
 	/**
      * Registers the Custom Post Type
-     * @since 12.15.12
+     * @since 4.21.13
      */
 	function post_type(){
-		$this->register_post_type( 'simple_link' , array(
+	
+	    $args = apply_filters('simple-links-register-post-type', array(
 				                                           'menu_icon' => SIMPLE_LINKS_IMG_DIR . 'menu-icon.png',
 				                                           'labels'    => array(
 				                                           		           'singular_name' =>  __('Link','simple-links'),
@@ -612,23 +613,22 @@ class simple_links extends SL_post_type_tax{
 				                                           				   'add_new'       =>  __('Add Link','simple-links'),
 				                                           				   'view_item'     =>  __('View Link','simple-links')
 				                                           		),
-															'hierachical' => false,
-															'supports'	  => array( 'thumbnail','title','page-attributes','revisions' ),
-															'show_in_nav_menus'=> false,
-				                                            'has_archive' => false,
-															'rewrite'     => false,
+															'hierachical'          => false,
+															'supports'	           => array( 'thumbnail','title','page-attributes','revisions' ),
+															'show_in_nav_menus'    => false,
+				                                            'has_archive'          => false,
+															'rewrite'              => false,
+															'exclude_from_search'  => true,
 															'register_meta_box_cb' => array( $this, 'meta_box' )
 															
 				
 				
-				)
-		);
+				) );
+	
+		$this->register_post_type( 'simple_link' , $args );
+		
 	}
 	
 	
-	
-	
-	
-	
-}
-}
+}  //-- End of Class
+} //-- End of if class exists
