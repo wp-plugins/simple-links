@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 4.4.13
+                    * @since 4.23.13
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -89,13 +89,14 @@ class SL_links_main extends WP_Widget {
     
     /**
      * The output of the widget to the site
-     * @since 1.17.13
+     * @since 4.23.13
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
      * @uses See Class Docs for filtering the output,settings,and args
      * 
      * @see Notice error removed with help from WebEndev
+     * @see nofollow error was remove with help from Heiko Manfrass
      */
     function widget( $args, $instance ) {
         $unfiltered_instance = $instance;
@@ -219,7 +220,7 @@ class SL_links_main extends WP_Widget {
                     $meta['web_address'][0],
                     $meta['target'][0],
                     $meta['description'][0],
-                    empty( $meta['link_target_nofollow'] ) ? '': 'rel="nofollow"',
+                    empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"',
                     $image,
                     $link->post_title
             );
