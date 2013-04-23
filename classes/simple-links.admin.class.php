@@ -4,7 +4,7 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 10.10.12
+                      * @since 4.23.13
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
@@ -26,6 +26,9 @@ class simple_links_admin{
 	
 	function __construct(){
 		
+        //Change the post updating messages
+        add_filter('post_updated_messages', array( $this, 'linksUpdatedMessages' ) );
+        
 		//Remove the Wordpress Links from admin menu
 		add_action( 'admin_menu', array( $this, 'remove_links' ) );
 	
@@ -78,6 +81,38 @@ class simple_links_admin{
 		add_filter( 'manage_simple_link_posts_custom_column', array( $this, 'post_list_columns_output'), 0, 2 );
 	
 	}
+
+    /**
+     * Customizes the Message for Post Editing Like updating and creating.
+     * @since 1.7.2
+     * 
+     * @uses called by self::__construct using the 'post_updated_messages' filter
+     * @updated 4.23.13
+     */    
+    function linksUpdatedMessages($messages){
+        global $post, $post_ID;
+
+        $messages['simple_link'] = 
+        
+        apply_filters('simple-links-updated-messages', array( 
+  
+            0  => '',
+            1  => __( 'Link updated.', 'simple-links'),
+            2  => __( 'Custom field updated.', 'simple-links'),
+            3  => __( 'Custom field deleted.', 'simple-links'),
+            4  => __( 'Link updated.', 'simple-links'),
+            5  => isset($_GET['revision']) ? sprintf( __( 'Link restored to revision from %s', 'simple-links'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+            6  => __( 'Link published.', 'simple-links'),
+            7  => __( 'Link saved.', 'simple-links'),
+            8  =>  __( 'Link submitted.', 'simple-links'),
+            9  => sprintf( __( 'Link scheduled for: <strong>%1$s</strong>.','simple-links'), date_i18n( __( 'M j, Y @ G:i', 'simple-links'), strtotime( $post->post_date ) ) ),
+            10 => __( 'Link draft updated.','simple-links')
+ 
+        ) );
+        return $messages;
+   
+    }
+
 	
 	
 	
