@@ -13,14 +13,14 @@
                     *       *   apply_filters( 'simple_links_widget_settings', $instance );
                     *       the Links object directly after get_posts()
                     *       *   apply_filters('simple_links_widget_links_object', $links, $instance, $args );
+                    *       the links meta data one link at a time
+                    *       *   apply_filters('simple_links_link_meta', get_post_meta($link->ID, false), $link, $instance, $args );
                     *   ** All Filters can be specified for a particular widget by ID
                     *      * e.g.   add_filter( 'simple_links_widget_settings_simple-links-3')
                     * 
+                    * 
                     *
                     */
-
-
-
 class SL_links_main extends WP_Widget {
 
     protected $defaults = array(            
@@ -149,12 +149,8 @@ class SL_links_main extends WP_Widget {
         if( $query_args['orderby'] == 'random' ){
             $query_args['orderby'] = 'rand';
         }
-        
-        
-        
-        
-            //print_r( $query_args );
-        
+
+
         //Retrieve the links
         $links = get_posts( $query_args );
         
@@ -195,9 +191,9 @@ class SL_links_main extends WP_Widget {
                 continue;
             }
     
-            $meta = get_post_meta($link->ID, false);
-            
-
+           $meta = apply_filters('simple_links_widget_link_meta_' . $widget_id, get_post_meta($link->ID, false), $link, $instance, $args );
+           $meta = apply_filters('simple_links_widget_link_meta', $meta, $link, $instance, $args );
+        
         
             //Adds the meta to the main object for people using filters
             $link->meta = $meta;
@@ -219,16 +215,18 @@ class SL_links_main extends WP_Widget {
             $output .= sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
                     $meta['web_address'][0],
                     $meta['target'][0],
-                    $meta['description'][0],
+                    strip_tags($meta['description'][0]),
                     empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"',
                     $image,
                     $link->post_title
             );
+
             //Add the description
             if( isset($instance['description']) && ($instance['description']) && isset($meta['description'][0]) && ($meta['description'][0] != '') ){
                 $output .= ' ' . $instance['separator'] . ' ' . $meta['description'][0];
             }
         
+           
         
         
             //Add the addtional fields
@@ -260,8 +258,6 @@ class SL_links_main extends WP_Widget {
         //The output can be filtered here
         $output = apply_filters( 'simple_links_widget_output_' . $widget_id, $output, $links, $instance, $args );
         echo apply_filters( 'simple_links_widget_output', $output, $links, $instance, $args );
-        
-
     }
     
     
