@@ -2,7 +2,7 @@
 /**
  * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
- * @since 4.1.0
+ * @since 4.23.13
  *
  *
  * @uses to edit, create a file named page_list.php and put in a folder in the your theme called 'advanced-sidebar-menu
@@ -32,8 +32,8 @@ if( $child_pages ){
 	} else {
 
 		#-- Display children of current page's parent only
-		foreach($result as $pID){
-
+		foreach($child_pages as $pID){
+		    
 				#-- If the page is not in the excluded ones
 			if( $asm->exclude( $pID->ID) ){
 					#--echo the current page from the $result

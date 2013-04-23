@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 4.7.13
+           * @since 4.23.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -32,46 +32,46 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * Not of ton of options here but who need them
      * Most of the magic happens automatically
      * 
-     * @since 4.7.13
+     * @since 4.23.13
      */
 	function form( $instance ) {
          ?>
             <p> Title <br>
-             <input id="<?php echo $this->get_field_name('title'); ?>" 
+             <input id="<?php echo $this->get_field_id('title'); ?>" 
             	name="<?php echo $this->get_field_name('title'); ?>" size="50" type="text" value="<?php echo $instance['title']; ?>"/></p>
 
-            <p> Include Parent Page: <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
+            <p> Include Parent Page: <input id="<?php echo $this->get_field_id('include_parent'); ?>" 
             	name="<?php echo $this->get_field_name('include_parent'); ?>" type="checkbox" value="checked" 
             	<?php echo $instance['include_parent']; ?>/></p>
 			
             			
-			<p> Include Parent Even With No Children: <input id="<?php echo $this->get_field_name('include_childless_parent'); ?>"
+			<p> Include Parent Even With No Children: <input id="<?php echo $this->get_field_id('include_childless_parent'); ?>"
 			name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['include_childless_parent']; ?>/></p>
 						
-			<p> Use this Plugin's Styling: <input id="<?php echo $this->get_field_name('css'); ?>"
+			<p> Use this Plugin's Styling: <input id="<?php echo $this->get_field_id('css'); ?>"
 			name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['css']; ?>/></p>
 					
-			<p> Pages to Exclude, Comma Separated: <input id="<?php echo $this->get_field_name('exclude'); ?>" 
+			<p> Pages to Exclude, Comma Separated: <input id="<?php echo $this->get_field_id('exclude'); ?>" 
             	name="<?php echo $this->get_field_name('exclude'); ?>" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
             <p> Legacy Mode: (use pre 4.0 structure and css) <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
             name="<?php echo $this->get_field_name('legacy_mode'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['legacy_mode']; ?>/>
             </p>    
             	
-            <p> Always Display Child Pages: <input id="<?php echo $this->get_field_name('display_all'); ?>" 
+            <p> Always Display Child Pages: <input id="<?php echo $this->get_field_id('display_all'); ?>" 
             	name="<?php echo $this->get_field_name('display_all'); ?>" type="checkbox" value="checked" 
-            	onclick="javascript:asm_reveal_element( 'levels-<?php echo $this->get_field_name('levels'); ?>' )"
+            	onclick="javascript:asm_reveal_element( 'levels-<?php echo $this->get_field_id('levels'); ?>' )"
             	<?php echo $instance['display_all']; ?>/></p>
             
-            <span id="levels-<?php echo $this->get_field_name('levels'); ?>" style="<?php 
-                  if( $instance['display_all'] == checked ){
+            <span id="levels-<?php echo $this->get_field_id('levels'); ?>" style="<?php 
+                  if( $instance['display_all'] == 'checked' ){
                   	echo 'display:block';
                   } else {
                   	echo 'display:none';
                   } ?>"> 
-            <p> Levels to Display: <select id="<?php echo $this->get_field_name('levels'); ?>" 
+            <p> Levels to Display: <select id="<?php echo $this->get_field_id('levels'); ?>" 
             name="<?php echo $this->get_field_name('levels'); ?>">
             <?php 
             	for( $i= 1; $i<6; $i++ ){
@@ -82,6 +82,9 @@ class advanced_sidebar_menu_page extends WP_Widget {
             		}
             	} 
             	echo '</select></p></span>';
+                
+                
+           do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'));   
                 
             
 		}
@@ -170,7 +173,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			
 		//for depreciation
 		$p = $top_parent;
-		$result = $child_pages;
+		$result = $child_pages = apply_filters( 'advanced_sidebar_menu_child_pages', $child_pages, $post, $args, $instance );
 
 		#---- if there are no children do not display the parent unless it is check to do so
 		if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){

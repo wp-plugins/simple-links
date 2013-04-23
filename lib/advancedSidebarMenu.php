@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 4.8.13
+          * @since 4.23.13
           * 
           * @package Advanced Sidebar Menu
           */
@@ -256,7 +256,7 @@ class advancedSidebarMenu{
 
     /**
     * Allows for Overwritting files in the child theme
-    * @since 4.8.13
+    * @since 4.23.13
     * @param string $file the name of the file to overwrite
     */
          
@@ -268,7 +268,7 @@ class advancedSidebarMenu{
         } else {
             $file = ADVANCED_SIDEBAR_VIEWS_DIR . $file;
         }
-        return $file;
+        return apply_filters( 'advanced_sidebar_menu_view_file', $file, $legacy );
     
     }
 
