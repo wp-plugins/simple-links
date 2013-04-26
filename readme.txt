@@ -38,7 +38,9 @@ Includes Category Options:
    <li>Levels of Categories to display</li>
 </ol>    
 
-There is also built in functionality to overwrite the output of the widgets and the css to customize this and still be upgrade safe.
+Templates may be overridden for customization of outputs and/or css.
+
+Many built in filters for altering the way the widgets function.
    
 
 
@@ -85,9 +87,6 @@ the folder you just created. You may edit the files at will to change the output
 You must have the option checked to use the built in CSS (in the widget) to be able to edit the css file in this way.
 The Others will work always.
 
-= Does this support multiple instances? =
-
-Yes.
 
 = Does the menu change for each page you are on? =
 
@@ -98,6 +97,11 @@ Yes. Based on whatever parents and children pages you are on, the menu will chan
 As of version 1.1 this will automatically generate class names for each level for menu system. 
 You can add classes to your theme's style.css file to style it accordingly. 
 You may want to use something like margins to set the levels apart.
+
+
+= What if I want functionality which is not built in? =
+
+I do offer preminum services for buiding custom add-ons for additional functionality. Otherwise you are welcome to alter the code in any way or build your own add-ons. keep in mind, if you edit the code directly, it will break on update. The best way to customize is using the built in filters or template overides. If you have a cool add-on you have developed, let me know, I may want to publish your work.
 
 
 == Changelog ==

@@ -32,6 +32,8 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * Not of ton of options here but who need them
      * Most of the magic happens automatically
      * 
+     * @filters do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'));
+     * 
      * @since 4.23.13
      */
 	function form( $instance ) {
@@ -93,11 +95,16 @@ class advanced_sidebar_menu_page extends WP_Widget {
     /**
      * Handles the saving of the widget
      * 
-     * @since 4.5.13
+     * @filters apply_filters('advanced_sidebar_menu_page_widget_update', $newInstance, $oldInstance );
+     * 
+     * @since 4.26.13
      */
-	function update( $new_instance, $old_instance ) {
-			$new_instance['exclude'] = strip_tags($new_instance['exclude']);
-			return $new_instance;
+	function update( $newInstance, $oldInstance ) {
+			$newInstance['exclude'] = strip_tags($newInstance['exclude']);
+            
+            $newInstance = apply_filters('advanced_sidebar_menu_page_widget_update', $newInstance, $oldInstance );
+            
+			return $newInstance;
     }
 
 
