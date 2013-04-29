@@ -9,7 +9,7 @@ Stable tag: 4.1.2
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
 == Description ==
-<h4>Now Supports an Unlimited Levels of Pages</h4>
+<h4>Now Supports Unlimited Levels of Pages</h4>
 
 Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
 Keeps the menu clean and usable.
