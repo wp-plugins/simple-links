@@ -148,6 +148,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
         
         if( is_single() && !isset( $instance['single'] ) ) return;
 
+        $legacy = (isset( $instance['legacy_mode'] ) && $instance['legacy_mode'] == 'checked');
         $asm = new advancedSidebarMenu;
         $asm->instance = $instance;
         $asm->args = $args;
@@ -182,13 +183,12 @@ class advanced_sidebar_menu_category extends WP_Widget {
              $asm->top_id = $asm->getTopCat($cat_id);
             
              //Keeps track or already used top levels so this won't double up
-             if( in_array( $asm->top_id, $already_top ) ){
-                continue;
-             }
+             if( in_array( $asm->top_id, $already_top ) ) continue;
+             
              $already_top[] = $asm->top_id;
        
             //Check for children
-            $all_categories = $all = get_categories( array( 'child_of' => $asm->top_id ) );
+            $all_categories = $all = array_filter(get_categories( array( 'child_of' => $asm->top_id )) );
 
             
             //If there are no children and not displaying childless parent - bail
@@ -221,17 +221,16 @@ class advanced_sidebar_menu_category extends WP_Widget {
             $top_cat = $cat_id;
             $cat_ancestors = $asm->ancestors;
                                     
-                            
-             $legacy = isset( $instance['legacy_mode'] );
-
              if( isset($instance['css']) && $instance['css'] == 'checked' ){
                  echo '<style type="text/css">';
                      include( $asm->file_hyercy('sidebar-menu.css', $legacy ) );
                  echo '</style>';
              }
+
             //Bring in the view
             require( $asm->file_hyercy( 'category_list.php', $legacy ) );
                    
+              
             echo apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );        
       
             if( $close ){

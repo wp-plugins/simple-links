@@ -201,11 +201,13 @@ class advancedSidebarMenu{
     
     /**
      * Determines if all the children should be included
-     * @since 7/16/12
+     * @since 5.19.13
      * @return bool
      */
     function display_all(){
+    
         if( !isset( $this->instance['display_all'] ) ) return false;
+
         if( $this->instance['display_all'] == 'checked' ){
             return true;
         } else {
