@@ -17,6 +17,22 @@ class advancedSidebarMenu{
       var $order_by;
          
          
+      
+      /**
+       * Checks if a widgets checkbox is checked.
+       * * this one is special and does a double check
+       * 
+       * @since 4.1.3
+       * 
+       * @param string $name - name of checkbox
+       */   
+      function checked($name){
+      
+        if( isset( $this->instance[$name] ) && $this->instance[$name] == 'checked' ) return true;
+        
+        return false;
+          
+      }   
          
       /**
        * Retrieves the Highest level Category Id

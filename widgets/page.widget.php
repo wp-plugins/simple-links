@@ -187,11 +187,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
         $result = $child_pages = apply_filters( 'advanced_sidebar_menu_child_pages', $child_pages, $post, $args, $instance );
 
         #---- if there are no children do not display the parent unless it is check to do so
-        if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){
+        if( ($child_pages) || $asm->checked('include_childless_parent') && (!in_array($top_parent, $exclude) )  ){
             
-                $legacy = isset( $instance['legacy_mode'] );
+                $legacy = $asm->checked('legacy_mode' );
             
-                if( $instance['css'] == 'checked' ){
+                if( $asm->checked('css') ){
                     echo '<style type="text/css">';
                         include( $asm->file_hyercy('sidebar-menu.css', $legacy ) );
                     echo '</style>';

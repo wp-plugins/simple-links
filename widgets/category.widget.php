@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 4.23.13
+           * @since 5.19.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -147,25 +147,24 @@ class advanced_sidebar_menu_category extends WP_Widget {
     function widget($args, $instance) {
         
         if( is_single() && !isset( $instance['single'] ) ) return;
-
-        $legacy = (isset( $instance['legacy_mode'] ) && $instance['legacy_mode'] == 'checked');
         $asm = new advancedSidebarMenu;
         $asm->instance = $instance;
         $asm->args = $args;
-        $already_top = array();
+        
+        $legacy = $asm->checked('legacy_mode');
+
+        $cat_ids = $already_top = array();
+        $asm_once = $asm_cat_widget_count = false; //keeps track of how many widgets this created
+        $count = null;
         
         $exclude = explode(',', $instance['exclude']);
         $asm->exclude = $exclude;
         
         extract( $args);
-        #-- Create a usable array of the excluded pages
-    
-        $cat_ids = $already_top = array();
-        $asm_once = $asm_cat_widget_count = false; //keeps track of how many widgets this created
-        $count = null;
+        
 
         //If on a single page create an array of each category and create a list for each
-        if( is_single() && (isset($instance['single']) ) ){
+        if( is_single() && $asm->checked('single' ) ){
             $category_array = get_the_category();
             foreach( get_the_category() as $id => $cat ){
                 $cat_ids[] = $cat->term_id;
@@ -192,7 +191,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
             
             //If there are no children and not displaying childless parent - bail
-            if( empty($all_categories ) && !(isset($instance['include_childless_parent'])) ) continue;
+            if( empty($all_categories ) && !( $asm->checked('include_childless_parent') ) ) continue;
             //If there are no children and the parent is excluded bail
             if( empty($all_categories ) && in_array($asm->top_id, $exclude) ) continue;
                 
@@ -203,6 +202,13 @@ class advanced_sidebar_menu_category extends WP_Widget {
                 
                 //Start the menu
                 echo $before_widget;
+                   if( !$asm_once ) {
+                       $asm->title();
+                       if( $asm->checked('css') ){
+                            echo '<style type="text/css">';
+                            include( $asm->file_hyercy('sidebar-menu.css', $legacy ) );
+                            echo '</style>';
+                        }
                         
                     $count++; // To change the id of the widget if there are multiple
                     $asm_once = true;  //There has been a div
@@ -212,19 +218,15 @@ class advanced_sidebar_menu_category extends WP_Widget {
                         $close = false;  //If this is a list leave it open for now
                     } 
 
-            } else {
-                $close = false;
-            }
+                   } else {
+                        $close = false;
+                   }
                     
                     
-            //for deprecation
-            $top_cat = $cat_id;
-            $cat_ancestors = $asm->ancestors;
+                //for deprecation
+                $top_cat = $cat_id;
+                $cat_ancestors = $asm->ancestors;
                                     
-             if( isset($instance['css']) && $instance['css'] == 'checked' ){
-                 echo '<style type="text/css">';
-                     include( $asm->file_hyercy('sidebar-menu.css', $legacy ) );
-                 echo '</style>';
              }
 
             //Bring in the view

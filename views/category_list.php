@@ -13,13 +13,14 @@
 
 
 
-//Displays the title
-$asm->title();
+
+$content = '';
 
 //Include the parent page if chosen
 if( $asm->include_parent() ){
 	$content .= '<ul class="parent-sidebar-menu">';
 		$content .= $asm->openListItem( wp_list_categories( 'echo=0&title_li=&include=' . trim($top_cat)) );
+      
 }
 
 

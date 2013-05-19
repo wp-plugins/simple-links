@@ -2,7 +2,7 @@
 /**
  * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
- * @since 4.23.13
+ * @since 5.19.13
  *
  *
  * @uses to edit, create a file named page_list.php and put in a folder in the your theme called 'advanced-sidebar-menu
@@ -41,12 +41,9 @@ if( $child_pages ){
 			} else {
 			    continue;
             }
-                if( !$instance['legacy_mode'] ){
-                    #-- Displays all levels of granchild pages related to the current page
-			         $content .= $asm->displayGrandChildMenu($pID);
-                } else{
-                    $content .= $asm->grandChildLegacyMode($pID);             
-                }      
+			         
+			$content .= $asm->displayGrandChildMenu($pID);
+   
                     
             $content .= '</li>';    
 		}
