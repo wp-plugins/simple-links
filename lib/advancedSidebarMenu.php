@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 4.23.13
+          * @since 5.19.13
           * 
           * @package Advanced Sidebar Menu
           */
@@ -17,6 +17,37 @@ class advancedSidebarMenu{
       var $order_by;
          
          
+         
+      /**
+       * Retrieves the Highest level Category Id
+       * 
+       * @since 4.1.3
+       * @param int $catId - id of cat looking for top parent of
+       * 
+       * @return int
+       */   
+       function getTopCat( $catId ){
+             $cat_ancestors = array();
+             $cat_ancestors[] = $catId ;
+       
+            do {
+                $cat_id = get_category($cat_id);
+                $cat_id = $cat_id->parent;
+                $cat_ancestors[] = $cat_id; 
+            }
+             while ($cat_id);
+       
+            
+             //Reverse the array to start at the last
+             $this->ancestors = array_reverse( $cat_ancestors );
+             
+             //forget the [0] because the parent of top parent is always 0
+             return $this->ancestors[1];
+           
+       }
+       
+       
+       
       /**   
        * Removes the closing </li> tag from a list item to allow for child menus inside of it
        * 
@@ -174,6 +205,7 @@ class advancedSidebarMenu{
      * @return bool
      */
     function display_all(){
+        if( !isset( $this->instance['display_all'] ) ) return false;
         if( $this->instance['display_all'] == 'checked' ){
             return true;
         } else {
@@ -211,10 +243,11 @@ class advancedSidebarMenu{
     
     /**
      * Determines if the parent page or cat should be included
-     * @since 7/16/12
+     * @since 5.19.13
      * @return bool
      */
     function include_parent(){
+        if( !isset( $this->instance['include_parent'] ) ) return false;
         if( ($this->instance['include_parent'] == 'checked') && (!in_array($this->top_id, $this->exclude)) ){
             return true;
         } else {
@@ -225,14 +258,12 @@ class advancedSidebarMenu{
    
     /**
      * Echos the title of the widget to the page
-     * @since 4.7.13
+     * @since 5.19.13
      */
     function title(){
         if( $this->instance['title'] != '' ){
-            
             $title = apply_filters('widget_title', $this->instance['title'], $this->args, $this->instance );
-            
-            echo '<h4 class="widgettitle">' . $title . '</h4>';
+            echo $this->args['before_title'] . $title . $this->args['after_title'];
         }
         
     }
