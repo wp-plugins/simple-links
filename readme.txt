@@ -55,6 +55,9 @@ Some of the features this plugin offers:
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 1.8.0 =
+Added new filters to allow for filtering each links output directly
+
 
 = 1.7.1 =
 Prevent the links from showing up in search results
