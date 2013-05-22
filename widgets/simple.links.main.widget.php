@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 4.23.13
+                    * @since 5.22.13
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -89,7 +89,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * The output of the widget to the site
-     * @since 4.23.13
+     * @since 5.22.13
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
@@ -115,8 +115,8 @@ class SL_links_main extends WP_Widget {
         
         
         //Call this filter to change the Widgets Settings Pre Compile
-        $instance = apply_filters('simple_links_widget_settings_' . $widget_id, $instance);
         $instance = apply_filters('simple_links_widget_settings', $instance);
+        $instance = apply_filters('simple_links_widget_settings_' . $widget_id, $instance);
 
         //Go through all the possible categories and add the ones that are set
         foreach( $simple_links_func->get_categories() as $cat ){
@@ -155,8 +155,9 @@ class SL_links_main extends WP_Widget {
         $links = get_posts( $query_args );
         
         //Filter on the links object directly
-        $links = apply_filters('simple_links_widget_links_object_' . $widget_id, $links, $instance, $args );
         $links = apply_filters('simple_links_widget_links_object', $links, $instance, $args );
+        $links = apply_filters('simple_links_widget_links_object_' . $widget_id, $links, $instance, $args );
+        
         
         //Escape hatch
         if( !$links ){
@@ -191,10 +192,9 @@ class SL_links_main extends WP_Widget {
                 continue;
             }
     
-           $meta = apply_filters('simple_links_widget_link_meta_' . $widget_id, get_post_meta($link->ID, false), $link, $instance, $args );
            $meta = apply_filters('simple_links_widget_link_meta', $meta, $link, $instance, $args );
-        
-        
+           $meta = apply_filters('simple_links_widget_link_meta_' . $widget_id, get_post_meta($link->ID, false), $link, $instance, $args );
+           
             //Adds the meta to the main object for people using filters
             $link->meta = $meta;
 
@@ -210,9 +210,8 @@ class SL_links_main extends WP_Widget {
                     $image .= '<br>';  //make the ones with returned image have the links below
                 }
             }
-        
-        
-            $output .= sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
+
+            $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
                     $meta['web_address'][0],
                     $meta['target'][0],
                     strip_tags($meta['description'][0]),
@@ -220,6 +219,12 @@ class SL_links_main extends WP_Widget {
                     $image,
                     $link->post_title
             );
+            
+            $link_output = apply_filters('simple_links_widget_link_output', $link_output, $meta, $link, $image, $instance, $args );
+            $link_output = apply_filters('simple_links_widget_link_output_' . $widget_id, $link_output, $meta, $link, $image, $instance, $args );
+ 
+            $output .= $link_output;
+            
 
             //Add the description
             if( isset($instance['description']) && ($instance['description']) && isset($meta['description'][0]) && ($meta['description'][0] != '') ){

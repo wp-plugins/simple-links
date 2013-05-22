@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 4.21.13
+                  * @since 5.22.13
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -78,7 +78,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 4.23.13
+	 * @since 5.22.13
 	 * @param $atts = 'title'          => string, 
 	 * 				  'category'       => csv,  
 	 *                'orderby'        => string, 
@@ -202,8 +202,9 @@ class simple_links extends SL_post_type_tax{
 		$links = get_posts( $args );
 
         //Filter on the links object directly
-        $links = apply_filters('simple_links_shortcode_links_object_' . $atts['id'], $links, $atts );
         $links = apply_filters('simple_links_shortcode_links_object', $links, $atts);
+        $links = apply_filters('simple_links_shortcode_links_object_' . $atts['id'], $links, $atts );
+        
 
 
 		if( !$links ){ 
@@ -251,7 +252,7 @@ class simple_links extends SL_post_type_tax{
 					}
 				
 				
-			 		$output .= sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
+			 		$link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
 			  						$meta['web_address'][0],
 			  						$meta['target'][0],
 			  						$meta['description'][0],
@@ -259,6 +260,12 @@ class simple_links extends SL_post_type_tax{
 			 				        $image,
 			  						$link->post_title
 			  				 ); 
+                     $link_output = apply_filters('simple_links_shortcode_link_output', $link_output, $meta, $link, $image, $atts );
+            $link_output = apply_filters('simple_links_shortcode_link_output_' . $atts['id'], $link_output, $meta, $link, $image, $atts );
+ 
+            $output .= $link_output;
+                     
+                             
 			 	
 			 		//Add the description
 			 		if( ($atts['description'] == 'true') && ($meta['description'][0] != '') ){
