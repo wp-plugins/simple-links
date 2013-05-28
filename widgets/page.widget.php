@@ -34,7 +34,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * 
      * @filters do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'));
      * 
-     * @since 4.23.13
+     * @since 5.28.13
      */
     function form( $instance ) {
          ?>
@@ -49,8 +49,27 @@ class advanced_sidebar_menu_page extends WP_Widget {
                         
             <p> Include Parent Even With No Children: <input id="<?php echo $this->get_field_id('include_childless_parent'); ?>"
             name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
-                    <?php echo $instance['include_childless_parent']; ?>/></p>
-                        
+                    <?php echo $instance['include_childless_parent']; ?>/>
+            </p>
+            
+            <p> Order By: <select id="<?php echo $this->get_field_id('order_by'); ?>" 
+            name="<?php echo $this->get_field_name('order_by'); ?>">
+                <?php
+                
+                $order_by = array( 
+                            'menu_order' => 'Page Order',
+                            'post_title' => 'Title',
+                            'post_date'  => 'Published Date'
+                            );
+                
+                foreach( $order_by as $key => $order ){
+                    
+                    printf('<option value="%s" %s>%s</option>', $key, selected($instance['order_by'], $key, false), $order );
+                }
+                ?>
+             </select>
+           </p>
+             
             <p> Use this Plugin's Styling: <input id="<?php echo $this->get_field_id('css'); ?>"
             name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['css']; ?>/></p>
@@ -124,7 +143,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
      *         apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
      * 
      * 
-     * @since 5.19.13
+     * @since 5.28.13
      */
     function widget($args, $instance) {
         global $wpdb, $post, $table_prefix;
@@ -173,10 +192,10 @@ class advanced_sidebar_menu_page extends WP_Widget {
         
         
         //Filter for specifiying the order by
-        $order_by = apply_filters('advanced_sidebar_menu_order_by', 'menu_order', $post, $args, $instance );
+        $order_by = apply_filters('advanced_sidebar_menu_order_by', $instance['order_by'], $post, $args, $instance );
         $asm->order_by = $order_by; 
             
-            
+
         /**
          * Must be done this way to prevent doubling up of pages
          */

@@ -281,7 +281,8 @@ class advancedSidebarMenu{
     function title(){
         if( $this->instance['title'] != '' ){
             $title = apply_filters('widget_title', $this->instance['title'], $this->args, $this->instance );
-            $title = apply_filters('advanced_sidebar_menu_widget_title', $title, $this->args, $this->instance );
+            $title = apply_filters('advanced_sidebar_menu_widget_title', $title, $this->args, $this->instance, $this );
+            
             echo $this->args['before_title'] . $title . $this->args['after_title'];
         }
         

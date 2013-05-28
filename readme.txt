@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 4.1.4
+Stable tag: 4.2.0
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
@@ -105,6 +105,10 @@ I do offer preminum services for buiding custom add-ons for additional functiona
 
 
 == Changelog ==
+
+= 4.2.0 =
+* Added Order By Selection in Page Widget
+
 = 4.0.0 =
 * Added support for an unlimited number of page levels
 * Change structure slightly for future enhancements
