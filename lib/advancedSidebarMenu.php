@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 5.19.13
+          * @since 5.28.13
           * 
           * @package Advanced Sidebar Menu
           */
@@ -276,11 +276,12 @@ class advancedSidebarMenu{
    
     /**
      * Echos the title of the widget to the page
-     * @since 5.19.13
+     * @since 5.28.13
      */
     function title(){
         if( $this->instance['title'] != '' ){
             $title = apply_filters('widget_title', $this->instance['title'], $this->args, $this->instance );
+            $title = apply_filters('advanced_sidebar_menu_widget_title', $title, $this->args, $this->instance );
             echo $this->args['before_title'] . $title . $this->args['after_title'];
         }
         
