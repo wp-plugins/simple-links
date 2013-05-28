@@ -63,7 +63,7 @@ e.g.
 
 == Frequently Asked Questions ==
 
-= Version 4.0 is not displaying all my 3rd and 4th level pages always. How do I bring this back?=
+= Version 4.0 is not displaying all my 3rd and 4th level pages always. How do I bring this back? =
 
 You will find a checkbox in the widget options for Legacy Mode. 
 
