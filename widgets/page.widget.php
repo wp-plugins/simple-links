@@ -204,7 +204,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
         #---- if there are no children do not display the parent unless it is check to do so
         if( (!empty($child_pages)) || $asm->checked('include_childless_parent') && (!in_array($top_parent, $exclude) )  ){
             
-                $legacy = $asm->checked('legacy_mode' );
+                $legacy = $asm->checked('legacy_mode');
             
                 if( $asm->checked('css') ){
                     echo '<style type="text/css">';

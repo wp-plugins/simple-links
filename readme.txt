@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 4.2.1
+Stable tag: 4.2.2
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
@@ -63,18 +63,25 @@ e.g.
 
 == Frequently Asked Questions ==
 
-= Version 4.0 is not displaying all my 3rd and 4th level pages always. How do I bring this back? =
+= Version 4.0+ is not displaying the same as previous version of the plugin. How do I bring this back? =
 
 You will find a checkbox in the widget options for Legacy Mode. 
 
-= How do I order my links by title? =
+= How do I change the styling of the current page? =
 
-Add this to your theme's functions.php file
-<code>add_filter('advanced_sidebar_menu_order_by', 'order_by_post_title' );
-function order_by_post_title($order){
-    return 'post_title';
+You may add css to your theme's style.css to change the way the menu looks
+
+For Instance This would remove the dot and  change the color
+<code>
+.advanced-sidebar-menu li.current_page_item a {
+    color: black;
+}
+
+.advanced-sidebar-menu li.current_page_item {
+    list-style-type:  none !important;
 }
 </code>
+
 
 = How do you get the categories to display on single post pages? =
 
