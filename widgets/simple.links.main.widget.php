@@ -211,6 +211,7 @@ class SL_links_main extends WP_Widget {
                 }
             }
 
+            //TODO Move this to a linkFactory type method
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
                     $meta['web_address'][0],
                     $meta['target'][0],

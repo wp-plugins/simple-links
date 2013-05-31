@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 5.22.13
+                  * @since 5.31.13
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -61,6 +61,34 @@ class simple_links extends SL_post_type_tax{
 		add_shortcode('simple-links', array( $this, 'shortcode' ) );
 	
 	}
+
+    
+    /**
+     * Generates an html link from a links ID
+     * 
+     * @since 5.31.13
+     * 
+     * @param int  $linksId - the links post->ID
+     */
+    public function linkFactory($linkId){
+       $link = get_post( $linkId );
+       $meta = get_post_meta( $linkId );
+       
+       $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s</a>',
+                    $meta['web_address'][0],
+                    $meta['target'][0],
+                    strip_tags($meta['description'][0]),
+                    empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"',
+                    $link->post_title
+        );
+            
+        return apply_filters('simple_links_factory_output', $link_output, $linkId );
+            
+    }
+    
+    
+
+
 	
 	
 	/**
@@ -78,7 +106,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 5.22.13
+	 * @since 5.31.13
 	 * @param $atts = 'title'          => string, 
 	 * 				  'category'       => csv,  
 	 *                'orderby'        => string, 
@@ -251,12 +279,12 @@ class simple_links extends SL_post_type_tax{
 						}
 					}
 				
-				
+				     //TODO Move this to a linkFactory type method
 			 		$link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
 			  						$meta['web_address'][0],
 			  						$meta['target'][0],
 			  						$meta['description'][0],
-			  						empty( $meta['link_target_nofollow'] ) ? '': 'rel="nofollow"', 
+			  						empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"', 
 			 				        $image,
 			  						$link->post_title
 			  				 ); 
