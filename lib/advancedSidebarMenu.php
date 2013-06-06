@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 5.31.13
+          * @since 6.6.13
           * 
           * @package Advanced Sidebar Menu
           */
@@ -15,6 +15,8 @@ class advancedSidebarMenu{
       var $ancestors; //For the category ancestors
       var $count = 1; //Count for grandchild levels
       var $order_by;
+      var $taxonomy; //For filters to override the taxonomy
+      var $current_term; //Current category or taxonomy
          
          
       
@@ -33,27 +35,42 @@ class advancedSidebarMenu{
         return false;
           
       }   
+      
+      
+      /**
+       * Used by a uasort to sort taxonomy arrays by term order
+       * 
+       * @since 4.3.0
+       */
+      function sortTerms( $a, $b ){
+          if( !isset($a->{$this->order_by}) || !isset($b->{$this->order_by}) ) return 0;
+          
+          return $a->{$this->order_by} > $b->{$this->order_by};
+          
+      }
+      
+      
          
       /**
        * Retrieves the Highest level Category Id
        * 
-       * @since 4.1.3
+       * @since 6.6.13
        * @param int $catId - id of cat looking for top parent of
        * 
        * @return int
        */   
        function getTopCat( $catId ){
              $cat_ancestors = array();
-             $cat_ancestors[] = $catId ;
+             $cat_ancestors[] = $catId;
+             
        
             do {
-                $cat_id = get_category($cat_id);
-                $cat_id = $cat_id->parent;
-                $cat_ancestors[] = $cat_id; 
+                $catId = get_term($catId, $this->taxonomy);
+                $catId = $catId->parent;
+                $cat_ancestors[] = $catId; 
             }
-             while ($cat_id);
-       
-            
+             while ($catId);
+
              //Reverse the array to start at the last
              $this->ancestors = array_reverse( $cat_ancestors );
              
@@ -61,6 +78,7 @@ class advancedSidebarMenu{
              return $this->ancestors[1];
            
        }
+       
        
        
        
@@ -197,13 +215,13 @@ class advancedSidebarMenu{
     /**
      * If the cat is a second level cat
      * @param obj $cat the cat
-     * @since 10.12.12
+     * @since 6.6.13
      */
     function second_level_cat( $child_cat ){
         //if this is the currrent cat or a parent of the current cat
-        if( $child_cat->cat_ID == get_query_var('cat' ) || in_array( $child_cat->cat_ID, $this->ancestors )){
+        if( $child_cat->cat_ID == $this->current_term || in_array( $child_cat->cat_ID, $this->ancestors )){
             $all_children = array();
-            $all_children = get_categories( array( 'child_of' => $child_cat->cat_ID ) );
+            $all_children = get_terms( $this->taxonomy, array( 'child_of' => $child_cat->cat_ID ) );
             if( !empty( $all_children ) ){
                 return true;
             } else {

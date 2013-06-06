@@ -138,10 +138,13 @@ class advanced_sidebar_menu_category extends WP_Widget {
     /**
      * Outputs the categories widget to the page
      * 
-     * @since 5.19.13
+     * @since 6.6.13
      * @uses loads the views/category_list.php
      * 
-     * @filters apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance ); 
+     * @filters apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );
+     *           apply_filters('advanced_sidebar_menu_taxonomy', 'post', $args, $instance ); 
+     *           apply_filters('advanced_sidebar_menu_proper_single', $asm->checked('single'), $args, $instance)
+     *           apply_filters( 'advanced_sidebar_menu_category_ids', $cat_ids, $args, $instance )
      * 
      */
     function widget($args, $instance) {
@@ -154,26 +157,42 @@ class advanced_sidebar_menu_category extends WP_Widget {
         $legacy = $asm->checked('legacy_mode');
 
         $cat_ids = $already_top = array();
-        $asm_once = $asm_cat_widget_count = false; //keeps track of how many widgets this created
-        $count = null;
+        $asm_once = false; //keeps track of how many widgets this created
+
         
         $exclude = explode(',', $instance['exclude']);
         $asm->exclude = $exclude;
         
+        $asm->taxonomy = apply_filters('advanced_sidebar_menu_taxonomy', 'category', $args, $instance );
+        
         extract( $args);
         
-
         //If on a single page create an array of each category and create a list for each
-        if( is_single() && $asm->checked('single' ) ){
-            $category_array = get_the_category();
-            foreach( get_the_category() as $id => $cat ){
+        if( is_single() ){
+            if( !apply_filters('advanced_sidebar_menu_proper_single', $asm->checked('single'), $args, $instance) ) return;
+            global $post;
+            $category_array = wp_get_object_terms($post->ID, $asm->taxonomy);
+           
+            //Sort by term_order to work with some plugins
+            $asm->order_by = apply_filters('advanced_sidebar_menu_category_orderby', 'name', $args, $instance );
+
+            uasort( $category_array, array( $asm, 'sortTerms'));
+
+            foreach( $category_array as $id => $cat ){
                 $cat_ids[] = $cat->term_id;
             }
             
         //IF on a category page get the id of the category
-        } elseif( is_category() ){
-            $cat_ids[] = get_query_var('cat');  
+        } elseif( is_tax() || is_category() ){
+            $asm->current_term = get_queried_object()->term_id;
+            $cat_ids[] = get_queried_object()->term_id;
         }
+        
+
+        
+        $cat_ids = apply_filters( 'advanced_sidebar_menu_category_ids', $cat_ids, $args, $instance );
+        
+        if( empty( $cat_ids ) ) return;
 
         //Go through each category there will be only one if this is a category page mulitple possible if this is single
         foreach( $cat_ids as $cat_id ){
@@ -187,7 +206,11 @@ class advanced_sidebar_menu_category extends WP_Widget {
              $already_top[] = $asm->top_id;
        
             //Check for children
-            $all_categories = $all = array_filter(get_categories( array( 'child_of' => $asm->top_id )) );
+            $all_categories = $all = array_filter( get_terms( $asm->taxonomy, array( 
+                                                                                        'child_of' => $child_cat->cat_ID, 
+                                                                                        'orderby' => $asm->order_by )
+                                                             ) 
+                                                 );
 
             
             //If there are no children and not displaying childless parent - bail
@@ -209,30 +232,24 @@ class advanced_sidebar_menu_category extends WP_Widget {
                             include( $asm->file_hyercy('sidebar-menu.css', $legacy ) );
                             echo '</style>';
                         }
-                        
-                    $count++; // To change the id of the widget if there are multiple
+
                     $asm_once = true;  //There has been a div
                     $close = true; //The div should be closed at the end
     
                     if($instance['new_widget'] == 'list'){
                         $close = false;  //If this is a list leave it open for now
                     } 
-
-                   } else {
-                        $close = false;
-                   }
-                    
-                    
-                //for deprecation
-                $top_cat = $cat_id;
-                $cat_ancestors = $asm->ancestors;
-                                    
+                   }                    
              }
+            
+            //for deprecation
+            $top_cat = $asm->top_id;
+            $cat_ancestors = $asm->ancestors;
+            
 
             //Bring in the view
             require( $asm->file_hyercy( 'category_list.php', $legacy ) );
-                   
-              
+                              
             echo apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );        
       
             if( $close ){

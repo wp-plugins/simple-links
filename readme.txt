@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 4.2.2
+Stable tag: 4.3.0
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
@@ -19,7 +19,8 @@ Includes Page options:
    <li>Add a title to the widget</li>
    <li>Include the highest level parent page</li>
    <li>Include the highest level parent page even with no Children</li>
-  <li>Use built in styling (very plain styling currently but plans for more advanced in near future versions)</li>
+   <li>Order Pages By (date, title, page order)</li>
+   <li>Use built in styling (very plain styling currently but plans for more advanced in near future versions)</li>
    <li>Exclude pages</li>
    <li>Legacy Mode - For those who like the way it was pre version 4.0</li>
    <li>Always display child Pages</li>
@@ -112,6 +113,8 @@ I do offer preminum services for buiding custom add-ons for additional functiona
 
 
 == Changelog ==
+= 4.3.0 =
+* Added many filters into the category widget for things like taxonomies, parent category, display on override, order by, and much more. There is no UI support for any of this yet, but developers may now tap into this. 
 
 = 4.2.0 =
 * Added Order By Selection in Page Widget
