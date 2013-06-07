@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 5.19.13
+           * @since 6.7.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -138,7 +138,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
     /**
      * Outputs the categories widget to the page
      * 
-     * @since 6.6.13
+     * @since 6.7.13
      * @uses loads the views/category_list.php
      * 
      * @filters apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );
@@ -211,6 +211,11 @@ class advanced_sidebar_menu_category extends WP_Widget {
                                                                                         'orderby' => $asm->order_by )
                                                              ) 
                                                  );
+            //For Backwards Compatibility
+            foreach( $all_categories as $tc ){
+               $tc->cat_ID = $tc->term_id;   
+            }    
+            
 
             
             //If there are no children and not displaying childless parent - bail

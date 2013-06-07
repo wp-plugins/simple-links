@@ -3,7 +3,7 @@
             /**
              * The Ouput of the Advanced Sidebar Categories Widget
              * @author Mat Lipe
-             * @since 4.3.0
+             * @since 4.3.1
              * 
              * 
              * @uses to edit create a file named category_list.php and put in a folder in the your child theme called 'advanced-sidebar-menu
@@ -19,7 +19,6 @@ if( $asm->include_parent() ){
         $content .= $asm->openListItem( wp_list_categories( 'echo=0&orderby='.$asm->order_by.'&taxonomy='.$asm->taxonomy.'&title_li=&hide_empty=0&include=' . trim($asm->top_id)) );
       
 }
-
 
     //If there are children to display
     if( !empty($all_categories) ){
@@ -38,14 +37,14 @@ if( $asm->include_parent() ){
                     if( $asm->first_level_category( $child_cat ) ){
                         
                         //List the child category and the children if it is the current one
-                        $content .= $asm->openListItem(wp_list_categories('echo=0&orderby='.$asm->order_by.'&taxonomy='.$asm->taxonomy.'&title_li=&include=' . $child_cat->cat_ID . '&depth=1' ) );
+                        $content .= $asm->openListItem(wp_list_categories('echo=0&orderby='.$asm->order_by.'&taxonomy='.$asm->taxonomy.'&title_li=&include=' . $child_cat->term_id . '&depth=1' ) );
 
                         
                         //If there are children of this cat and it is a parent or child or the current cat
                         if( $asm->second_level_cat( $child_cat ) ){
                                 #-- Create a new menu with all the children under it
                                 $content .= '<ul class="grandchild-sidebar-menu">';
-                                $content .= wp_list_categories('echo=0&orderby='.$asm->order_by.'&taxonomy='.$asm->taxonomy.'&title_li=&exclude='.$instance['exclude'].'&depth=3&child_of=' .$child_cat->cat_ID );
+                                $content .= wp_list_categories('echo=0&orderby='.$asm->order_by.'&taxonomy='.$asm->taxonomy.'&title_li=&exclude='.$instance['exclude'].'&depth=3&child_of=' .$child_cat->term_id );
                                 $content .= '</ul>';
                             
                         }

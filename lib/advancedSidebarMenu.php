@@ -62,15 +62,14 @@ class advancedSidebarMenu{
        function getTopCat( $catId ){
              $cat_ancestors = array();
              $cat_ancestors[] = $catId;
-             
-       
-            do {
+               
+             do {
                 $catId = get_term($catId, $this->taxonomy);
                 $catId = $catId->parent;
                 $cat_ancestors[] = $catId; 
             }
              while ($catId);
-
+             
              //Reverse the array to start at the last
              $this->ancestors = array_reverse( $cat_ancestors );
              
@@ -203,11 +202,15 @@ class advancedSidebarMenu{
      * 
      * IF this is a top level category
      * @param obj $cat the cat object
+     * 
+     * @since 6.7.13
      */
     function first_level_category( $cat ){
-        if( !in_array($cat->cat_ID, $this->exclude) && $cat->parent == $this->top_id){
+        
+        if( !in_array($cat->term_id, $this->exclude) && $cat->parent == $this->top_id){
             return true;
         } else {
+       
             return false;
         }
     }
@@ -215,13 +218,13 @@ class advancedSidebarMenu{
     /**
      * If the cat is a second level cat
      * @param obj $cat the cat
-     * @since 6.6.13
+     * @since 6.7.13
      */
     function second_level_cat( $child_cat ){
         //if this is the currrent cat or a parent of the current cat
-        if( $child_cat->cat_ID == $this->current_term || in_array( $child_cat->cat_ID, $this->ancestors )){
+        if( $child_cat->term_id == $this->current_term || in_array( $child_cat->term_id, $this->ancestors )){
             $all_children = array();
-            $all_children = get_terms( $this->taxonomy, array( 'child_of' => $child_cat->cat_ID ) );
+            $all_children = get_terms( $this->taxonomy, array( 'child_of' => $child_cat->term_id ) );
             if( !empty( $all_children ) ){
                 return true;
             } else {
