@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 6.6.13
+          * @since 6.13.13
           * 
           * @package Advanced Sidebar Menu
           */
