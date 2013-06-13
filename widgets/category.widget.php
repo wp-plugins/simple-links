@@ -253,7 +253,6 @@ class advanced_sidebar_menu_category extends WP_Widget {
             $top_cat = $asm->top_id;
             $cat_ancestors = $asm->ancestors;
             
-
             //Bring in the view
             require( $asm->file_hyercy( 'category_list.php', $legacy ) );
                               

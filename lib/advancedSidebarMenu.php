@@ -218,13 +218,15 @@ class advancedSidebarMenu{
     /**
      * If the cat is a second level cat
      * @param obj $cat the cat
-     * @since 6.7.13
+     * @since 6.13.13
      */
     function second_level_cat( $child_cat ){
+
         //if this is the currrent cat or a parent of the current cat
         if( $child_cat->term_id == $this->current_term || in_array( $child_cat->term_id, $this->ancestors )){
+            
             $all_children = array();
-            $all_children = get_terms( $this->taxonomy, array( 'child_of' => $child_cat->term_id ) );
+            $all_children = get_terms( $this->taxonomy, array( 'child_of' => $child_cat->term_id, 'fields' => 'ids' ) );
             if( !empty( $all_children ) ){
                 return true;
             } else {
