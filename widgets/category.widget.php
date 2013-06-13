@@ -191,7 +191,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
         
         $cat_ids = apply_filters( 'advanced_sidebar_menu_category_ids', $cat_ids, $args, $instance );
-        
+
         if( empty( $cat_ids ) ) return;
 
         //Go through each category there will be only one if this is a category page mulitple possible if this is single
@@ -204,13 +204,15 @@ class advanced_sidebar_menu_category extends WP_Widget {
              if( in_array( $asm->top_id, $already_top ) ) continue;
              
              $already_top[] = $asm->top_id;
+             
        
             //Check for children
             $all_categories = $all = array_filter( get_terms( $asm->taxonomy, array( 
-                                                                                        'child_of' => $child_cat->cat_ID, 
+                                                                                        'child_of' => $asm->top_id, 
                                                                                         'orderby' => $asm->order_by )
                                                              ) 
                                                  );
+
             //For Backwards Compatibility
             foreach( $all_categories as $tc ){
                $tc->cat_ID = $tc->term_id;   

@@ -29,7 +29,7 @@ if( $asm->include_parent() ){
                 $content .=  wp_list_categories('echo=0&orderby='.$asm->order_by.'&taxonomy='.$asm->taxonomy.'&title_li=&child_of=' . $asm->top_id .'&depth=' .$instance['levels'] );
 
             } else {
-            
+                
             #-- to Display the categories based a parent child relationship
                 foreach( $all_categories as $child_cat ){
                     
