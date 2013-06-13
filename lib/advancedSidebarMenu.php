@@ -203,16 +203,18 @@ class advancedSidebarMenu{
      * IF this is a top level category
      * @param obj $cat the cat object
      * 
-     * @since 6.7.13
+     * @since 6.13.13
      */
     function first_level_category( $cat ){
         
         if( !in_array($cat->term_id, $this->exclude) && $cat->parent == $this->top_id){
-            return true;
+            $return = true;
         } else {
-       
-            return false;
+            $return = false;
         }
+        
+        return apply_filters('advanced_sidebar_menu_first_level_category', $return, $cat, $this);
+        
     }
     
     /**
@@ -220,22 +222,26 @@ class advancedSidebarMenu{
      * @param obj $cat the cat
      * @since 6.13.13
      */
-    function second_level_cat( $child_cat ){
+    function second_level_cat( $cat ){
 
         //if this is the currrent cat or a parent of the current cat
-        if( $child_cat->term_id == $this->current_term || in_array( $child_cat->term_id, $this->ancestors )){
+        if( $cat->term_id == $this->current_term || in_array( $cat->term_id, $this->ancestors )){
             
             $all_children = array();
-            $all_children = get_terms( $this->taxonomy, array( 'child_of' => $child_cat->term_id, 'fields' => 'ids' ) );
+            $all_children = get_terms( $this->taxonomy, array( 'child_of' => $cat->term_id, 'fields' => 'ids' ) );
             if( !empty( $all_children ) ){
-                return true;
+                $return = true;
             } else {
-                return false;
+                $return = false;
             }
             
         } else {
-            return false;
+            $return = false;
         }
+        
+        return apply_filters('advanced_sidebar_menu_second_level_category', $return, $cat, $this);
+        
+        
     }
     
     /**
@@ -270,15 +276,18 @@ class advancedSidebarMenu{
      * 
      * Determines if this is an ancestor or the current post
      * @param obj $pID the post object
-     * @since 7/19/12
+     * @since 6.13.13
      */
     function page_ancestor( $pID ){
         global $post;
+        
         if($pID->ID == $post->ID or $pID->ID == $post->post_parent or @in_array($pID->ID, $post->ancestors) ){
-            return true;
+            $return = true;
         } else {
-            return false;
+            $return = false;
         }
+        
+        return apply_filters('advanced_sidebar_menu_page_ancestor', $return, $pID, $this);
     }
     
     
