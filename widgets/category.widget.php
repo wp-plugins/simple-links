@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 6.7.13
+           * @since 6.26.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -138,7 +138,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
     /**
      * Outputs the categories widget to the page
      * 
-     * @since 6.7.13
+     * @since 6.26.13
      * @uses loads the views/category_list.php
      * 
      * @filters apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );
@@ -148,6 +148,23 @@ class advanced_sidebar_menu_category extends WP_Widget {
      * 
      */
     function widget($args, $instance) {
+        
+        $defaults = array(
+            'title'                    => '',
+            'include_parent'           => false,
+            'include_childless_parent' => false,
+            'css'                      => false, 
+            'single'                   => false,
+            'new_widget'               => 'widget',
+            'exclude'                  => '',
+            'legacy_mode'              => false,      
+            'display_all'              => false,
+            'levels'                   => 1
+            );
+            
+        $instance = wp_parse_args( $instance, $defaults);
+        
+        
         
         if( is_single() && !isset( $instance['single'] ) ) return;
         $asm = new advancedSidebarMenu;

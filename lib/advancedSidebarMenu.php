@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 6.13.13
+          * @since 6.26.13
           * 
           * @package Advanced Sidebar Menu
           */
@@ -28,8 +28,7 @@ class advancedSidebarMenu{
        * 
        * @param string $name - name of checkbox
        */   
-      function checked($name){
-      
+      function checked($name){ 
         if( isset( $this->instance[$name] ) && $this->instance[$name] == 'checked' ) return true;
         
         return false;
@@ -246,18 +245,12 @@ class advancedSidebarMenu{
     
     /**
      * Determines if all the children should be included
-     * @since 5.19.13
+     * @since 6.26.13
      * @return bool
      */
     function display_all(){
     
-        if( !isset( $this->instance['display_all'] ) ) return false;
-
-        if( $this->instance['display_all'] == 'checked' ){
-            return true;
-        } else {
-            return false;
-        }
+        return $this->checked('display_all');
     }
     
     /**
@@ -293,25 +286,27 @@ class advancedSidebarMenu{
     
     /**
      * Determines if the parent page or cat should be included
-     * @since 5.19.13
+     * @since 6.26.13
      * @return bool
      */
     function include_parent(){
-        if( !isset( $this->instance['include_parent'] ) ) return false;
-        if( ($this->instance['include_parent'] == 'checked') && (!in_array($this->top_id, $this->exclude)) ){
+        
+        if( !$this->checked('include_parent') ) return false;
+       
+        if( (!in_array($this->top_id, $this->exclude)) ){
             return true;
-        } else {
-            return false;
         }
+            
+        return false;
     }
     
    
     /**
      * Echos the title of the widget to the page
-     * @since 5.31.13
+     * @since 6.26.13
      */
     function title(){
-        if( $this->instance['title'] != '' ){
+        if(  isset( $this->instance['title']) && ($this->instance['title'] != '') ){
             $title = apply_filters('widget_title', $this->instance['title'], $this->args, $this->instance );
             $title = apply_filters('advanced_sidebar_menu_widget_title', $title, $this->args, $this->instance, $this );
             

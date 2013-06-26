@@ -148,6 +148,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
     function widget($args, $instance) {
         global $wpdb, $post, $table_prefix;
         
+        
         $asm = new advancedSidebarMenu;
 
         $asm->instance = $instance;
