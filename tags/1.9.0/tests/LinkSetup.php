@@ -6,7 +6,7 @@
  * @author Mat Lipe
  * @requires Selenium
  */
-class Setup extends PHPUnit_Extensions_SeleniumTestCase
+class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
 {
     
     protected $captureScreenshotOnFailure = TRUE;
@@ -85,7 +85,7 @@ class Setup extends PHPUnit_Extensions_SeleniumTestCase
     
   protected function setUp()
   {
-    $this->setBrowser("*firefox");
+    $this->setBrowser("*chrome");
     $this->setBrowserUrl("http://wordpress.loc/wp-admin");
 
   }
@@ -144,8 +144,18 @@ class Setup extends PHPUnit_Extensions_SeleniumTestCase
    * Adds the additional fields
    */
   protected function addAdditionalFields(){
-      $this->click("link=Settings");
+      
+      $this->click("xpath=(//li[@id='menu-posts-simple_link']/a/div[3])");
       $this->waitForPageToLoad("30000");
+      
+      if( !$this->isElementPresent("xpath=(//a[contains(@href, 'edit.php?post_type=simple_link&page=simple-link-settings')])") ){
+            echo 'Is the test user an Admin???';
+          die();   
+          
+      }
+      $this->click("xpath=(//a[contains(@href, 'edit.php?post_type=simple_link&page=simple-link-settings')])");
+      $this->waitForPageToLoad("30000");
+      
 
       #-- Add additional Fields
       try {
