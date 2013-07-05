@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
 Tested up to: 3.5.1
-Stable tag: 1.8.1
+Stable tag: 1.9.0
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -33,6 +33,7 @@ Some of the features this plugin offers:
 </div>
 
 == Upgrade Notice ==
+
 = 1.7.1 =
 * Prevent the links from showing up in search results
 
@@ -55,9 +56,12 @@ Some of the features this plugin offers:
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 1.9.0 =
+Added ability to display the link image without the links title
+Added ability to use any type of link including relative links
+
 = 1.8.0 =
 Added new filters to allow for filtering each links output directly
-
 
 = 1.7.1 =
 Prevent the links from showing up in search results

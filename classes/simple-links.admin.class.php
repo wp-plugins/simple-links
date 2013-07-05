@@ -4,7 +4,7 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 4.23.13
+                      * @since 7.5.13
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
@@ -217,7 +217,7 @@ class simple_links_admin{
 	
 	/**
 	 * Generates all contextual help screens for this plugin
-	 * @since 12.15.12
+	 * @since 7.5.13
 	 * @uses Called at load by __construct
 	 */
 	function help(){
@@ -235,6 +235,7 @@ class simple_links_admin{
 												order      = '.__('"DESC or ASC" - defaults to ASC'). '<br>
 												count      = '.__('"Number of links to show"'). '<br>
 												show_image = '.__('"true or false" - to show the link\'s image or not'). '<br>
+												show_image_only = '.__('"true or false" - to show the link\'s image without the title under it. If show image is not true this does nothing'). '<br>
 												image_size = '.__('"Any size built into Wordpress or your theme" - default to thumbnail'). '<br>
 												remove_line_break = "true or false" - '.__('Remove Line Break Between Images and Links'). ' - default to false<br>
 												fields     = '.__('"Comma separated list of the Link\'s Additional Fields to show"'). '<br>
@@ -258,6 +259,7 @@ class simple_links_admin{
 				                Show Description = "'.__('Display the Link\'s Description'). '<br>
 				                Number of LInks  = "'.__('Number of links to show'). '"<br>
 				                Show Image       = "'.__('Check the box to display the Link\'s Image'). '<br>
+				                Display Image Without Title       = "'.__('Check this box display the Link\'s Image without the Link\'s title under it. If Show Image is not checked, this will do nothing"'). '<br>
 				                Image Size       = "'.__('The Size of Image to Show if the previous box is checked'). '<br>
 				                Include Additional Fields     = "'.__('Display values from the Link\'s Additional Fields'). '"<br>
 				                Field Separator  = "'.__('And characters to display between fields and description" - defaults to '). '"-"<br>'

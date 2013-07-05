@@ -2,7 +2,7 @@
                           /**
                            * Simple links admin jquery
                            * @author Mat Lipe
-                           * @since 11.6.12
+                           * @since 7.5.13
                            */
 
 var isSimpleLinks = false;
@@ -153,7 +153,7 @@ var SLsortPage = {
 
 /**
  * The Methods when on the editing page
- * @since 8/14/12
+ * @since 7.5.13
  */
 var SLeditPage = {
 		
@@ -167,9 +167,12 @@ var SLeditPage = {
 				$('#titlediv .inside').remove();
 				
 				//To Validate the Web Address Text Field
+				/** Removed because of all the possiblities
 				$('.simple-links-input[name="web_address"]').change( function(){
 					SLeditPage.validate( $(this).val() );
 				});
+				
+				**/
 				
 				//Change the featured Image Uploader
 				SLeditPage.fImage();
@@ -181,7 +184,9 @@ var SLeditPage = {
 		 * Check for a valid url
 		 * @param string text the url
 		 * @since 8/14/12
-		 */
+		 * 
+		 * @deprecated since version 1.9.0
+		
 		validate : function( text ){
 			
 		    var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -216,6 +221,8 @@ var SLeditPage = {
 			}
 			
 		},
+		 */
+		
 		
 		/**
 		 * Changes the featured Image Uploader to make it more friendly

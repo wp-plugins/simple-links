@@ -2,7 +2,10 @@
 
                                /**
                                 * The jquery required for the shortcode MCE Form
-                                * @since 12.15.12
+                                * @since 7.5.13
+                                * 
+                                * @TODO Cleanup the code and turn it into an array of checkboxes and values
+                                * 
                                 * @author Mat Lipe <mat@lipeimagination.info>
                                 */
 var output = '[simple-links';
@@ -94,6 +97,12 @@ jQuery(document).ready(function ($) {
                    if( $('#image-size').val() != '' ){
                        output += ' image_size="' + $('#image-size').val() + '"';
                    }
+                   
+                   //Add the show Image only 
+                   if( $('#show_image_only').is(':checked') ){
+                      output += ' show_image_only="true"'; 
+                   }
+                   
               }
               
               //Add the description to the shortcode

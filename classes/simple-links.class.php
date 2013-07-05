@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 5.31.13
+                  * @since 7.5.13
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -106,19 +106,20 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 5.31.13
-	 * @param $atts = 'title'          => string, 
-	 * 				  'category'       => csv,  
-	 *                'orderby'        => string, 
-	 *                'order'          =>  string
-	 *                'count'          => int, 
-	 *                'show_image'     => bool 
-	 *                'image_size'     => string
-	 *                'fields'         => csv
-	 *                'description'    => bool
-	 *                'separator'      => string
-	 *                'id'             => string
-     *                'remove_line_break => true
+	 * @since 7.5.13
+	 * @param $atts = 'title'              => false,
+                      'category'           => false,
+                       'orderby'           => 'menu_order',
+                       'count'             => '-1',
+                       'show_image'        => false,
+                       'show_image_only'   => false,
+                       'image_size'        => 'thumbnail',
+                       'order'             => 'ASC',
+                       'fields'            => false,
+                       'description'       => false,
+                       'separator'         =>  '-',
+                       'id'                =>  false,
+                       'remove_line_break' =>  false
 
      * 
      * @filters  
@@ -145,18 +146,19 @@ class simple_links extends SL_post_type_tax{
 	    global $simple_links_func;
 		$output = $image = '';
 		$defaults = array(  'title'         => false,
-				  	  'category'            => false,
+				  	   'category'            => false,
 		               'orderby'            => 'menu_order',
 		               'count'    	        => '-1',
 		               'show_image'         => false,
-		                'image_size'        => 'thumbnail',
-				        'order'             => 'ASC',
-				        'fields'            => false,
-		                'description'       => false,
-					    'separator'         =>  '-',
-				        'id'                =>  false,
-				        'remove_line_break' =>  false
-		                );
+		               'show_image_only'    => false,
+		               'image_size'        => 'thumbnail',
+				       'order'             => 'ASC',
+				       'fields'            => false,
+		               'description'       => false,
+					   'separator'         =>  '-',
+				       'id'                =>  false,
+				       'remove_line_break' =>  false
+		 );
 		//for filtering this function
 		$unfilterd_atts = $atts;
 		
@@ -271,6 +273,12 @@ class simple_links extends SL_post_type_tax{
 
 					//Add the image
 					if( $atts['show_image'] == 'true' ){
+					    
+                        //Remove the post Title if showing image only
+                        if( $atts['show_image_only'] ){
+                            $link->post_title = '';
+                        }
+                        
 						$image = get_the_post_thumbnail($link->ID, $atts['image_size']);
 						//more for the filterable object
 						$link->image = $image;

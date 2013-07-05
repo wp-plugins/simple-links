@@ -89,7 +89,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * The output of the widget to the site
-     * @since 5.22.13
+     * @since 7.5.13
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
@@ -186,6 +186,9 @@ class SL_links_main extends WP_Widget {
         
         
         //Go through each link
+        /** 
+         * @TODO Move this to a link factory class
+         */
         foreach( $links as $link ){
            //Escape Hatch
             if( !is_object( $link ) ){
@@ -202,7 +205,10 @@ class SL_links_main extends WP_Widget {
         
             //Add the image
             if( isset($instance['show_image']) && $instance['show_image'] ){
-        
+                //erase the title is show_image_only is checked
+                if( isset( $instance['show_image_only']) && $instance['show_image_only'] ){
+                    $link->post_title = '';
+                }
                 $image = get_the_post_thumbnail($link->ID, $instance['image_size']);
                 //more for the filterable object
                 $link->image = $image;
@@ -210,6 +216,8 @@ class SL_links_main extends WP_Widget {
                     $image .= '<br>';  //make the ones with returned image have the links below
                 }
             }
+
+            
 
             //TODO Move this to a linkFactory type method
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
@@ -273,7 +281,7 @@ class SL_links_main extends WP_Widget {
      * Updates the instance of each widget separately
      * @uses to make sure the data is valid
      * @see WP_Widget::update()
-     * @since 8/27/12
+     * @since 7.5.13
      */
     function update( $new_instance, $old_instance ) {
         $new_instance['title'] = strip_tags( $new_instance['title'] );
@@ -285,7 +293,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * Outputs the Widget form on the Widgets Page
-     * @since 1.17.13
+     * @since 7.5.13
      * @see WP_Widget::form()
      */
     function form( $instance ) {
@@ -363,6 +371,12 @@ class SL_links_main extends WP_Widget {
                     checked($instance['show_image']); ?> value="1"/>
         
         
+        <br><br>
+        <strong><?php _e('Display Image Without Title', 'simple-links');?></strong> 
+            <input type="checkbox" id="<?php echo $this->get_field_id( 'show_image_only' ); ?>" name="<?php echo $this->get_field_name( 'show_image_only' ); ?>" 
+                    <?php 
+                    if( !isset( $instance['show_image_only']) ) $instance['show_image_only'] = 0;
+                    checked($instance['show_image_only']); ?> value="1"/>
         <br><br>
        <strong><?php _e('Image Size', 'simple-links');?>:</strong>
             <select id="<?php echo $this->get_field_id( 'image_size' ); ?>" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
