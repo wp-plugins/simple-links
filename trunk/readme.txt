@@ -42,13 +42,18 @@ Some of the features this plugin offers:
 
 
 == Frequently Asked Questions ==
-*Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin once this plugin is installed. You will find documentation on the "widgets", "pages", "posts", "simple links settings", etc pages on using this plugin.
+= Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin. =
+*Once this plugin is activated, uou will find documentation on the "widgets", "pages", "posts", and "simple links settings" screens.
 
-*The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">Click Here</a> which is the same as the plugin link.
+= The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">Click Here</a> which is the same as the plugin link. =
 
-*For Developers Docs See this section of the same page <a href="http://lipeimagination.info/simple-links-docs/#developers">Click Here</a>
+= For Developers Docs See this section of the same page <a href="http://lipeimagination.info/simple-links-docs/#developers">Click Here</a> =
 
-*For other question start a support thread and myself of someone from the community can probably help you out.
+= For all other questions, start a support thread and myself or someone from the community can probably help you out. =
+
+= If you are looking for custom functionality, I do offer premium add-on creation services =
+
+
 
 == Screenshots ==
 1. The Widget Options
