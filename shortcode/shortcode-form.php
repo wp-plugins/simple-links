@@ -3,7 +3,7 @@
                                * @uses called with a template redirect using a query var send from the mce plugin
                                * @see simple_links->load_outside_page();
                                * @see js/editor_plugin.js
-                               * @since 7.5.13
+                               * @since 7.9.13
  * 
                                * @author Mat Lipe <mat@lipeimagination.info>
                                */
@@ -129,7 +129,7 @@ body,input{
         
         
         <p><?php _e('Show Image','simple-links');?> <input type="checkbox" id="show_image" value="true" /></p>
-        <p><?php _e('Show Image Only','simple-links');?> <input type="checkbox" id="show_image_only" value="true" /></p>
+        <p><?php _e('Display Image Without Title','simple-links');?> <input type="checkbox" id="show_image_only" value="true" /></p>
         
         <p>
           <?php _e('Image Size','simple-links');?>  <select id="image-size">
