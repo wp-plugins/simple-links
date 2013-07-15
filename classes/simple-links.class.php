@@ -2,7 +2,7 @@
                  /**
                   * Methods for the Simple Links Plugin
                   * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 7.5.13
+                  * @since 7.15.13
                   * @uses These methods are used in both the admin output of the site
                   * @see simple_links_admin() for the only admin methods
                   * @see mat_post_type_tax() for the post type and tax registrations
@@ -403,10 +403,12 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Saves the meta fields
-	 * @since 12.15.12
+	 * @since 7.15.13
 	 */
 	function meta_save(){
 		global $post;
+        
+        if( !isset( $post->post_type ) ) return;
 		$type = $post->post_type;
 	
 		//Make sure this is valid
