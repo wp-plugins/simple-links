@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 5.22.13
+                    * @since 7.15.13
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -89,7 +89,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * The output of the widget to the site
-     * @since 7.5.13
+     * @since 7.15.13
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
@@ -195,8 +195,8 @@ class SL_links_main extends WP_Widget {
                 continue;
             }
     
-           $meta = apply_filters('simple_links_widget_link_meta', $meta, $link, $instance, $args );
-           $meta = apply_filters('simple_links_widget_link_meta_' . $widget_id, get_post_meta($link->ID, false), $link, $instance, $args );
+           $meta = apply_filters('simple_links_widget_link_meta', get_post_meta($link->ID, false), $link, $instance, $args );
+           $meta = apply_filters('simple_links_widget_link_meta_' . $widget_id, $meta, $link, $instance, $args );
            
             //Adds the meta to the main object for people using filters
             $link->meta = $meta;
@@ -220,6 +220,7 @@ class SL_links_main extends WP_Widget {
             
 
             //TODO Move this to a linkFactory type method
+            
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
                     $meta['web_address'][0],
                     $meta['target'][0],
