@@ -5,16 +5,36 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 6.26.13
+           * @since 8.1.13
            * @package Advanced Sidebar Menu
            *
+           * @todo Clean this bad boy up. Still rookie code from years ago
+           * 
+           * 
            */
 class advanced_sidebar_menu_category extends WP_Widget {
+    
+     private $defaults = array(
+                           'title'                    => false,
+                           'include_parent'           => false,
+                           'include_childless_parent' => false,
+                           'single'                   => false,
+                           'css'                      => false,
+                           'exclude'                  => false,
+                           'new_widget'               => 'list',
+                           'legacy_mode'              => false,
+                           'display_all'              => false,
+                           'levels'                   => 1
+                        );
 
 
 #-------------------------------------------------------------------------------------------------------------------------
 
-    // This decides the name of the widget
+    /**
+     * Build the widget like a Baller
+     * 
+     * @since 8.1.13
+     */
     function __construct() {
                 /* Widget settings. */
         $widget_ops = array( 'classname' => 'advanced-sidebar-menu advanced-sidebar-category', 'description' => 'Creates a menu of all the Categories using the child/parent relationship' );
@@ -26,10 +46,19 @@ class advanced_sidebar_menu_category extends WP_Widget {
 
 
 
-#-----------------------------------------------------------------------------------------------------------------------------------
-      // this creates the widget form for the dashboard
+    /**
+     * Creates a form for the Widget Options
+     * 
+     * @since 8.1.13
+     * 
+     * @param array $instance
+     * 
+     * @actions do_action('advanced_sidebar_menu_category_widget_form', $instance ); 
+     */
     function form( $instance ) {
-                    //   require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
+    
+              $instance = wp_parse_args($instance, $this->defaults);
+                 
             ?>
              <p> Title <br>
              <input id="<?php echo $this->get_field_name('title'); ?>" 

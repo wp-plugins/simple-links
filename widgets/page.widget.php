@@ -1,18 +1,30 @@
 <?php 
-
-
           /**
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 5.28.13
+           * @since 8.1.13
            * @package Advanced Sidebar Menu
            *
            */
 class advanced_sidebar_menu_page extends WP_Widget {
+    
+    private $defaults = array(
+                           'title'                    => false,
+                           'include_parent'           => false,
+                           'include_childless_parent' => false,
+                           'order_by'                 => 'menu_order',
+                           'css'                      => false,
+                           'exclude'                  => false,
+                           'legacy_mode'              => false,
+                           'display_all'              => false,
+                           'levels'                   => 1
+                        );
+    
+    
 
     /**
-     * Build the widget like a Mo Fo
+     * Build the widget like a BOSS
      * 
      * @since 4.5.13
      * 
@@ -34,9 +46,12 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * 
      * @filters do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'));
      * 
-     * @since 5.28.13
+     * @since 8.1.13
      */
     function form( $instance ) {
+        
+        $instance = wp_parse_args($instance, $this->defaults);
+        
          ?>
             <p> Title <br>
              <input id="<?php echo $this->get_field_id('title'); ?>" 
@@ -105,7 +120,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
                 echo '</select></p></span>';
                 
                 
-           do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'));   
+           do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only') );   
                 
             
         }
@@ -143,7 +158,9 @@ class advanced_sidebar_menu_page extends WP_Widget {
      *         apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
      * 
      * 
-     * @since 5.28.13
+     * @since 8.1.13
+     * 
+     * @see Geansai - pointed out a notice level error. Thanks Geansai!!
      */
     function widget($args, $instance) {
         global $wpdb, $post, $table_prefix;
@@ -174,7 +191,8 @@ class advanced_sidebar_menu_page extends WP_Widget {
 
         //Get the Top Parent Id
         if($post->ancestors){
-             $top_parent = end( $post->ancestors );
+             $ancestors = $post->ancestors;
+             $top_parent = end( $ancestors );
         } else {
              $top_parent = $post->ID;
         }   

@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 7.4.13
+          * @since 8.1.13
           * 
           * @package Advanced Sidebar Menu
           */
@@ -129,7 +129,7 @@ class advancedSidebarMenu{
       * @uses called by the widget view page_list.php
       * @since 4.0
       * 
-      * @since 7.4.13
+      * @since 8.1.13
       */
      function displayGrandChildMenu($page){
         static $count = 0;
@@ -141,7 +141,8 @@ class advancedSidebarMenu{
         //if there are no children of the current page bail
         if( !$children = $this->page_children($page->ID) ) return;
 
-       $content .= sprintf('<ul class="grandchild-sidebar-menu level-%s children">',$count );
+
+        $content = sprintf('<ul class="grandchild-sidebar-menu level-%s children">',$count );
         foreach( $children as $child ){
             
             //If this page should be excluded bail
