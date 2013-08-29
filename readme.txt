@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.6.0
-Stable tag: 4.3.5
+Stable tag: 4.4.0
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
@@ -113,6 +113,9 @@ I do offer preminum services for buiding custom add-ons for additional functiona
 
 
 == Changelog ==
+= 4.4.0 =
+* Added a has_children class to page links with hidden children
+
 = 4.3.0 =
 * Added many filters into the category widget for things like taxonomies, parent category, display on override, order by, and much more. There is no UI support for any of this yet, but developers may now tap into this. 
 

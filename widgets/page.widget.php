@@ -3,7 +3,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 8.1.13
+           * @since 8.29.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -158,7 +158,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
      *         apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
      * 
      * 
-     * @since 8.1.13
+     * @since 8.29.13
      * 
      * @see Geansai - pointed out a notice level error. Thanks Geansai!!
      */
@@ -178,9 +178,15 @@ class advanced_sidebar_menu_page extends WP_Widget {
         //Filter this one with a 'single' for a custom post type will default to working for pages only
         $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
         $asm->post_type = $post_type;
+        
+        //Add a has_children class to appropriate pages
+        add_filter('page_css_class', array( $asm, 'hasChildrenClass'), 2, 2 );
+        
+        //Add the default classes to pages from a custom post type
         if( $asm->post_type != 'page' ){
              add_filter('page_css_class', array( $asm, 'custom_post_type_css'), 2, 4 );   
         }
+        
         
         
         

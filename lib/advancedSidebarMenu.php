@@ -4,7 +4,7 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 8.1.13
+          * @since 8.29.13
           * 
           * @package Advanced Sidebar Menu
           */
@@ -19,6 +19,35 @@ class advancedSidebarMenu{
       var $current_term; //Current category or taxonomy
          
          
+      
+
+      
+      
+      
+      /**
+       * Check is a page has children by id
+       * 
+       * @since 8.29.13
+       * 
+       * @param int $postId
+       */
+      function hasChildren($postId){
+          if( $this->post_type == 'page' ){
+            $children = get_pages("child_of=$postId");
+          } else {
+            $children = get_posts(array(
+                                    'post_type' => $this->post_type,
+                                    'post_parent' => $postId
+                                    ) );
+          }
+          if( count( $children ) != 0 ) {
+                return true; 
+           } else {
+                return false; 
+           } 
+          
+      }
+      
       
       /**
        * Checks if a widgets checkbox is checked.
@@ -172,10 +201,27 @@ class advancedSidebarMenu{
        return $content; 
         
     }
+              
          
-         
-         
-         
+     /**
+      * Adds the class for any menu item with children
+      * 
+      * @param array $css the currrent css classes
+      * @param obj $page the page being checked
+      * 
+      * 
+      * @since 8.29.13
+      * 
+      * @return array
+      */     
+    function hasChildrenClass($css, $page){
+        if( $this->hasChildren($page->ID) ){
+            $css[] = 'has_children';   
+        }
+        
+        return $css;
+        
+    }     
          
          /**
           * Adds the class for current page item etc to the page list when using a custom post type
