@@ -143,47 +143,21 @@ class simple_links extends SL_post_type_tax{
 	 */
 	function shortcode( $atts ){
 	    
+        $links = new SimpleLinksFactory($atts, 'shortcode');
+	    
 	    global $simple_links_func;
 		$output = $image = '';
-		$defaults = array(  'title'         => false,
-				  	   'category'            => false,
-		               'orderby'            => 'menu_order',
-		               'count'    	        => '-1',
-		               'show_image'         => false,
-		               'show_image_only'    => false,
-		               'image_size'        => 'thumbnail',
-				       'order'             => 'ASC',
-				       'fields'            => false,
-		               'description'       => false,
-					   'separator'         =>  '-',
-				       'id'                =>  false,
-				       'remove_line_break' =>  false
-		 );
+
 		//for filtering this function
 		$unfilterd_atts = $atts;
 		
-		//Call this filter to change the atts pre compile
-		$atts = apply_filters('simple_links_shortcode_atts', $atts);
-		if( isset( $atts['id'] ) ){
-		    $atts = apply_filters('simple_links_shortcode_atts_' . $atts['id'], $atts);
-		}
-		
-		
-		//Create the proper atts
-		$atts = shortcode_atts( $defaults, $atts );
-		
-		
-		//Change the Random att to rand for get posts
-		if( $atts['orderby'] == 'random' ){
-		    $atts['orderby'] = 'rand';
-		}
-		
-		
-		
-		//Setup the fields
-		if( $atts['fields'] != false ){
-			$atts['fields'] = explode(',', $atts['fields'] );
-		}
+        
+        
+   #-------- START HERE ---------#
+   //Transferring all args creation to parseArgs
+   //Set all query args to $this->query_args
+   //Add the actually quering to getLinks()
+        
 
 		
 		//Get us started
