@@ -157,79 +157,8 @@ class simple_links extends SL_post_type_tax{
    //Transferring all args creation to parseArgs
    //Set all query args to $this->query_args
    //Add the actually quering to getLinks()
-        
-
-		
-		//Get us started
-		$args = array(
-				   'post_type'              =>  'simple_link',
-				   'orderby'                =>  $atts['orderby'],
-		           'order'                  =>  $atts['order'],
-				   'numberposts'            =>  $atts['count'],
-				  // 'simple_link_category'   =>  $atts['category'], //just plain silly
-				   'posts_per_page'         =>  $atts['count'],  //Fixes the themes desire to override these
-			       'posts_per_archive_page' =>  $atts['count']   //Fixes the themes desire to override these
-				);
-		
-		//Add the categories to the query
-		if( $atts['category'] ){
-		    $att_cats = explode(',', $atts['category']);
-		    //Go through all the possible categories and add the ones that are set
-		    foreach( $simple_links_func->get_categories() as $cat ){
-		        if( in_array($cat, $att_cats) ){
-		            $cat = get_term_by('name', $cat, 'simple_link_category');
-		            $all_cats[] = $cat->term_id;
-		        }
-		    }
-		
-		    //If there are category make them into a query
-		    if( isset( $all_cats ) ){
-		        $args['tax_query'][] = array(
-		                'taxonomy' => 'simple_link_category',
-		                'fields'   => 'id',
-		                'terms'    =>  $all_cats
-		        );
-		    }
-		}
-		
-		
-		
-		
-		//For Backwards Compatibility
-		if( $atts['orderby'] == 'name' ){
-				$args['orderby'] = 'title';
-		}
-
-		//print_r( $args, true );
-
-		//Retrieve the links
-		$links = get_posts( $args );
-
-        //Filter on the links object directly
-        $links = apply_filters('simple_links_shortcode_links_object', $links, $atts);
-        $links = apply_filters('simple_links_shortcode_links_object_' . $atts['id'], $links, $atts );
-        
-
-
-		if( !$links ){ 
-			return;
-		}
-		
-		//Print the title if specified
-		if( $atts['title'] != false ){
-			$output .= sprintf('<h4 class="simple-links-title">%s</h4>', $atts['title'] );
-			
-		}
-		
-		//Start the UL
-		if( $atts['id'] ){
-		    $output .= '<ul class="simple-links-list" id="' . $atts['id'] . '">';
-		} else {
-		    $output .= '<ul class="simple-links-list">';
-		}
-		
-		$links['title'] = $atts['title'];
-		
+	
+	
 		
 		    //Go through each link
 			foreach( $links as $link ){
@@ -299,17 +228,7 @@ class simple_links extends SL_post_type_tax{
 			 	$output .= '</li>';
 			 	
 				}
-		$output .= '</ul><!-- End .simple-links-list -->';
-		
-	    //print_r( $links );
-		
-		$atts = $unfilterd_atts;
-		
-		//The output can be filtered here
-		if( isset( $atts['id'] ) ){
-		    $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links, $atts );
-		}
-		return apply_filters( 'simple_links_shortcode_output', $output, $links, $atts );
+
 		
 	}
 	
