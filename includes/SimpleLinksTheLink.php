@@ -62,7 +62,7 @@ class SimpleLinksTheLink{
      * 
      * @param bool $echo - defaults to false;
      */
-    private function output($echo = false){
+    protected function output($echo = false){
         
         if( !$this->link instanceof WP_post ) return false;
         
@@ -137,7 +137,7 @@ class SimpleLinksTheLink{
      * 
      * return string
      */
-    private function getImage(){
+    protected function getImage(){
         //Remove the post Title if showing image only
         if( $this->args['show_image_only'] ){
              $this->link->post_title = '';
@@ -164,7 +164,7 @@ class SimpleLinksTheLink{
      * 
      * @return mixed
      */
-    private function getData($name = false){
+    protected  function getData($name = false){
         
         if( empty( $this->meta_data ) ){
             $this->meta_data = get_post_meta($post->ID); 
@@ -200,7 +200,7 @@ class SimpleLinksTheLink{
      * 
      * @return string|array
      */
-    private function getAdditionalField($name = false){
+    protected  function getAdditionalField($name = false){
         
         if( empty( $this->additional_fields ) ){
             $this->additional_fields = json_decode( $this->getData('link_additional_value'), true );               
