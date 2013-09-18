@@ -27,6 +27,8 @@ require('includes/simple_links.php');
 
 $simple_links = new simple_links();
 
+//backward compatibility
+$simple_links_func = $simple_links;
 
 if( is_admin() ){
     require( 'includes/simple_links_admin.php' );
