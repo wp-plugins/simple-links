@@ -183,12 +183,16 @@ class SimpleLinksFactory{
      * @uses SimpleLinksTheLink
      * 
      * @param bool $echo - defaults to false
+     * 
+     * @since 9.17.13
+     * 
      * @return String|void
      */
     protected function output($echo = false){
         
         if( empty( $this->links ) ) return false;
         
+        $output = '';
         
         //if there is a title
         if( $this->args['title'] ){
@@ -197,22 +201,25 @@ class SimpleLinksFactory{
         }
         
         //Start the list
-        if( $this->args['id'] ){
-            $output .= '<ul class="simple-links-list" id="' . $this->args['id'] . '">';
-        } else {
-            $output .= '<ul class="simple-links-list">';
-        }
+        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list" id="%s">', $this->full_args );
+        $output .= sprintf($markup, $this->args['id']);
+
             
             //Add the links to the list
-            foreach( $links as $link ){
-                
+            foreach( $links as $link ){    
                 $link = new SimpleLinksTheLink($link, $this->full_args, $this->type);
-                
                 $output .= $link->output();   
             }
  
         //end the list
-        $output .= '</ul><!-- End .simple-links-list -->';
+        if( has_filter('simple_links_markup' ) ){
+            $output = force_balance_tags($output);   
+        } else {
+            $output .= '</ul>';   
+        }
+        
+        
+        $output .= '<!-- End .simple-links-list -->';
         
         
         
