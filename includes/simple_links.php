@@ -144,92 +144,9 @@ class simple_links extends SL_post_type_tax{
 	function shortcode( $atts ){
 	    
         $links = new SimpleLinksFactory($atts, 'shortcode');
-	    
-	    global $simple_links_func;
-		$output = $image = '';
-
-		//for filtering this function
-		$unfilterd_atts = $atts;
-		
         
-        
-   #-------- START HERE ---------#
-   //Transferring all args creation to parseArgs
-   //Set all query args to $this->query_args
-   //Add the actually quering to getLinks()
+        return $links->output();
 	
-	
-		
-		    //Go through each link
-			foreach( $links as $link ){
-			    //Escape Hatch
-                if( !is_object( $link ) ){
-                    continue;
-                }
-                $meta = apply_filters('simple_links_shortcode_link_meta_' . $atts['id'], get_post_meta($link->ID, false), $link, $atts );
-               $meta = apply_filters('simple_links_shortcode_link_meta', $meta, $link, $atts );
-
-				//Adds the meta to the main object for people using filters
-				$link->meta = $meta;
-				
-				$output .= '<li class="simple-links-shortcode-item">';
-
-					//Add the image
-					if( $atts['show_image'] == 'true' ){
-					    
-                        //Remove the post Title if showing image only
-                        if( $atts['show_image_only'] ){
-                            $link->post_title = '';
-                        }
-                        
-						$image = get_the_post_thumbnail($link->ID, $atts['image_size']);
-						//more for the filterable object
-						$link->image = $image;
-						if( $image != '' && !$atts['remove_line_break']){
-							$image .= '<br>';  //make the ones with returned image have the links below
-						}
-					}
-				
-				     //TODO Move this to a linkFactory type method
-			 		$link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
-			  						$meta['web_address'][0],
-			  						$meta['target'][0],
-			  						$meta['description'][0],
-			  						empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"', 
-			 				        $image,
-			  						$link->post_title
-			  				 ); 
-                     $link_output = apply_filters('simple_links_shortcode_link_output', $link_output, $meta, $link, $image, $atts );
-            $link_output = apply_filters('simple_links_shortcode_link_output_' . $atts['id'], $link_output, $meta, $link, $image, $atts );
- 
-            $output .= $link_output;
-                     
-                             
-			 	
-			 		//Add the description
-			 		if( ($atts['description'] == 'true') && ($meta['description'][0] != '') ){
-			 			$output .= ' ' . $atts['separator'] . ' ' . $meta['description'][0];
-			 		}
-			 		
-			 	
-			 	
-			 		//Add the addtional fields
-			 		if( $atts['fields'] != false ){
-			 			$post_additional_fields = json_decode( get_post_meta( $link->ID, 'link_additional_value', true), true );
-			 			foreach( $atts['fields'] as $field ){
-			 				if( isset( $post_additional_fields[$field] ) && $post_additional_fields[$field] != '' ){
-			 					$output .= ' ' . $atts['separator'] . ' ' . $post_additional_fields[$field];
-			 				}
-			 			}
-			 		}
-			
-			 	
-			 	//Close this list item
-			 	$output .= '</li>';
-			 	
-				}
-
-		
 	}
 	
 	

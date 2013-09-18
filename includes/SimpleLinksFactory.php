@@ -83,7 +83,7 @@ class SimpleLinksFactory{
      * @param array $args
      * @return array
      */
-    private function parseArgs($args){
+    protected  function parseArgs($args){
         
         $args = apply_filters('simple_links_args', $args, $this->type);
         
@@ -153,7 +153,7 @@ class SimpleLinksFactory{
      * 
      * @since 9.17.13
      */
-    private function getLinks(){
+    protected  function getLinks(){
         
         
         $this->query_args['post_type'] = 'simple_link';
@@ -182,10 +182,10 @@ class SimpleLinksFactory{
      * @uses may be called normally or by using echo with the class
      * @uses SimpleLinksTheLink
      * 
-     * @param bool $echo - defaults to true
+     * @param bool $echo - defaults to false
      * @return String|void
      */
-    private function output($echo = true){
+    protected function output($echo = false){
         
         if( empty( $this->links ) ) return false;
         
