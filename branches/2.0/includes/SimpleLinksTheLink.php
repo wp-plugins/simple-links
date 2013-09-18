@@ -79,7 +79,10 @@ class SimpleLinksTheLink{
             $class .= 'simple-links-'.$this->args['type'].'-item';
         }
 
-        $output = sprintf('<li class="%s" id="link-%s">', $class, $this->link->ID ); 
+        
+        $markup = apply_filters('simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this->args);
+
+        $output = sprintf($markup, $class, $this->link->ID ); 
         
             //Main link output
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
@@ -117,8 +120,14 @@ class SimpleLinksTheLink{
                  }
             }   
 
-        $output .= '</li>';
-        
+          
+        //done this way to allow for filtering  
+        if( has_filter('simple_links_link_markup' ) ){
+            $output = force_balance_tags($output);  
+        } else {
+            $output .= '</li>';
+        }
+
         
         //handle the output
         if( $echo ){
