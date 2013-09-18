@@ -85,7 +85,7 @@ class SimpleLinksFactory{
      */
     private function parseArgs($args){
         
-        $args = apply_filters('simple_links_args', $args);
+        $args = apply_filters('simple_links_args', $args, $this->type);
         
         
         //shortcode atts filter - from old structure
@@ -102,6 +102,7 @@ class SimpleLinksFactory{
         $this->query_args = shortcode_atts($this->query_args, $args);
         
         $this->full_args = array_merge( $this->args, $this->query_args);
+        $this->full_args['type'] = $this->type;
            
          
         //Change the Random att to rand for get posts
@@ -139,7 +140,7 @@ class SimpleLinksFactory{
         }
 
 
-        return $this->args = apply_filters( 'simple_links_parsed_args', $this->args, $args );
+        return $this->args = apply_filters( 'simple_links_parsed_args', $this->full_args );
         
 
     }
@@ -162,14 +163,13 @@ class SimpleLinksFactory{
         //Get the links
         $links = get_posts( $this->query_args );
 
-        $links = apply_filters( 'simple_links_object', $links, $full_args );
+        $links = apply_filters( 'simple_links_object', $links, $this->full_args );
 
 
         //backwards compatible
-        if( $this->type == 'shortcode' ){
-            $links = apply_filters('simple_links_shortcode_links_object', $links, $this->full_args);
-            $links = apply_filters('simple_links_shortcode_links_object_' . $this->args['id'], $links, $this->full_args );      
-        }
+        $links = apply_filters('simple_links_'.$this->full_args['type'].'_links_object', $links, $this->full_args);
+        $links = apply_filters('simple_links_'.$this->full_args['type'].'_links_object_' . $this->args['id'], $links, $this->full_args );      
+
   
         return $this->links = $links;
     }
@@ -206,7 +206,7 @@ class SimpleLinksFactory{
             //Add the links to the list
             foreach( $links as $link ){
                 
-                $link = new SimpleLinksTheLink($link, $this->args);
+                $link = new SimpleLinksTheLink($link, $this->full_args, $this->type);
                 
                 $output .= $link->output();   
             }
@@ -217,12 +217,17 @@ class SimpleLinksFactory{
         
         
         // Backwards compatibility
-        if( $this->type == 'shortcode' ){
-            $output =  apply_filters( 'simple_links_shortcode_output', $output, $links, $this->full_args );
-            $output = apply_filters( 'simple_links_shortcode_output_' . $this->args['id'], $output, $links, $this->full_args );
+        $output =  apply_filters( 'simple_links_'.$this->full_args['type'].'_output', $output, $links, $this->full_args );
+        $output = apply_filters( 'simple_links_'.$this->full_args['type'].'_output_' . $this->args['id'], $output, $links, $this->full_args );
+
+            
+        $output = apply_filters( 'simple_links__output', $output, $links, $this->full_args );
+        
+        if( $echo ){
+            echo $output;
+        } else {
+            return $output;
         }
-        
-        
         
     }
     
