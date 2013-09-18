@@ -13,6 +13,7 @@ class SimpleLinksTheLink{
     
     public $link; //The Post object
     public $meta_data = array(); //The post meta data
+    public $additional_fields = array(); //custom additional fields
     
     
     public $args = array(
@@ -61,7 +62,7 @@ class SimpleLinksTheLink{
      * 
      * @param bool $echo - defaults to false;
      */
-    function output($echo = false){
+    private function output($echo = false){
         
         if( !$this->link instanceof WP_post ) return false;
         
@@ -79,6 +80,8 @@ class SimpleLinksTheLink{
         }
 
         $output = sprintf('<li class="%s" id="link-%s">', $class, $this->link->ID ); 
+        
+            //Main link output
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
                                     $this->getData('web_address'),
                                     $this->getData('target'),
@@ -98,6 +101,21 @@ class SimpleLinksTheLink{
             $output .= $link_output;
             
             
+            //The description
+            if( ($this->args['description'] == 'true') && ($this->getData['description'] != '') ){
+                $output .= ' ' . $this->args['separator'] . ' ' . $this->getData['description'];
+            }
+            
+            
+            //The additional fields
+            if( is_array( $this->args['fields'] ) ){
+                foreach( $this->args['fields'] as $field ){
+                    $field = $this->getAdditionalField($field);
+                    if( !empty($field) ){
+                        $output .= ' ' . $this->args['separator'] . ' ' . $field;
+                    }
+                 }
+            }   
 
         $output .= '</li>';
         
@@ -119,7 +137,7 @@ class SimpleLinksTheLink{
      * 
      * return string
      */
-    function getImage(){
+    private function getImage(){
         //Remove the post Title if showing image only
         if( $this->args['show_image_only'] ){
              $this->link->post_title = '';
@@ -146,7 +164,7 @@ class SimpleLinksTheLink{
      * 
      * @return mixed
      */
-    function getData($name = false){
+    private function getData($name = false){
         
         if( empty( $this->meta_data ) ){
             $this->meta_data = get_post_meta($post->ID); 
@@ -182,9 +200,21 @@ class SimpleLinksTheLink{
      * 
      * @return string|array
      */
-    function getAdditionalField($name = false){
+    private function getAdditionalField($name = false){
         
+        if( empty( $this->additional_fields ) ){
+            $this->additional_fields = json_decode( $this->getData('link_additional_value'), true );               
+        }
         
+        if( !$name ){
+            return $this->additional_fields;
+        }
+        
+        if( isset( $this->additional_fields[$name] ) ){
+            return $this->additional_fields[$name];
+        } 
+        
+        return false;
     }
     
     
