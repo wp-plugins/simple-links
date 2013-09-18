@@ -60,8 +60,10 @@ class SimpleLinksFactory{
      */
     function __construct($args, $type = false){
         $this->type = $type;
-        $this->args = $this->parseArgs($args);
-        $this->links = $this->getLinks();
+        
+        $this->parseArgs($args);
+        
+        $this->getLinks();
         
     }
     
@@ -84,13 +86,17 @@ class SimpleLinksFactory{
      */
     private function parseArgs($args){
         
+        $args = apply_filters('simple_links_args', $args);
+        
+        
         //shortcode atts filter - from old structure
         if( $this->type == 'shortcode'){
             $args = apply_filters('simple_links_shortcode_atts', $args);
             if( $args['id'] ){
                  $args = apply_filters('simple_links_shortcode_atts_' . $args['id'], $args);
             }
-         }
+         } 
+        
         
         //Merge with defaults - done this way to split to two lists
         $this->args = shortcode_atts($this->args, $args); 
@@ -100,6 +106,11 @@ class SimpleLinksFactory{
         //Change the Random att to rand for get posts
         if( $this->query_args['orderby'] == 'random' ){
             $this->query_args['orderby'] = 'rand';
+        } else {
+            //For Backwards Compatibility
+            if( $atts['orderby'] == 'name' ){
+                $args['orderby'] = 'title';
+            }
         }
         
         
@@ -125,6 +136,9 @@ class SimpleLinksFactory{
                         'terms'    =>  $all_cats
             );
         }
+
+
+        return $this->args = apply_filters( 'simple_links_parsed_args', $this->args, $args );
         
 
     }
@@ -144,8 +158,21 @@ class SimpleLinksFactory{
         $this->query_args['posts_per_page'] = $this->query_args['count'];
         $this->query_args['posts_per_archive_page'] = $this->query_args['count'];
         
-  
+        //Get the links
+        $links = get_posts( $this->query_args );
         
+        $full_args = array_merge($this->args, $this->query_args);
+        
+        $links = apply_filters( 'simple_links_object', $links, $full_args );
+
+
+        //backwards compatible
+        if( $this->type == 'shortcode' ){
+            $links = apply_filters('simple_links_shortcode_links_object', $links, $full_args);
+            $links = apply_filters('simple_links_shortcode_links_object_' . $this->args['id'], $links, $full_args );      
+        }
+  
+        return $this->links = $links;
     }
     
     
