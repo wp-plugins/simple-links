@@ -111,7 +111,6 @@ class SimpleLinksTheLink{
  
             $output .= $link_output;
             
-    
             //The description
             if( ($this->args['description']) && ($this->getData('description') != '') ){
                 $output .= ' ' . $this->args['separator'] . ' ' . $this->getData('description');
