@@ -18,7 +18,10 @@ define( 'SIMPLE_LINKS_CSS_DIR', SIMPLE_LINKS_ASSETS_URL. 'css/' );
 define( 'SIMPLE_LINKS_SHORTCODE_DIR', SIMPLE_LINKS_DIR. 'shortcode/' );
 
 require( 'includes/functions.php' );
-require( 'widgets/init.php');
+
+require('widgets/SL_links_main.php' );
+require('widgets/SL_links_replica.php');
+
 
 require('includes/SimpleLinksFactory.php');
 require('includes/SimpleLinksTheLink.php');

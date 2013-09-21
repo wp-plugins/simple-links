@@ -7,6 +7,8 @@
  * @since 2.0
  * 
  * @uses May be constructed with $args then $this->output() will output the links list
+ * 
+ * @filters May be overridden using the 'simple_links_factory_class' filter
  */
 class SimpleLinksFactory{
     public $full_args = array(); //combined args and query args
@@ -58,6 +60,14 @@ class SimpleLinksFactory{
      * @param string $type - used mostly for css classes
      */
     function __construct($args, $type = false){
+             
+        $factory = apply_filters('simple_links_factory_class', 'SimpleLinksFactory', $args, $this);
+        
+        If( $factory != 'SimpleLinksFactory' ){
+            return new $factory($args, $type);   
+        }
+        
+        
         $this->type = $type;
         
         $this->parseArgs($args);
@@ -208,8 +218,10 @@ class SimpleLinksFactory{
         }
  
             //Add the links to the list
-            foreach( $this->links as $link ){    
-                $link = new SimpleLinksTheLink($link, $this->full_args, $this->type);
+            foreach( $this->links as $link ){
+                $link_class = apply_filters('simple_links_link_class', 'SimpleLinksTheLink', $this->type, $this->full_args, $this);   
+                $link = new $link_class($link, $this->full_args, $this->type);
+                
                 $output .= $link->output();   
             }
  

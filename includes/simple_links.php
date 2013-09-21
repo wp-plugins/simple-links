@@ -1,12 +1,15 @@
 <?php
                  /**
                   * Methods for the Simple Links Plugin
-                  * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 7.15.13
+                  * 
+                  * @author Mat Lipe <mat@matlipe.com>
+                  * 
+                  * @since 9.21.13
+                  * 
                   * @uses These methods are used in both the admin output of the site
+                  * 
                   * @see simple_links_admin() for the only admin methods
-                  * @see mat_post_type_tax() for the post type and tax registrations
-                  * @uses $simple_links_func
+                  * @see SL_post_type_tax() for the post type and tax registrations
                   */
 
 if( !class_exists( 'simple_links' ) ){
@@ -30,9 +33,7 @@ class simple_links extends SL_post_type_tax{
 											
 	    //Add the translate ability
 	    add_action('plugins_loaded', array( $this,'translate') );
-	    
-	    
-	    
+
 		parent::__construct();
 		
 		//Set the array for additional fields
@@ -42,13 +43,7 @@ class simple_links extends SL_post_type_tax{
 		//Add the custom post type
 		add_action('init', array( $this, 'post_type' ) );
 		
-		//Add the jquery
-	    /**
-	     * Not used at the moment
-	     */
-		//add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts') );
-	
-		
+
 		//Add the Link Categories
 		add_action( 'init', array( $this, 'link_categories' ) );
 		
@@ -59,8 +54,31 @@ class simple_links extends SL_post_type_tax{
 		
 		//Bring in the shortcode
 		add_shortcode('simple-links', array( $this, 'shortcode' ) );
+        
+        //Add the widgets
+        add_action( 'widgets_init', array( $this, 'addWidgets') ); 
 	
 	}
+
+
+
+    /**
+     * Register the widgets
+     * 
+     * @since 9.21.13
+     * 
+     * @uses added to the widgets_init hook by self::__construct();
+     */
+    function addWidgets(){
+        //Register the main widget
+        register_widget( 'SL_links_main' );
+        //If the settigs has been set to replace Widgets
+        if( get_option('sl-replace-widgets', false ) ){
+            register_widget('SL_links_replica');
+        }
+
+    }
+
 
     
     /**
@@ -142,7 +160,7 @@ class simple_links extends SL_post_type_tax{
 	 * 
 	 */
 	function shortcode( $atts ){
-	    
+
         $links = new SimpleLinksFactory($atts, 'shortcode');
         
         return $links->output();
@@ -439,34 +457,7 @@ class simple_links extends SL_post_type_tax{
 		
 	}
 	
-	
-	
-	
-	/**
-	 * Add the jquery to the site
-	 * @since 11.2.12
-	 */
-	function frontend_scripts(){
 
-		wp_enqueue_script(
-				apply_filters( 'simple_links_script', 'simple_links_script' ),
-				SIMPLE_LINKS_JS_DIR . 'simple_links.js',
-				array('jquery' ), 
-				'1.0.0'   
-		
-		);
-
-		
-
-		wp_enqueue_style(
-				apply_filters( 'simple_links_style' , 'simple_links_style' ), //The name of the style
-				SIMPLE_LINKS_CSS_DIR . 'simple.links.css'
-		);
-		
-		
-		
-	}
-		
 
 	/**
      * Registers the Custom Post Type
