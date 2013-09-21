@@ -159,7 +159,7 @@ class SimpleLinksTheLink{
         }
                         
         $image = get_the_post_thumbnail($this->link->ID, $this->args['image_size']);
-                        
+         
         //more for the filterable object
         $this->link->image = $image;
         if( $image != '' && !$this->args['remove_line_break']){
