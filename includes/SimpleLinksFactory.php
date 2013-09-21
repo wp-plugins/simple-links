@@ -100,16 +100,7 @@ class SimpleLinksFactory{
          //Merge with defaults - done this way to split to two lists
         $this->args = shortcode_atts($this->args, $args); 
         $this->query_args = shortcode_atts($this->query_args, $args);
-        
-        
-        //shortcode atts filter - from old structure
-        if( $this->type == 'shortcode'){
-            $this->args = apply_filters('simple_links_shortcode_atts', $this->args);
-            if( $this->args['id'] ){
-                 $this->args = apply_filters('simple_links_shortcode_atts_' . $this->args['id'], $this->args);
-            }
-         } 
-           
+         
          
         //Change the Random att to rand for get posts
         if( $this->query_args['orderby'] == 'random' ){
@@ -120,6 +111,12 @@ class SimpleLinksFactory{
                 $args['orderby'] = 'title';
             }
         }
+        
+        
+        if( isset( $this->args['widget_id'] ) ){
+            $this->args['id'] = $this->args['widget_id'];
+        }
+        
         
         
         //Setup the fields
@@ -204,17 +201,17 @@ class SimpleLinksFactory{
         $output = '';
 
         //if there is a title
-        if( $this->args['title'] ){
+        if( $this->args['title'] && $this->type != 'widget' ){
             $output .= sprintf('<h4 class="simple-links-title">%s</h4>', $this->args['title'] );
             
         }
         
         //Start the list
-        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list" %s>', $this->full_args );
+        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list%s" %s>', $this->full_args );
         if( empty( $this->args['id'] ) ){
-            $output .= sprintf($markup, ''); 
+            $output .= sprintf($markup, '',''); 
         } else {
-            $output .= sprintf($markup, 'id="'.$this->args['id'].'"' );
+            $output .= sprintf($markup, ' '.$this->args['id'], 'id="'.$this->args['id'].'"' );
         }
  
             //Add the links to the list
@@ -235,14 +232,8 @@ class SimpleLinksFactory{
         
         $output .= '<!-- End .simple-links-list -->';
         
-        
-        
-        // Backwards compatibility
-        $output =  apply_filters( 'simple_links_'.$this->full_args['type'].'_output', $output, $links, $this->full_args );
-        $output = apply_filters( 'simple_links_'.$this->full_args['type'].'_output_' . $this->args['id'], $output, $links, $this->full_args );
-
             
-        $output = apply_filters( 'simple_links__output', $output, $links, $this->full_args );
+        $output = apply_filters( 'simple_links__output', $output, $this->links, $this->full_args );
         
         if( $echo ){
             echo $output;
