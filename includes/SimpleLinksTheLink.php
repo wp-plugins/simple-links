@@ -62,7 +62,7 @@ class SimpleLinksTheLink{
      * 
      * @param bool $echo - defaults to false;
      */
-    protected function output($echo = false){
+    function output($echo = false){
         
         if( !$this->link instanceof WP_post ) return false;
         
@@ -76,12 +76,11 @@ class SimpleLinksTheLink{
         
         $class = 'simple-links-item';
         if( $this->args['type'] ){
-            $class .= 'simple-links-'.$this->args['type'].'-item';
+            $class .= ' simple-links-'.$this->args['type'].'-item';
         }
 
-        
-        $markup = apply_filters('simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this->args);
 
+        $markup = apply_filters('simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this->args);
         $output = sprintf($markup, $class, $this->link->ID ); 
         
             //Main link output
@@ -91,7 +90,7 @@ class SimpleLinksTheLink{
                                     $this->getData('description'),
                                     empty( $this->meta_data['link_target_nofollow'][0] ) ? '': 'rel="nofollow"', 
                                     $image,
-                                    $link->post_title
+                                    $this->link->post_title
             );     
             
             $link_output = apply_filters( 'simple_links_link_output', $link_output, $this->getData, $this->link, $image, $this->args );
@@ -176,7 +175,7 @@ class SimpleLinksTheLink{
     protected  function getData($name = false){
         
         if( empty( $this->meta_data ) ){
-            $this->meta_data = get_post_meta($post->ID); 
+            $this->meta_data = get_post_meta($this->link->ID); 
             $this->link->meta = $this->meta_data;
             
             $this->meta_data = apply_filters( 'simple_links_meta', $this->meta_data, $this->link, $this->args );

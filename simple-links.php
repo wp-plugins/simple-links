@@ -20,7 +20,8 @@ define( 'SIMPLE_LINKS_SHORTCODE_DIR', SIMPLE_LINKS_DIR. 'shortcode/' );
 require( 'includes/functions.php' );
 require( 'widgets/init.php');
 
-
+require('includes/SimpleLinksFactory.php');
+require('includes/SimpleLinksTheLink.php');
 require('includes/SL_post_type_tax.php');
 require('includes/simple_links.php');
 
