@@ -61,6 +61,8 @@ class SimpleLinksTheLink{
      * The actual links Output
      * 
      * @param bool $echo - defaults to false;
+     * 
+     * @return string
      */
     function output($echo = false){
         
@@ -71,6 +73,11 @@ class SimpleLinksTheLink{
             $image = $this->getImage();
         } else {
             $image = '';
+        }
+        
+        //do not display empty links
+        if( $this->args['show_image_only'] && empty( $image ) ){
+            return;
         }
         
         
@@ -102,13 +109,12 @@ class SimpleLinksTheLink{
  
             $output .= $link_output;
             
-            
+    
             //The description
-            if( ($this->args['description'] == 'true') && ($this->getData['description'] != '') ){
-                $output .= ' ' . $this->args['separator'] . ' ' . $this->getData['description'];
+            if( ($this->args['description']) && ($this->getData('description') != '') ){
+                $output .= ' ' . $this->args['separator'] . ' ' . $this->getData('description');
             }
-            
-            
+ 
             //The additional fields
             if( is_array( $this->args['fields'] ) ){
                 foreach( $this->args['fields'] as $field ){
@@ -141,17 +147,17 @@ class SimpleLinksTheLink{
     /**
      * Gets the links image formatted based on args
      * 
-     * @since 9.17.13
+     * @since 9.21.13
      * 
      * return string
      */
-    protected function getImage(){
+   function getImage(){
         //Remove the post Title if showing image only
         if( $this->args['show_image_only'] ){
              $this->link->post_title = '';
         }
                         
-        $image = get_the_post_thumbnail($link->ID, $this->args['image_size']);
+        $image = get_the_post_thumbnail($this->link->ID, $this->args['image_size']);
                         
         //more for the filterable object
         $this->link->image = $image;
@@ -172,7 +178,7 @@ class SimpleLinksTheLink{
      * 
      * @return mixed
      */
-    protected  function getData($name = false){
+    function getData($name = false){
         
         if( empty( $this->meta_data ) ){
             $this->meta_data = get_post_meta($this->link->ID); 
@@ -185,8 +191,7 @@ class SimpleLinksTheLink{
             $this->meta_data = apply_filters('simple_links_'.$this->args['type'].'_link_meta', $this->meta_data, $this->link, $this->args );  
             
         }
-        
-        
+
         //defaults to all data
         if( !$name ){
             return $this->meta_data;
@@ -208,7 +213,7 @@ class SimpleLinksTheLink{
      * 
      * @return string|array
      */
-    protected  function getAdditionalField($name = false){
+    function getAdditionalField($name = false){
         
         if( empty( $this->additional_fields ) ){
             $this->additional_fields = json_decode( $this->getData('link_additional_value'), true );               

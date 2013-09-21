@@ -99,11 +99,6 @@ class SimpleLinksFactory{
                  $this->args = apply_filters('simple_links_shortcode_atts_' . $this->args['id'], $this->args);
             }
          } 
-        
-       
-        
-        $this->full_args = array_merge( $this->args, $this->query_args);
-        $this->full_args['type'] = $this->type;
            
          
         //Change the Random att to rand for get posts
@@ -140,6 +135,9 @@ class SimpleLinksFactory{
             );
         }
 
+
+        $this->full_args = array_merge( $this->args, $this->query_args);
+        $this->full_args['type'] = $this->type;
 
         return $this->args = apply_filters( 'simple_links_parsed_args', $this->full_args );
         
@@ -240,6 +238,22 @@ class SimpleLinksFactory{
             return $output;
         }
         
+    }
+
+
+    /**
+     * Retrieves all link categories 
+     * @since 9.21.13
+     * @return object
+     */
+    function get_categories(){
+        
+        $args = array(
+                  'hide_empty' => false,
+                  'fields'     => 'names'
+                );
+        
+        return get_terms('simple_link_category', $args );
     }
     
 }
