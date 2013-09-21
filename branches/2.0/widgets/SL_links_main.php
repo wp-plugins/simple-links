@@ -99,16 +99,8 @@ class SL_links_main extends WP_Widget {
      * @see nofollow error was remove with help from Heiko Manfrass
      */
     function widget( $args, $instance ) {
-        $unfiltered_instance = $instance;
-        $unfiltered_args = $args;
-        $output = $image = '';
-        global $simple_links_func;//
-
-        //Create variable from the built in widget args
         extract( $args );
 
-    //-- Setup the Arguments and filters ----------------------------------------------------
-        
         //Filter for Changing the widget args
         $args = apply_filters('simple_links_widget_args', $args);
         $args = apply_filters('simple_links_widget_args_' . $widget_id, $args);
@@ -118,161 +110,26 @@ class SL_links_main extends WP_Widget {
         $instance = apply_filters('simple_links_widget_settings', $instance);
         $instance = apply_filters('simple_links_widget_settings_' . $widget_id, $instance);
 
-        //Go through all the possible categories and add the ones that are set
-        foreach( $simple_links_func->get_categories() as $cat ){
-            if( isset( $instance[$cat]) && ($instance[$cat]) ){
-                    $cat = get_term_by('name', $cat, 'simple_link_category');
-                    $all_cats[] = $cat->term_id;
-                
-            }
-        }
-        
-        //If there are category make them into a query
-        if( isset( $all_cats ) ){
-            $instance['tax_query'][] = array(
-                                        'taxonomy' => 'simple_link_category',
-                                        'fields'   => 'id',
-                                        'terms'    =>  $all_cats
-                );
-        }
-        
-    //------------ Retrieve the Links   
-        
-        //Parse the query vars along with the defaults
-        $query_args = wp_parse_args($instance, $this->defaults);
-        
-        $query_args['posts_per_page']         = $query_args['numberposts'];  //Fixes the themes desire to override these
-        $query_args['posts_per_archive_page'] = $query_args['numberposts'];   //Fixes the themes desire to override these
-        
-        
-        //Change the random to rand for deprection on previously saved widget with wrong value
-        if( $query_args['orderby'] == 'random' ){
-            $query_args['orderby'] = 'rand';
-        }
-
-
-        //Retrieve the links
-        $links = get_posts( $query_args );
-        
-        //Filter on the links object directly
-        $links = apply_filters('simple_links_widget_links_object', $links, $instance, $args );
-        $links = apply_filters('simple_links_widget_links_object_' . $widget_id, $links, $instance, $args );
-        
-        
-        //Escape hatch
-        if( !$links ){
-            return;
-        }
-        
-        //Add the instance stuff
-        $links['title'] = $instance['title'];
-        $links['id']    = $widget_id;
-        
-        
+        $full_args = array_merge($args, $instance);
+    
     //--------------- Starts the Output --------------------------------------  
         
         $output .= $before_widget;
-        
-        
-        //Add the title
-        if( !empty( $instance['title'] ) ){
-            $output .= $before_title. $instance['title'].$after_title;
-        }
-        
-
-        $output .= '<ul class="simple-links-list ' . $widget_id . '">';
-        
-        //print_r( $links );
-        
-        
-        //Go through each link
-        /** 
-         * @TODO Move this to a link factory class
-         */
-        foreach( $links as $link ){
-           //Escape Hatch
-            if( !is_object( $link ) ){
-                continue;
+            //Add the title
+            if( !empty( $instance['title'] ) ){
+                $output .= $before_title. $instance['title'].$after_title;
             }
-    
-           $meta = apply_filters('simple_links_widget_link_meta', get_post_meta($link->ID, false), $link, $instance, $args );
-           $meta = apply_filters('simple_links_widget_link_meta_' . $widget_id, $meta, $link, $instance, $args );
-           
-            //Adds the meta to the main object for people using filters
-            $link->meta = $meta;
-
-            $output .= '<li class="simple-links-widget-item">';
-        
-            //Add the image
-            if( isset($instance['show_image']) && $instance['show_image'] ){
-                //erase the title is show_image_only is checked
-                if( isset( $instance['show_image_only']) && $instance['show_image_only'] ){
-                    $link->post_title = '';
-                }
-                $image = get_the_post_thumbnail($link->ID, $instance['image_size']);
-                //more for the filterable object
-                $link->image = $image;
-                if( $image != '' && empty( $instance['line_break']) ){
-                    $image .= '<br>';  //make the ones with returned image have the links below
-                }
-            }
-
             
-
-            //TODO Move this to a linkFactory type method
+            $links = new SimpleLinksFactory($full_args);
             
-            $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>',
-                    $meta['web_address'][0],
-                    $meta['target'][0],
-                    strip_tags($meta['description'][0]),
-                    empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"',
-                    $image,
-                    $link->post_title
-            );
+            $output .= $links->output();
             
-            $link_output = apply_filters('simple_links_widget_link_output', $link_output, $meta, $link, $image, $instance, $args );
-            $link_output = apply_filters('simple_links_widget_link_output_' . $widget_id, $link_output, $meta, $link, $image, $instance, $args );
- 
-            $output .= $link_output;
-            
-
-            //Add the description
-            if( isset($instance['description']) && ($instance['description']) && isset($meta['description'][0]) && ($meta['description'][0] != '') ){
-                $output .= ' ' . $instance['separator'] . ' ' . $meta['description'][0];
-            }
-        
-           
-        
-        
-            //Add the addtional fields
-            $post_additional_fields = json_decode( get_post_meta( $link->ID, 'link_additional_value', true), true );
-            
-            if( is_array( $post_additional_fields ) ){
-
-                foreach( $post_additional_fields as $field => $value ){
-                    if( !empty($instance[$field]) ){
-                        $output .= ' ' . $instance['separator'] . ' ' . $value;
-                    }
-                }
-            }
-        
-            //Close this list item
-            $output .= '</li>';
-        
-        }
-
-        $output .= '</ul><!-- End .simple-links-list -->';
-
-        //return the vars to normal
-        $instance = $unfiltered_instance;
-        $args = $unfiltered_args;
-        
         //Close the Widget
         $output .= $after_widget;
         
         //The output can be filtered here
-        $output = apply_filters( 'simple_links_widget_output_' . $widget_id, $output, $links, $instance, $args );
-        echo apply_filters( 'simple_links_widget_output', $output, $links, $instance, $args );
+        $output = apply_filters( 'simple_links_widget_output_' . $widget_id, $links->output(), $links->links, $instance, $args );
+        echo apply_filters( 'simple_links_widget_output', $links->output(), $links->links, $instance, $args );
     }
     
     

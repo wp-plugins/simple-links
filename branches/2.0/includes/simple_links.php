@@ -160,8 +160,20 @@ class simple_links extends SL_post_type_tax{
 	 * 
 	 */
 	function shortcode( $atts ){
+	            
+        //shortcode atts filter - 
+        $atts = apply_filters('simple_links_shortcode_atts', $atts);
+        if( isset($atts['id']) ){
+           $atts = apply_filters('simple_links_shortcode_atts_' . $atts['id'], $atts);
+        }
 
         $links = new SimpleLinksFactory($atts, 'shortcode');
+        
+               
+        $output =  apply_filters( 'simple_links_shortcode_output', $links->output(), $links->links, $links->full_args );
+        if( isset( $atts['id'] ) ){
+            $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $links->output(), $links->links, $links->full_args );
+        }
         
         return $links->output();
 	
