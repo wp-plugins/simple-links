@@ -99,6 +99,9 @@ class SL_links_main extends WP_Widget {
      * @see nofollow error was remove with help from Heiko Manfrass
      */
     function widget( $args, $instance ) {
+        global $simple_links;
+        
+        
         extract( $args );
 
         //Filter for Changing the widget args
@@ -110,8 +113,14 @@ class SL_links_main extends WP_Widget {
         $instance = apply_filters('simple_links_widget_settings', $instance);
         $instance = apply_filters('simple_links_widget_settings_' . $widget_id, $instance);
 
-        $full_args = array_merge($args, $instance);
     
+          //Go through all the possible categories and add the ones that are set
+        foreach( $simple_links->get_categories() as $cat ){
+            if( isset( $instance[$cat]) && ($instance[$cat]) ){
+                $instance['category'][] = $cat;
+            }
+        }
+        
     //--------------- Starts the Output --------------------------------------  
         
         $output .= $before_widget;
@@ -120,7 +129,7 @@ class SL_links_main extends WP_Widget {
                 $output .= $before_title. $instance['title'].$after_title;
             }
             
-            $links = new SimpleLinksFactory($full_args);
+            $links = new SimpleLinksFactory($instance, 'widget');
             
             $output .= $links->output();
             
@@ -128,8 +137,8 @@ class SL_links_main extends WP_Widget {
         $output .= $after_widget;
         
         //The output can be filtered here
-        $output = apply_filters( 'simple_links_widget_output_' . $widget_id, $links->output(), $links->links, $instance, $args );
-        echo apply_filters( 'simple_links_widget_output', $links->output(), $links->links, $instance, $args );
+        $output = apply_filters( 'simple_links_widget_output_' . $widget_id, $output, $links->links, $instance, $args );
+        echo apply_filters( 'simple_links_widget_output', $output, $links->links, $instance, $args );
     }
     
     

@@ -113,24 +113,21 @@ class SimpleLinksFactory{
         }
         
         
-        if( isset( $this->args['widget_id'] ) ){
-            $this->args['id'] = $this->args['widget_id'];
-        }
-        
-        
-        
         //Setup the fields
         if( $this->args['fields'] != false ){
             $this->args['fields'] = explode(',', $this->args['fields'] );
         }
-        
+
         
         //Add the categories to the query
         if( $this->query_args['category'] ){
-            $args_cats = explode(',', $this->query_args['category']);
+            if( !is_array( $this->query_args['category'] ) ){
+                $this->query_args['category'] = explode(',', $this->query_args['category']);
+            }
+            
             //Go through all the possible categories and add the ones that are set
             foreach( $this->get_categories() as $cat ){
-                if( in_array($cat, $args_cats) ){
+                if( in_array($cat, $this->query_args['category']) ){
                     $cat = get_term_by('name', $cat, 'simple_link_category');
                     $all_cats[] = $cat->term_id;
                 }
@@ -140,6 +137,8 @@ class SimpleLinksFactory{
                         'fields'   => 'id',
                         'terms'    =>  $all_cats
             );
+            
+            unset( $this->query_args['category'] );
         }
 
 
