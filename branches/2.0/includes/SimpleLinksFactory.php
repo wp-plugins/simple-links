@@ -22,7 +22,7 @@ class SimpleLinksFactory{
        'fields'             => false,
        'description'        => false,
        'separator'          =>  '-',
-       'id'                 => false,
+       'id'                 => '',
        'remove_line_break'  => false
       );
     
@@ -87,19 +87,20 @@ class SimpleLinksFactory{
         
         $args = apply_filters('simple_links_args', $args, $this->type);
         
+         //Merge with defaults - done this way to split to two lists
+        $this->args = shortcode_atts($this->args, $args); 
+        $this->query_args = shortcode_atts($this->query_args, $args);
+        
         
         //shortcode atts filter - from old structure
         if( $this->type == 'shortcode'){
-            $args = apply_filters('simple_links_shortcode_atts', $args);
-            if( $args['id'] ){
-                 $args = apply_filters('simple_links_shortcode_atts_' . $args['id'], $args);
+            $this->args = apply_filters('simple_links_shortcode_atts', $this->args);
+            if( $this->args['id'] ){
+                 $this->args = apply_filters('simple_links_shortcode_atts_' . $this->args['id'], $this->args);
             }
          } 
         
-        
-        //Merge with defaults - done this way to split to two lists
-        $this->args = shortcode_atts($this->args, $args); 
-        $this->query_args = shortcode_atts($this->query_args, $args);
+       
         
         $this->full_args = array_merge( $this->args, $this->query_args);
         $this->full_args['type'] = $this->type;
@@ -184,16 +185,16 @@ class SimpleLinksFactory{
      * 
      * @param bool $echo - defaults to false
      * 
-     * @since 9.17.13
+     * @since 9.21.13
      * 
      * @return String|void
      */
-    protected function output($echo = false){
+     function output($echo = false){
         
         if( empty( $this->links ) ) return false;
         
         $output = '';
-        
+
         //if there is a title
         if( $this->args['title'] ){
             $output .= sprintf('<h4 class="simple-links-title">%s</h4>', $this->args['title'] );
@@ -201,12 +202,15 @@ class SimpleLinksFactory{
         }
         
         //Start the list
-        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list" id="%s">', $this->full_args );
-        $output .= sprintf($markup, $this->args['id']);
-
-            
+        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list" %s>', $this->full_args );
+        if( empty( $this->args['id'] ) ){
+            $output .= sprintf($markup, ''); 
+        } else {
+            $output .= sprintf($markup, 'id="'.$this->args['id'].'"' );
+        }
+ 
             //Add the links to the list
-            foreach( $links as $link ){    
+            foreach( $this->links as $link ){    
                 $link = new SimpleLinksTheLink($link, $this->full_args, $this->type);
                 $output .= $link->output();   
             }
