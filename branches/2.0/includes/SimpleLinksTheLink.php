@@ -8,6 +8,8 @@
  * @since 2.0
  * 
  * @uses May be constructed a link object or ID and using a echo will output the formatted link
+ * 
+ * @filter may be overridden using the 'simple_links_link_class' filter
  */
 class SimpleLinksTheLink{
     
@@ -33,7 +35,7 @@ class SimpleLinksTheLink{
         
         $this->args = wp_parse_args($args, $this->args);
         
-        $this->args = apply_filters('simple_links_the_link_args', $this->args);
+        $this->args = apply_filters('simple_links_the_link_args', $this->args, $this);
         
         
         if( is_numeric($link) ){
@@ -87,7 +89,7 @@ class SimpleLinksTheLink{
         }
 
 
-        $markup = apply_filters('simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this->args);
+        $markup = apply_filters('simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this);
         $output = sprintf($markup, $class, $this->link->ID ); 
         
             //Main link output
@@ -100,7 +102,7 @@ class SimpleLinksTheLink{
                                     $this->link->post_title
             );     
             
-            $link_output = apply_filters( 'simple_links_link_output', $link_output, $this->getData, $this->link, $image, $this->args );
+            $link_output = apply_filters( 'simple_links_link_output', $link_output, $this->getData, $this->link, $image, $this->args, $this );
             
             //backward compatibility
             $link_output = apply_filters('simple_links_'.$this->args['type'].'_link_output', $link_output, $this->getData, $this->link, $image, $this->args );
@@ -184,7 +186,7 @@ class SimpleLinksTheLink{
             $this->meta_data = get_post_meta($this->link->ID); 
             $this->link->meta = $this->meta_data;
             
-            $this->meta_data = apply_filters( 'simple_links_meta', $this->meta_data, $this->link, $this->args );
+            $this->meta_data = apply_filters( 'simple_links_meta', $this->meta_data, $this->link, $this );
 
             //backward compatibility
             $this->meta_data = apply_filters('simple_links_'.$this->args['type'].'_link_meta_' . $this->args['id'], $this->meta_data, $this->link, $this->args );
