@@ -11,7 +11,6 @@
  * @filters May be overridden using the 'simple_links_factory_class' filter
  */
 class SimpleLinksFactory{
-    public $full_args = array(); //combined args and query args
     public $links = array(); //the retrieved links
     public $type = false; //if this is a shortcode or widget etc.
     
@@ -30,10 +29,10 @@ class SimpleLinksFactory{
     
       //Default Query Args - used by getLinks();
       public $query_args = array(
-         'order'    => 'ASC',
-         'orderby'  => 'menu_order',
-         'count'    => '-1',
-         'category' => false,
+         'order'       => 'ASC',
+         'orderby'     => 'menu_order',
+         'category'    => false,
+         'numberposts' => '-1'
       );  
     
     
@@ -92,10 +91,16 @@ class SimpleLinksFactory{
      * 
      * @param array $args
      * @return array
+     * 
+     * @since 9.21.13
      */
     protected  function parseArgs($args){
         
         $args = apply_filters('simple_links_args', $args, $this->type);
+        
+        if( isset($args['count']) ){
+            $args['numberposts'] = $args['count'];   
+        }
         
          //Merge with defaults - done this way to split to two lists
         $this->args = shortcode_atts($this->args, $args); 
@@ -111,14 +116,15 @@ class SimpleLinksFactory{
                 $args['orderby'] = 'title';
             }
         }
-        
-        
+
         //Setup the fields
         if( $this->args['fields'] != false ){
-            $this->args['fields'] = explode(',', $this->args['fields'] );
+            if( !is_array($this->args['fields']) ){
+                $this->args['fields'] = explode(',', $this->args['fields'] );
+            }
         }
 
-        
+ 
         //Add the categories to the query
         if( $this->query_args['category'] ){
             if( !is_array( $this->query_args['category'] ) ){
@@ -142,10 +148,10 @@ class SimpleLinksFactory{
         }
 
 
-        $this->full_args = array_merge( $this->args, $this->query_args);
-        $this->full_args['type'] = $this->type;
+        $this->query_args = apply_filters('simple_links_parsed_query_args', $this->query_args, $this);
 
-        return $this->args = apply_filters( 'simple_links_parsed_args', $this->full_args );
+        $this->args['type'] = $this->type;
+        return $this->args = apply_filters( 'simple_links_parsed_args', $this->args, $this );
         
 
     }
@@ -156,24 +162,26 @@ class SimpleLinksFactory{
      * 
      * @return obj
      * 
-     * @since 9.17.13
+     * @since 9.21.13
      */
     protected  function getLinks(){
-        
-        
+ 
         $this->query_args['post_type'] = 'simple_link';
         $this->query_args['posts_per_page'] = $this->query_args['count'];
         $this->query_args['posts_per_archive_page'] = $this->query_args['count'];
-        
+        if( !isset( $this->query_args['numberposts'] ) ){
+            $this->query_args['numberposts'] = $this->query_args['count'];
+        }
+
         //Get the links
         $links = get_posts( $this->query_args );
 
-        $links = apply_filters( 'simple_links_object', $links, $this->full_args );
+        $links = apply_filters( 'simple_links_object', $links, $this->args );
 
 
         //backwards compatible
-        $links = apply_filters('simple_links_'.$this->full_args['type'].'_links_object', $links, $this->full_args);
-        $links = apply_filters('simple_links_'.$this->full_args['type'].'_links_object_' . $this->args['id'], $links, $this->full_args );      
+        $links = apply_filters('simple_links_'.$this->args['type'].'_links_object', $links, $this->args);
+        $links = apply_filters('simple_links_'.$this->args['type'].'_links_object_' . $this->args['id'], $links, $this->args );      
 
   
         return $this->links = $links;
@@ -206,7 +214,7 @@ class SimpleLinksFactory{
         }
         
         //Start the list
-        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list%s" %s>', $this->full_args );
+        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list%s" %s>', $this->args );
         if( empty( $this->args['id'] ) ){
             $output .= sprintf($markup, '',''); 
         } else {
@@ -215,8 +223,9 @@ class SimpleLinksFactory{
  
             //Add the links to the list
             foreach( $this->links as $link ){
-                $link_class = apply_filters('simple_links_link_class', 'SimpleLinksTheLink', $this->type, $this->full_args, $this);   
-                $link = new $link_class($link, $this->full_args, $this->type);
+                $link_class = apply_filters('simple_links_link_class', 'SimpleLinksTheLink', $this->type, $this->args, $this);   
+                
+                $link = new $link_class($link, $this->args, $this->type);
                 
                 $output .= $link->output();   
             }
@@ -232,7 +241,7 @@ class SimpleLinksFactory{
         $output .= '<!-- End .simple-links-list -->';
         
             
-        $output = apply_filters( 'simple_links__output', $output, $this->links, $this->full_args );
+        $output = apply_filters( 'simple_links__output', $output, $this->links, $this->args );
         
         if( $echo ){
             echo $output;

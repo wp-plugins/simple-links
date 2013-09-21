@@ -22,16 +22,6 @@
                     *
                     */
 class SL_links_main extends WP_Widget {
-
-    protected $defaults = array(            
-                'post_type'              =>  'simple_link',
-                'orderby'                =>  'menu_order',
-                'order'                  =>  'DESC',
-                'numberposts'            =>  '-1',
-                'simple_link_category'   => '0'
-            );
-            
-    
     
     /**
      * Setup the Widget
@@ -87,9 +77,43 @@ class SL_links_main extends WP_Widget {
       return $new;
     }
     
+    
+    
+    /**
+     * Backward compatiblity from the horrible pre 2.0 strucuture
+        I mean seriously -- Anyone see how this could cause issues? "My Bad!"
+     * 
+     * @since 2.0
+     */
+    function preVersionTwoData($instance){
+       global $simple_links; 
+       
+       if( isset( $instance['category'] ) ){
+            return $instance;   
+       }
+        
+        
+       foreach( $simple_links->get_categories() as $cat ){
+            if( isset( $instance[$cat]) && ($instance[$cat]) ){
+                    $instance['category'][] = $cat;
+                }
+            }
+            
+            $instance['remove_line_break'] = $instance['line_break'];
+            foreach( $simple_links->additional_fields as $field ){
+                if( isset( $instance[$field]) && $instance[$field] ){
+                    $instance['fields'][] = $field;
+                }
+            }
+            
+
+        return $instance;        
+    }
+    
+    
     /**
      * The output of the widget to the site
-     * @since 7.15.13
+     * @since 9.21.13
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
@@ -100,8 +124,7 @@ class SL_links_main extends WP_Widget {
      */
     function widget( $args, $instance ) {
         global $simple_links;
-        
-        
+
         extract( $args );
 
         //Filter for Changing the widget args
@@ -113,13 +136,11 @@ class SL_links_main extends WP_Widget {
         $instance = apply_filters('simple_links_widget_settings', $instance);
         $instance = apply_filters('simple_links_widget_settings_' . $widget_id, $instance);
 
-    
-          //Go through all the possible categories and add the ones that are set
-        foreach( $simple_links->get_categories() as $cat ){
-            if( isset( $instance[$cat]) && ($instance[$cat]) ){
-                $instance['category'][] = $cat;
-            }
-        }
+
+        //For pre 2.0 saved widget data
+        $instance = $this->preVersionTwoData($instance);
+
+        
         
     //--------------- Starts the Output --------------------------------------  
         
@@ -148,10 +169,13 @@ class SL_links_main extends WP_Widget {
      * Updates the instance of each widget separately
      * @uses to make sure the data is valid
      * @see WP_Widget::update()
-     * @since 7.5.13
+     * @since 9.21.13
      */
     function update( $new_instance, $old_instance ) {
         $new_instance['title'] = strip_tags( $new_instance['title'] );
+        
+        $new_instance = apply_filters('simple_links_widget_update', $new_instance, $this);       
+ 
         return $new_instance;
     
     }
@@ -160,12 +184,16 @@ class SL_links_main extends WP_Widget {
     
     /**
      * Outputs the Widget form on the Widgets Page
-     * @since 7.5.13
+     * @since 9.21.13
      * @see WP_Widget::form()
      */
     function form( $instance ) {
-        global $simple_links_func;
+        global $simple_links;
         
+        //backward compatibility - to allow for checkboxes to still be checked
+        //For version 2.0
+        $instance = $this->preVersionTwoData($instance);
+
         ?>
         
         <em><?php _e('Be sure the see the Help Section in the Top Right Corner of the Screen for Questions!', 'simple-links');?></em><br><br>
@@ -195,10 +223,11 @@ class SL_links_main extends WP_Widget {
         <br><br>
        <strong><?php _e('Categories (optional)', 'simple-links');?>:</strong><br>
             <?php 
-             foreach( $simple_links_func->get_categories() as $cat ){
+            
+            foreach( $simple_links->get_categories() as $cat ){
                 if( !isset( $instance[$cat] ) ) $instance[$cat] = 0;
-                printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="1" name="%s" %s/> %s <br>', $this->get_field_name($cat), checked($instance[$cat], true, false), $cat );
-                }
+                printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $cat, $this->get_field_name('category'), $cat, checked($instance['category'][$cat], $cat, false), $cat );
+            }
             ?>
        
        <br><br>
@@ -223,11 +252,11 @@ class SL_links_main extends WP_Widget {
         
         <br><br>
         <strong><?php _e('Remove Line Break Between Image and Link', 'simple-links');?></strong> 
-            <input type="checkbox" id="<?php echo $this->get_field_id( 'line_break' ); ?>" name="<?php echo $this->get_field_name( 'line_break' ); ?>" 
+            <input type="checkbox" id="<?php echo $this->get_field_id( 'remove_line_break' ); ?>" name="<?php echo $this->get_field_name( 'remove_line_break' ); ?>" 
                     <?php 
                     
-                    if( !isset( $instance['line_break']) ) $instance['line_break'] = 0;
-                    checked($instance['line_break']); ?> value="1"/>
+                    if( !isset( $instance['remove_line_break']) ) $instance['remove_line_break'] = 0;
+                    checked($instance['remove_line_break']); ?> value="1"/>
         
         
         <br><br>
@@ -248,7 +277,7 @@ class SL_links_main extends WP_Widget {
        <strong><?php _e('Image Size', 'simple-links');?>:</strong>
             <select id="<?php echo $this->get_field_id( 'image_size' ); ?>" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
                 <?php 
-                foreach( $simple_links_func->image_sizes() as $size ){
+                foreach( $simple_links->image_sizes() as $size ){
                     printf('<option value="%s" %s>%s</option>', $size, selected($instance['image_size'], $size ), $size );
                 }
                 ?>
@@ -257,14 +286,16 @@ class SL_links_main extends WP_Widget {
         <br><br>
        <strong><?php _e('Include Additional Fields', 'simple-links');?>:</strong><br>
             <?php 
-            if( empty( $simple_links_func->additional_fields ) ){
-                echo '<em>'.__('There have been no additional fields added', 'simple-links').'</em>';
-            } else {
-            foreach( $simple_links_func->additional_fields as $field ){
+            if( empty( $simple_links->additional_fields ) ){
                 
-                if( !isset( $instance[$field]) ) $instance[$field] = 0;
-                printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="1" name="%s" %s/> %s <br>', $this->get_field_name($field), checked($instance[$field], true, false), $field);
-                                  }
+                echo '<em>'.__('There have been no additional fields added', 'simple-links').'</em>';
+                
+            } else {
+
+                foreach( $simple_links->additional_fields as $field ){
+                    if( !isset( $instance['fields'][$field]) ) $instance['fields'][$field] = 0;
+                    printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $field, $this->get_field_name('fields'), $field, checked($instance['fields'][$field], $field, false), $field);
+                }
             }
             ?>
             
@@ -275,10 +306,12 @@ class SL_links_main extends WP_Widget {
         
         if( !isset( $instance['separator']  ) ) $instance['separator'] = '';
         echo esc_attr( $instance['separator'] ); ?>" class="widefat" />
-        
-        
-        
+
         <?php 
+        
+        do_action('simple_links_widget_form', $instance, $this);
+        
+        
     }
     
     
