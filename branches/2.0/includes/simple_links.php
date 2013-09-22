@@ -4,7 +4,7 @@
                   * 
                   * @author Mat Lipe <mat@matlipe.com>
                   * 
-                  * @since 9.21.13
+                  * @since 9.22.13
                   * 
                   * @uses These methods are used in both the admin output of the site
                   * 
@@ -22,7 +22,7 @@ class simple_links extends SL_post_type_tax{
 	protected $meta_box_descriptions = array();
 											
     /**
-     * Since 10.11.12
+     * Since 9.22.13
      */
 	function __construct(){
 	    $this->meta_box_descriptions = array( 'web_address' 	 => __('Example','simple-links').': <code>http://wordpress.org/</code> '.__('DO NOT forget the','simple-links').' <code>http:// or https://</code>',
@@ -50,7 +50,7 @@ class simple_links extends SL_post_type_tax{
 		
 		//Setup the form output for the new button
 		add_filter('query_vars', array( $this, 'outside_page_query_var') );
-		add_action('template_redirect', array( $this, 'load_outside_page') );
+		add_action('template_redirect', array( $this, 'loadShortcodeForm') );
 		
 		//Bring in the shortcode
 		add_shortcode('simple-links', array( $this, 'shortcode' ) );
@@ -212,19 +212,21 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Brings in the PHP page for the mce buttons shortcode popup
-	 * @since 8/19/12
-	 * @uses called by mce_button()
+	 * @since 9.22.13
+     * 
+     * @uses added to the template_redirect hook by self::__construct();
+     * 
+	 * @uses called by the mce icon
 	 */
-	function load_outside_page(){
+	function loadShortcodeForm(){
 		//Escape Hatch
 		if( !is_user_logged_in() ){ return; }
 		//Check the query var
 		switch(get_query_var('simple_links_shortcode')) {
 			case 'form':
-				
-				include(SIMPLE_LINKS_SHORTCODE_DIR . 'shortcode-form.php' );
+				include(SIMPLE_LINKS_JS_PATH . 'shortcode-form.php' );
 				die();
-	
+            break;
 		}
 	}
 	
