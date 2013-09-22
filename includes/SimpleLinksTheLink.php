@@ -193,7 +193,7 @@ class SimpleLinksTheLink{
             $this->meta_data = apply_filters('simple_links_'.$this->args['type'].'_link_meta', $this->meta_data, $this->link, $this->args );  
             
         }
-
+        
         //defaults to all data
         if( !$name ){
             return $this->meta_data;
@@ -216,11 +216,11 @@ class SimpleLinksTheLink{
      * @return string|array
      */
     function getAdditionalField($name = false){
-        
+        global $simple_links; 
         if( empty( $this->additional_fields ) ){
-            $this->additional_fields = json_decode( $this->getData('link_additional_value'), true );               
+            $this->additional_fields = $simple_links->getAdditionalFieldsValues($this->link->ID);           
         }
-        
+
         if( !$name ){
             return $this->additional_fields;
         }

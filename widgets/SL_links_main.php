@@ -287,13 +287,17 @@ class SL_links_main extends WP_Widget {
         <br><br>
        <strong><?php _e('Include Additional Fields', 'simple-links');?>:</strong><br>
             <?php 
-            if( empty( $simple_links->additional_fields ) ){
+            
+            $fields = $simple_links->getAdditionalFields();
+            
+            
+            if( empty( $fields ) ){
                 
                 echo '<em>'.__('There have been no additional fields added', 'simple-links').'</em>';
                 
             } else {
 
-                foreach( $simple_links->additional_fields as $field ){
+                foreach( $fields as $field ){
                     if( !isset( $instance['fields'][$field]) ) $instance['fields'][$field] = 0;
                     printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $field, $this->get_field_name('fields'), $field, checked($instance['fields'][$field], $field, false), $field);
                 }

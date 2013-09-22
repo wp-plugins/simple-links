@@ -35,11 +35,7 @@ class simple_links extends SL_post_type_tax{
 	    add_action('plugins_loaded', array( $this,'translate') );
 
 		parent::__construct();
-		
-		//Set the array for additional fields
-		$this->additional_fields = json_decode(get_option('link_additional_fields'), true );
-		
-		
+
 		//Add the custom post type
 		add_action('init', array( $this, 'post_type' ) );
 		
@@ -60,6 +56,25 @@ class simple_links extends SL_post_type_tax{
 	
 	}
 
+
+    /**
+     * Retrieve the additional fields names
+     * 
+     * @since 2.0
+     */
+    function getAdditionalFields(){
+        static $fields = false;
+        
+        if( $fields ) return $fields;
+        
+        $fields = get_option('link_additional_fields');
+        
+        if( !is_string($fields) ) return $fields; 
+
+        //pre version 2.0
+        return $fields = json_decode($fields, true);
+        
+    }
 
 
     /**
@@ -245,7 +260,7 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Saves the meta fields
-	 * @since 7.15.13
+	 * @since 9.22.13
 	 */
 	function meta_save(){
 		global $post;
@@ -285,9 +300,7 @@ class simple_links extends SL_post_type_tax{
 		}
 	
 		//Update the Addtional Fields
-		update_post_meta( $post->ID, 'link_additional_value', json_encode( $_POST['link_additional_value'] ) );
-	
-	
+	    update_post_meta( $post->ID, 'link_additional_value', $_POST['link_additional_value'] );
 	
 	
 	}
@@ -326,16 +339,41 @@ class simple_links extends SL_post_type_tax{
 	    }
 		
 	}
+
+    /**
+     * Get the additional Field Values for a post
+     * 
+     * @since 2.0
+     * @param int $postId
+     */
+    function getAdditionalFieldsValues($postId){
+
+        $values = get_post_meta($postId, 'link_additional_value', true);
+
+        //pre version 2.0
+        if( !is_array( $values ) ){
+            $values = json_decode( $values, true);
+        }
+        
+        return $values;
+   
+    }
 	
 	
 	/**
-	 * Creates the expandable meta box
-	 * @since 8/18/12
+	 * Output of the additional fields meta box
+     * 
+     * 
+	 * @since 9.22.13
+     * 
+     * 
 	 */
 	function additional_fields_meta_box_output($post){
 		global $simple_links_admin_func;
-		$values = json_decode(get_post_meta($post->ID, 'link_additional_value', true), true );
-		$names = json_decode( get_option( 'link_additional_fields' ), true);
+        
+        $values = $this->getAdditionalFieldsValues($post->ID);
+
+		$names = $this->getAdditionalFields();
 		$count = 0;
 
 		if( is_array( $names ) ){
