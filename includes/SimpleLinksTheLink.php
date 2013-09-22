@@ -19,11 +19,12 @@ class SimpleLinksTheLink{
     
     
     public $args = array(
-        'type'            => false,
-        'show_image'      => false,
-        'image_size'      => 'thumbnail',
-        'id'              => false,
-        'show_image_only' => false
+        'type'              => false,
+        'show_image'        => false,
+        'image_size'        => 'thumbnail',
+        'id'                => false,
+        'show_image_only'   => false,
+        'remove_line_break' => false
     );
     
     
@@ -157,7 +158,7 @@ class SimpleLinksTheLink{
         if( $this->args['show_image_only'] ){
              $this->link->post_title = '';
         }
-                        
+  
         $image = get_the_post_thumbnail($this->link->ID, $this->args['image_size']);
          
         //more for the filterable object

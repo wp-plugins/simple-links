@@ -8,6 +8,9 @@ Author: Mat Lipe
 Author URI: http://matlipe.com/
 */
 
+
+define( 'SIMPLE_LINKS_VERSION', 2.0 );
+
 define( 'SIMPLE_LINKS_DIR', plugin_dir_path(__FILE__) );
 define( 'SIMPLE_LINKS_URL', plugin_dir_url(__FILE__) );
 define( 'SIMPLE_LINKS_ASSETS_URL', SIMPLE_LINKS_URL. 'assets/');
