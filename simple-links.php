@@ -18,7 +18,6 @@ define( 'SIMPLE_LINKS_IMG_DIR', SIMPLE_LINKS_ASSETS_URL. 'img/' );
 define( 'SIMPLE_LINKS_JS_DIR',  SIMPLE_LINKS_ASSETS_URL. 'js/' );
 define( 'SIMPLE_LINKS_JS_PATH',  SIMPLE_LINKS_DIR. 'assets/js/' );
 define( 'SIMPLE_LINKS_CSS_DIR', SIMPLE_LINKS_ASSETS_URL. 'css/' );
-define( 'SIMPLE_LINKS_SHORTCODE_DIR', SIMPLE_LINKS_DIR. 'shortcode/' );
 
 require( 'includes/functions.php' );
 
