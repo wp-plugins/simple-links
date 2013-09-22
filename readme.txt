@@ -3,8 +3,8 @@ Contributors: Mat Lipe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Go%20Live%20Update%20Urls&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: Go Live, Urls, Domain Changes 
 Requires at least: 3.1
-Tested up to: 3.5.1
-Stable tag: 2.2.2
+Tested up to: 3.6.1
+Stable tag: 2.3.0
 
 == Description ==
 
@@ -64,6 +64,8 @@ Most tables will be just fine to update. You may make a backup of your database,
 1. Screenshot of a tyical settings page. The verbage will change slightly depending on your database structure
 
 == Changelog ==
+= 2.3 =
+* Added Post Meta to Seralized Safe to coincide with Simple Links Version 2.0
 
 = 2.2 =
 * Added Gravity Forms Support to Seralized Safe 

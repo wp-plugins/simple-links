@@ -4,8 +4,7 @@
  * @author Mat Lipe
  * @since 2.2
  * 
- * 
- * @updated 4.8.13
+ * @since 9.22.13
  * 
  * @TODO Cleanup the Names and formatting
  */
@@ -15,11 +14,14 @@ class GoLiveUpdateUrls{
     var $double_subdomain = false; //keep track if going to a subdomain
     
     //Keys are table names, values are table columns
+    //set in self::__construct()
    public $seralized_tables = array();
     
     
     /**
      * @since 2.2
+     * 
+     * @since 9.22.13
      */
     function __construct(){
         global $wpdb;
@@ -30,11 +32,12 @@ class GoLiveUpdateUrls{
         //Add the CSS
         add_action( 'admin_head', array( $this,'css') );
         
-        //default tables with seralized issues
+        //default tables with seralized data
         $this->seralized_tables = array( 
-                                    $pf.'options' => 'option_value', //wordpres options
-                                    $pf.'rg_form_meta' => 'display_meta' //gravity forms
-                                ); 
+             $pf.'options'      => 'option_value', //wordpres options
+             $pf.'postmeta'     => 'meta_value', //post meta data - since 2.3.0
+             $pf.'rg_form_meta' => 'display_meta' //gravity forms
+        ); 
                                 
     }
     
@@ -145,11 +148,17 @@ class GoLiveUpdateUrls{
  * Updates the datbase
  * 
  * @uses the oldurl and newurl set above
- * @since 4.8.13
+ * @since 9.22.13
  * 
  * @filters apply_filters( 'gluu-seralized-tables', $this->seralized_tables ); - effects makeCheckBoxes as well
  */
 function makeTheUpdates(){
+    
+    //in case of large tables
+    @set_time_limit( 0 );
+    @ini_set( 'memory_limit',           '256M' );
+    @ini_set( 'max_input_time',         '-1' );
+
     global $wpdb;
     
     $oldurl = $this->oldurl;

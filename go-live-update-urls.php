@@ -4,8 +4,8 @@ Plugin Name: Go Live Update URLS
 Plugin URI: http://lipeimagination.info/
 Description: This Plugin Updates all the URLs in the database to point to the new URL when making your site live or changing domains.
 Author: Mat Lipe
-Author URI: http://lipeimagination/
-Version: 2.2.2
+Author URI: http://matlipe.com/
+Version: 2.3.0
 */
 
 define( 'GLUU_VIEWS_DIR', plugin_dir_path(__FILE__) . 'views/' );
