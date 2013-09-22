@@ -3,8 +3,8 @@ Contributors: Mat Lipe
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Simple%20Links%20&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
-Tested up to: 3.6.0
-Stable tag: 1.9.2
+Tested up to: 3.6.1
+Stable tag: 2.0
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -61,6 +61,14 @@ Some of the features this plugin offers:
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 2.0 =
+New Factory Style class structure for more manageable development
+Change structure to allow for utf-8 characters
+Added many new filters
+Improved widget data structure
+Reorganized files and file names
+
+
 = 1.9.0 =
 Added ability to display the link image without the links title
 Added ability to use any type of link including relative links

@@ -4,14 +4,14 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 8.2.13
+                      * @since 9.22.13
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
                       */
 
 if( !class_exists( 'simple_links_admin' ) ){
-class simple_links_admin{
+class simple_links_admin extends simple_links{
     
     public $cap_for_settings; //The capabilites need to see settings page
     
@@ -32,10 +32,6 @@ class simple_links_admin{
         //Remove the Wordpress Links from admin menu
         add_action( 'admin_menu', array( $this, 'remove_links' ) );
     
-        //Set the array for additional fields
-        $this->additional_fields = json_decode( get_option('link_additional_fields'), true );
-    
-
         //Add the jquery
         add_action( 'admin_print_scripts', array( $this, 'admin_scripts') );
         add_action( 'admin_print_styles', array( $this, 'admin_style' ) );
@@ -744,21 +740,21 @@ class simple_links_admin{
         </div><!-- End .wrap -->
     <?php 
     }
+
+
     
     /**
      * The Additional_fields Meta box
-     * @since 8/29/12
+     * @since 9.22.13
      * @uses called by the add_meta_box function
      */
     function additional_fields(){
     
      ?><h4><?php _e('These Fields Will Be Available on All Link\'s Edit Screen, Widgets, and Shortcodes','simple-links');?>.</h4><?php
      
-     //Set the array for additional fields
-     $this->additional_fields = json_decode( get_option('link_additional_fields'), true );
 
-     if( is_array( $this->additional_fields ) ){
-        foreach( $this->additional_fields as $field ){
+     if( is_array( $this->getAdditionalFields() ) ){
+        foreach( $this->getAdditionalFields() as $field ){
             printf( 'Field Name: <input type="text" name="link_additional_field[]" value="%s"><br>', $field );
         }
      }
@@ -780,7 +776,7 @@ class simple_links_admin{
     
     /**
      * Saves the values from the settings page
-     * @since 8/18/12
+     * @since 9.22.13
      * @package Settings Page
      * @uses Called from above the setting's page form
      */
@@ -803,7 +799,7 @@ class simple_links_admin{
       if( isset( $_POST['link_additional_field'] ) ){
          $fields = array_filter( $_POST['link_additional_field'] );
          
-         update_option('link_additional_fields', json_encode($fields) );
+         update_option('link_additional_fields', $fields);
       }
       
       

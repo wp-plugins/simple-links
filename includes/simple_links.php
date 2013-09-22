@@ -1,12 +1,15 @@
 <?php
                  /**
                   * Methods for the Simple Links Plugin
-                  * @author Mat Lipe <mat@lipeimagination.info>
-                  * @since 7.15.13
+                  * 
+                  * @author Mat Lipe <mat@matlipe.com>
+                  * 
+                  * @since 9.22.13
+                  * 
                   * @uses These methods are used in both the admin output of the site
+                  * 
                   * @see simple_links_admin() for the only admin methods
-                  * @see mat_post_type_tax() for the post type and tax registrations
-                  * @uses $simple_links_func
+                  * @see SL_post_type_tax() for the post type and tax registrations
                   */
 
 if( !class_exists( 'simple_links' ) ){
@@ -19,7 +22,7 @@ class simple_links extends SL_post_type_tax{
 	protected $meta_box_descriptions = array();
 											
     /**
-     * Since 10.11.12
+     * Since 9.22.13
      */
 	function __construct(){
 	    $this->meta_box_descriptions = array( 'web_address' 	 => __('Example','simple-links').': <code>http://wordpress.org/</code> '.__('DO NOT forget the','simple-links').' <code>http:// or https://</code>',
@@ -30,37 +33,67 @@ class simple_links extends SL_post_type_tax{
 											
 	    //Add the translate ability
 	    add_action('plugins_loaded', array( $this,'translate') );
-	    
-	    
-	    
+
 		parent::__construct();
-		
-		//Set the array for additional fields
-		$this->additional_fields = json_decode(get_option('link_additional_fields'), true );
-		
-		
+
 		//Add the custom post type
 		add_action('init', array( $this, 'post_type' ) );
 		
-		//Add the jquery
-	    /**
-	     * Not used at the moment
-	     */
-		//add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts') );
-	
-		
+
 		//Add the Link Categories
 		add_action( 'init', array( $this, 'link_categories' ) );
 		
 		
 		//Setup the form output for the new button
 		add_filter('query_vars', array( $this, 'outside_page_query_var') );
-		add_action('template_redirect', array( $this, 'load_outside_page') );
+		add_action('template_redirect', array( $this, 'loadShortcodeForm') );
 		
 		//Bring in the shortcode
 		add_shortcode('simple-links', array( $this, 'shortcode' ) );
+        
+        //Add the widgets
+        add_action( 'widgets_init', array( $this, 'addWidgets') ); 
 	
 	}
+
+
+    /**
+     * Retrieve the additional fields names
+     * 
+     * @since 2.0
+     */
+    function getAdditionalFields(){
+        static $fields = false;
+        
+        if( $fields ) return $fields;
+        
+        $fields = get_option('link_additional_fields');
+        
+        if( !is_string($fields) ) return $fields; 
+
+        //pre version 2.0
+        return $fields = json_decode($fields, true);
+        
+    }
+
+
+    /**
+     * Register the widgets
+     * 
+     * @since 9.21.13
+     * 
+     * @uses added to the widgets_init hook by self::__construct();
+     */
+    function addWidgets(){
+        //Register the main widget
+        register_widget( 'SL_links_main' );
+        //If the settigs has been set to replace Widgets
+        if( get_option('sl-replace-widgets', false ) ){
+            register_widget('SL_links_replica');
+        }
+
+    }
+
 
     
     /**
@@ -142,201 +175,23 @@ class simple_links extends SL_post_type_tax{
 	 * 
 	 */
 	function shortcode( $atts ){
-	    
-	    global $simple_links_func;
-		$output = $image = '';
-		$defaults = array(  'title'         => false,
-				  	   'category'            => false,
-		               'orderby'            => 'menu_order',
-		               'count'    	        => '-1',
-		               'show_image'         => false,
-		               'show_image_only'    => false,
-		               'image_size'        => 'thumbnail',
-				       'order'             => 'ASC',
-				       'fields'            => false,
-		               'description'       => false,
-					   'separator'         =>  '-',
-				       'id'                =>  false,
-				       'remove_line_break' =>  false
-		 );
-		//for filtering this function
-		$unfilterd_atts = $atts;
-		
-		//Call this filter to change the atts pre compile
-		$atts = apply_filters('simple_links_shortcode_atts', $atts);
-		if( isset( $atts['id'] ) ){
-		    $atts = apply_filters('simple_links_shortcode_atts_' . $atts['id'], $atts);
-		}
-		
-		
-		//Create the proper atts
-		$atts = shortcode_atts( $defaults, $atts );
-		
-		
-		//Change the Random att to rand for get posts
-		if( $atts['orderby'] == 'random' ){
-		    $atts['orderby'] = 'rand';
-		}
-		
-		
-		
-		//Setup the fields
-		if( $atts['fields'] != false ){
-			$atts['fields'] = explode(',', $atts['fields'] );
-		}
+	            
+        //shortcode atts filter - 
+        $atts = apply_filters('simple_links_shortcode_atts', $atts);
+        if( isset($atts['id']) ){
+           $atts = apply_filters('simple_links_shortcode_atts_' . $atts['id'], $atts);
+        }
 
-		
-		//Get us started
-		$args = array(
-				   'post_type'              =>  'simple_link',
-				   'orderby'                =>  $atts['orderby'],
-		           'order'                  =>  $atts['order'],
-				   'numberposts'            =>  $atts['count'],
-				  // 'simple_link_category'   =>  $atts['category'], //just plain silly
-				   'posts_per_page'         =>  $atts['count'],  //Fixes the themes desire to override these
-			       'posts_per_archive_page' =>  $atts['count']   //Fixes the themes desire to override these
-				);
-		
-		//Add the categories to the query
-		if( $atts['category'] ){
-		    $att_cats = explode(',', $atts['category']);
-		    //Go through all the possible categories and add the ones that are set
-		    foreach( $simple_links_func->get_categories() as $cat ){
-		        if( in_array($cat, $att_cats) ){
-		            $cat = get_term_by('name', $cat, 'simple_link_category');
-		            $all_cats[] = $cat->term_id;
-		        }
-		    }
-		
-		    //If there are category make them into a query
-		    if( isset( $all_cats ) ){
-		        $args['tax_query'][] = array(
-		                'taxonomy' => 'simple_link_category',
-		                'fields'   => 'id',
-		                'terms'    =>  $all_cats
-		        );
-		    }
-		}
-		
-		
-		
-		
-		//For Backwards Compatibility
-		if( $atts['orderby'] == 'name' ){
-				$args['orderby'] = 'title';
-		}
-
-		//print_r( $args, true );
-
-		//Retrieve the links
-		$links = get_posts( $args );
-
-        //Filter on the links object directly
-        $links = apply_filters('simple_links_shortcode_links_object', $links, $atts);
-        $links = apply_filters('simple_links_shortcode_links_object_' . $atts['id'], $links, $atts );
+        $links = new SimpleLinksFactory($atts, 'shortcode');
         
-
-
-		if( !$links ){ 
-			return;
-		}
-		
-		//Print the title if specified
-		if( $atts['title'] != false ){
-			$output .= sprintf('<h4 class="simple-links-title">%s</h4>', $atts['title'] );
-			
-		}
-		
-		//Start the UL
-		if( $atts['id'] ){
-		    $output .= '<ul class="simple-links-list" id="' . $atts['id'] . '">';
-		} else {
-		    $output .= '<ul class="simple-links-list">';
-		}
-		
-		$links['title'] = $atts['title'];
-		
-		
-		    //Go through each link
-			foreach( $links as $link ){
-			    //Escape Hatch
-                if( !is_object( $link ) ){
-                    continue;
-                }
-                $meta = apply_filters('simple_links_shortcode_link_meta_' . $atts['id'], get_post_meta($link->ID, false), $link, $atts );
-               $meta = apply_filters('simple_links_shortcode_link_meta', $meta, $link, $atts );
-
-				//Adds the meta to the main object for people using filters
-				$link->meta = $meta;
-				
-				$output .= '<li class="simple-links-shortcode-item">';
-
-					//Add the image
-					if( $atts['show_image'] == 'true' ){
-					    
-                        //Remove the post Title if showing image only
-                        if( $atts['show_image_only'] ){
-                            $link->post_title = '';
-                        }
-                        
-						$image = get_the_post_thumbnail($link->ID, $atts['image_size']);
-						//more for the filterable object
-						$link->image = $image;
-						if( $image != '' && !$atts['remove_line_break']){
-							$image .= '<br>';  //make the ones with returned image have the links below
-						}
-					}
-				
-				     //TODO Move this to a linkFactory type method
-			 		$link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
-			  						$meta['web_address'][0],
-			  						$meta['target'][0],
-			  						$meta['description'][0],
-			  						empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"', 
-			 				        $image,
-			  						$link->post_title
-			  				 ); 
-                     $link_output = apply_filters('simple_links_shortcode_link_output', $link_output, $meta, $link, $image, $atts );
-            $link_output = apply_filters('simple_links_shortcode_link_output_' . $atts['id'], $link_output, $meta, $link, $image, $atts );
- 
-            $output .= $link_output;
-                     
-                             
-			 	
-			 		//Add the description
-			 		if( ($atts['description'] == 'true') && ($meta['description'][0] != '') ){
-			 			$output .= ' ' . $atts['separator'] . ' ' . $meta['description'][0];
-			 		}
-			 		
-			 	
-			 	
-			 		//Add the addtional fields
-			 		if( $atts['fields'] != false ){
-			 			$post_additional_fields = json_decode( get_post_meta( $link->ID, 'link_additional_value', true), true );
-			 			foreach( $atts['fields'] as $field ){
-			 				if( isset( $post_additional_fields[$field] ) && $post_additional_fields[$field] != '' ){
-			 					$output .= ' ' . $atts['separator'] . ' ' . $post_additional_fields[$field];
-			 				}
-			 			}
-			 		}
-			
-			 	
-			 	//Close this list item
-			 	$output .= '</li>';
-			 	
-				}
-		$output .= '</ul><!-- End .simple-links-list -->';
-		
-	    //print_r( $links );
-		
-		$atts = $unfilterd_atts;
-		
-		//The output can be filtered here
-		if( isset( $atts['id'] ) ){
-		    $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links, $atts );
-		}
-		return apply_filters( 'simple_links_shortcode_output', $output, $links, $atts );
-		
+               
+        $output =  apply_filters( 'simple_links_shortcode_output', $links->output(), $links->links, $links->full_args );
+        if( isset( $atts['id'] ) ){
+            $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $links->output(), $links->links, $links->full_args );
+        }
+        
+        return $links->output();
+	
 	}
 	
 	
@@ -372,19 +227,21 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Brings in the PHP page for the mce buttons shortcode popup
-	 * @since 8/19/12
-	 * @uses called by mce_button()
+	 * @since 9.22.13
+     * 
+     * @uses added to the template_redirect hook by self::__construct();
+     * 
+	 * @uses called by the mce icon
 	 */
-	function load_outside_page(){
+	function loadShortcodeForm(){
 		//Escape Hatch
 		if( !is_user_logged_in() ){ return; }
 		//Check the query var
 		switch(get_query_var('simple_links_shortcode')) {
 			case 'form':
-				
-				include(SIMPLE_LINKS_SHORTCODE_DIR . 'shortcode-form.php' );
+				include(SIMPLE_LINKS_JS_PATH . 'shortcode-form.php' );
 				die();
-	
+            break;
 		}
 	}
 	
@@ -403,7 +260,7 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Saves the meta fields
-	 * @since 7.15.13
+	 * @since 9.22.13
 	 */
 	function meta_save(){
 		global $post;
@@ -443,9 +300,7 @@ class simple_links extends SL_post_type_tax{
 		}
 	
 		//Update the Addtional Fields
-		update_post_meta( $post->ID, 'link_additional_value', json_encode( $_POST['link_additional_value'] ) );
-	
-	
+	    update_post_meta( $post->ID, 'link_additional_value', $_POST['link_additional_value'] );
 	
 	
 	}
@@ -484,16 +339,41 @@ class simple_links extends SL_post_type_tax{
 	    }
 		
 	}
+
+    /**
+     * Get the additional Field Values for a post
+     * 
+     * @since 2.0
+     * @param int $postId
+     */
+    function getAdditionalFieldsValues($postId){
+
+        $values = get_post_meta($postId, 'link_additional_value', true);
+
+        //pre version 2.0
+        if( !is_array( $values ) ){
+            $values = json_decode( $values, true);
+        }
+        
+        return $values;
+   
+    }
 	
 	
 	/**
-	 * Creates the expandable meta box
-	 * @since 8/18/12
+	 * Output of the additional fields meta box
+     * 
+     * 
+	 * @since 9.22.13
+     * 
+     * 
 	 */
 	function additional_fields_meta_box_output($post){
 		global $simple_links_admin_func;
-		$values = json_decode(get_post_meta($post->ID, 'link_additional_value', true), true );
-		$names = json_decode( get_option( 'link_additional_fields' ), true);
+        
+        $values = $this->getAdditionalFieldsValues($post->ID);
+
+		$names = $this->getAdditionalFields();
 		$count = 0;
 
 		if( is_array( $names ) ){
@@ -629,34 +509,7 @@ class simple_links extends SL_post_type_tax{
 		
 	}
 	
-	
-	
-	
-	/**
-	 * Add the jquery to the site
-	 * @since 11.2.12
-	 */
-	function frontend_scripts(){
 
-		wp_enqueue_script(
-				apply_filters( 'simple_links_script', 'simple_links_script' ),
-				SIMPLE_LINKS_JS_DIR . 'simple_links.js',
-				array('jquery' ), 
-				'1.0.0'   
-		
-		);
-
-		
-
-		wp_enqueue_style(
-				apply_filters( 'simple_links_style' , 'simple_links_style' ), //The name of the style
-				SIMPLE_LINKS_CSS_DIR . 'simple.links.css'
-		);
-		
-		
-		
-	}
-		
 
 	/**
      * Registers the Custom Post Type
