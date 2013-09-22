@@ -220,7 +220,6 @@ class SimpleLinksFactory{
         } else {
             $output .= sprintf($markup, ' '.$this->args['id'], 'id="'.$this->args['id'].'"' );
         }
- 
             //Add the links to the list
             foreach( $this->links as $link ){
                 $link_class = apply_filters('simple_links_link_class', 'SimpleLinksTheLink', $this->type, $this->args, $this);   

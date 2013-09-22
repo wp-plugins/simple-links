@@ -80,15 +80,17 @@ class SL_links_main extends WP_Widget {
     
     
     /**
-     * Backward compatiblity from the horrible pre 2.0 strucuture
-        I mean seriously -- Anyone see how this could cause issues? "My Bad!"
+     * Allows for migration widgets args from an old version of data to a new one
+     * 
+     * @uses run pre form and pre widget
      * 
      * @since 2.0
      */
-    function preVersionTwoData($instance){
+    function migrateOldData($instance){
        global $simple_links; 
-       
-       if( isset( $instance['category'] ) ){
+
+
+       if( isset( $instance['simple_links_version'] ) && ($instance['simple_links_version'] >= '2') ){
             return $instance;   
        }
         
@@ -113,7 +115,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * The output of the widget to the site
-     * @since 9.21.13
+     * @since 9.22.13
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
@@ -137,10 +139,9 @@ class SL_links_main extends WP_Widget {
         $instance = apply_filters('simple_links_widget_settings_' . $widget_id, $instance);
 
 
-        //For pre 2.0 saved widget data
-        $instance = $this->preVersionTwoData($instance);
+        //For any data which has not been resaved to the new structure
+        $instance = $this->migrateOldData($instance);
 
-        
         
     //--------------- Starts the Output --------------------------------------  
         
@@ -184,17 +185,17 @@ class SL_links_main extends WP_Widget {
     
     /**
      * Outputs the Widget form on the Widgets Page
-     * @since 9.21.13
+     * @since 9.22.13
      * @see WP_Widget::form()
      */
     function form( $instance ) {
         global $simple_links;
-        
+ 
         //backward compatibility - to allow for checkboxes to still be checked
-        //For version 2.0
-        $instance = $this->preVersionTwoData($instance);
+        $instance = $this->migrateOldData($instance);
 
         ?>
+        <input type="hidden" name="<?php echo $this->get_field_name( 'simple_links_version' ); ?>" value="<?php echo SIMPLE_LINKS_VERSION; ?>" />
         
         <em><?php _e('Be sure the see the Help Section in the Top Right Corner of the Screen for Questions!', 'simple-links');?></em><br><br>
         
