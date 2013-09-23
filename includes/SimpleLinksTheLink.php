@@ -7,6 +7,8 @@
  * @author Mat Lipe <mat@matlipe.com>
  * @since 2.0
  * 
+ * @since 9.23.13
+ * 
  * @uses May be constructed a link object or ID and using a echo will output the formatted link
  * 
  * @filter may be overridden using the 'simple_links_link_class' filter
@@ -66,6 +68,8 @@ class SimpleLinksTheLink{
      * @param bool $echo - defaults to false;
      * 
      * @return string
+     * 
+     * @since 9.23.13
      */
     function output($echo = false){
         
@@ -93,11 +97,13 @@ class SimpleLinksTheLink{
         $markup = apply_filters('simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this);
         $output = sprintf($markup, $class, $this->link->ID ); 
         
+            
+        
             //Main link output
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
                                     $this->getData('web_address'),
                                     $this->getData('target'),
-                                    $this->getData('description'),
+                                    strip_tags( $this->getData('description') ),
                                     empty( $this->meta_data['link_target_nofollow'][0] ) ? '': 'rel="nofollow"', 
                                     $image,
                                     $this->link->post_title
@@ -114,15 +120,19 @@ class SimpleLinksTheLink{
             
             //The description
             if( ($this->args['description']) && ($this->getData('description') != '') ){
-                $output .= ' ' . $this->args['separator'] . ' ' . $this->getData('description');
+                $output .= sprintf('%s <span class="link-description">%s</span>',  $this->args['separator'], $this->getData('description') );
             }
  
             //The additional fields
             if( is_array( $this->args['fields'] ) ){
                 foreach( $this->args['fields'] as $field ){
-                    $field = $this->getAdditionalField($field);
-                    if( !empty($field) ){
-                        $output .= ' ' . $this->args['separator'] . ' ' . $field;
+                    $data = $this->getAdditionalField($field);
+                    if( !empty($data) ){
+                        $output .= sprintf('%s <span class="%s">%s</span>', 
+                            $this->args['separator'], 
+                            str_replace( ' ', '-', strtolower($field) ),
+                            $data
+                        );
                     }
                  }
             }   

@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
 Tested up to: 3.6.1
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -63,11 +63,6 @@ Some of the features this plugin offers:
 == Changelog ==
 = 2.0 =
 New Factory Style class structure for more manageable development
-Change structure to allow for utf-8 characters
-Added many new filters
-Improved widget data structure
-Reorganized files and file names
-
 
 = 1.9.0 =
 Added ability to display the link image without the links title
