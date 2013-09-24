@@ -2,7 +2,10 @@
 /**
  * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
- * @since 5.19.13
+ * 
+ * @since 4.5.0
+ * 
+ * @since 9.24.13
  *
  *
  * @uses to edit, create a file named page_list.php and put in a folder in the your theme called 'advanced-sidebar-menu
@@ -28,7 +31,7 @@ if( $child_pages ){
 	#-- If they want all the pages displayed always
 	if( $asm->display_all() ){
 
-	$content .=	wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=0&child_of=".$top_parent."&depth=".$instance['levels']."&exclude=".$instance['exclude']);
+	$content .=	wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=0&child_of=".$top_parent."&depth=".$instance['levels']."&exclude=".implode(',',$asm->exclude) );
 	} else {
 
 		#-- Display children of current page's parent only

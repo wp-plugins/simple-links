@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Advanced Sidebar Menu
-Plugin URI: http://lipeimagination.info/wordpress/advanced-sidebar-menu/
+Plugin URI: http://matlipe.com/advanced-sidebar-menu/
 Description: Creates dynamic menu based on child/parent relationship.
 Author: Mat Lipe
-Version: 4.4.0
-Author URI: http://lipeimagination.info
-Since: 8.29.13
+Version: 4.5.0
+Author URI: http://matlipe.com
+Since: 9.24.13
 */
 
 

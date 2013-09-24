@@ -3,7 +3,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 8.29.13
+           * @since 9.24.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -158,25 +158,26 @@ class advanced_sidebar_menu_page extends WP_Widget {
      *         apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
      * 
      * 
-     * @since 8.29.13
+     * @since 9.24.13
      * 
      * @see Geansai - pointed out a notice level error. Thanks Geansai!!
      */
     function widget($args, $instance) {
         global $wpdb, $post, $table_prefix;
-        
-        
-        $asm = new advancedSidebarMenu;
+         
+        $asm = new advancedSidebarMenu();
 
         $asm->instance = $instance;
         $asm->args = $args;
-        $exclude = explode(',', $instance['exclude']);
-        $asm->exclude = $exclude;
         
+        //The excluded pages
+        $exclude = apply_filters( 'advanced_sidebar_menu_excluded_pages', explode(',', $instance['exclude']), $post, $args, $instance, $asm );
+        $asm->exclude = $exclude;
+
         extract($args);
         
         //Filter this one with a 'single' for a custom post type will default to working for pages only
-        $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
+        $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance, $asm  );
         $asm->post_type = $post_type;
         
         //Add a has_children class to appropriate pages
@@ -188,11 +189,9 @@ class advanced_sidebar_menu_page extends WP_Widget {
         }
         
         
-        
-        
         $proper_single = !(is_single() || is_page() ) || (get_post_type() != $post_type);
         //Filter the single post check if try to display the menu somewhere else like a category page
-        if( apply_filters('advanced_sidebar_menu_proper_single', $proper_single, $args, $instance) ) return;
+        if( apply_filters('advanced_sidebar_menu_proper_single', $proper_single, $args, $instance, $asm) ) return;
         
 
         //Get the Top Parent Id
@@ -203,7 +202,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
              $top_parent = $post->ID;
         }   
         //Filter for specifying the top parent
-        $top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post, $args, $instance );
+        $top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post, $args, $instance, $asm );
         $asm->top_id = $top_parent;
 
 
@@ -212,7 +211,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
         
         
         //Filter for specifiying the order by
-        $order_by = apply_filters('advanced_sidebar_menu_order_by', $instance['order_by'], $post, $args, $instance );
+        $order_by = apply_filters('advanced_sidebar_menu_order_by', $instance['order_by'], $post, $args, $instance, $asm );
         $asm->order_by = $order_by; 
             
 
@@ -223,8 +222,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
             
         //for depreciation
         $p = $top_parent;
-        $result = $child_pages = apply_filters( 'advanced_sidebar_menu_child_pages', $child_pages, $post, $args, $instance );
-        
+        $result = $child_pages = apply_filters( 'advanced_sidebar_menu_child_pages', $child_pages, $post, $args, $instance, $asm );
 
         #---- if there are no children do not display the parent unless it is check to do so
         if( (!empty($child_pages)) || $asm->checked('include_childless_parent') && (!in_array($top_parent, $exclude) )  ){
