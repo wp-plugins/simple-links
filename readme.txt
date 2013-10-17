@@ -28,9 +28,8 @@ Some of the features this plugin offers:
   The outputs, admin screens, and permissions are extendable for developers familiar with using filters.
 </div>
 
-<div>
-  <br />
-</div>
+For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-links-developer-docs/">http://matlipe.com/simple-links-docs/simple-links-developer-docs/</a> 
+
 
 == Upgrade Notice ==
 
@@ -45,9 +44,9 @@ Some of the features this plugin offers:
 = Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin. =
 *Once this plugin is activated, uou will find documentation on the "widgets", "pages", "posts", and "simple links settings" screens.
 
-= The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">Click Here</a> which is the same as the plugin link. =
+= The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">http://lipeimagination.info/simple-links-docs/</a> which is the same as the plugin link. 
 
-= For Developers Docs See this section of the same page <a href="http://lipeimagination.info/simple-links-docs/#developers">Click Here</a> =
+= For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-links-developer-docs/">http://matlipe.com/simple-links-docs/simple-links-developer-docs/</a> 
 
 = For all other questions, start a support thread and myself or someone from the community can probably help you out. =
 
