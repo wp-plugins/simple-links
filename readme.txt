@@ -43,6 +43,8 @@ Templates may be overridden for customization of outputs and/or css.
 
 Many built in filters for altering the way the widgets function.
    
+Developer Docs may be found here
+<a href="http://matlipe.com/advanced-sidebar-menu/developer-docs/">http://matlipe.com/advanced-sidebar-menu/developer-docs/</a>
 
 
 == Installation ==
@@ -63,6 +65,9 @@ e.g.
 
 
 == Frequently Asked Questions ==
+
+Developer docs may be found here:
+<a href="http://matlipe.com/advanced-sidebar-menu/developer-docs/">http://matlipe.com/advanced-sidebar-menu/developer-docs/</a>
 
 = Version 4.0+ is not displaying the same as previous version of the plugin. How do I bring this back? =
 
