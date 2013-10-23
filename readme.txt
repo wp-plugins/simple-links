@@ -32,8 +32,6 @@ The admin screen is extendable for developers familiar with using filters or tem
 
 Additonal Seralized Safe tables may be adding using the 'gluu-seralized-tables' filter checkboxes to tap into this will be coming in a future release.
 
-Developer docs may be found here: <a href="http://matlipe.com/go-live-update-urls/developer-docs-go-live-update-urls/">http://matlipe.com/go-live-update-urls/developer-docs-go-live-update-urls/</a>
-
 
 == Installation ==
 
@@ -59,7 +57,7 @@ Some plugins will store the data in the database seralized which does not allow 
 
 Most tables will be just fine to update. You may make a backup of your database, run this on all tables and if you run into trouble, restore your database, uncheck tables in sections, and rerun this until you find the culpurit. If you find a particular table gives you trouble, let me know and I will add it to the urgent list for seralized safe updating.
 
-Developer docs may be found here: <a href="http://matlipe.com/go-live-update-urls/developer-docs-go-live-update-urls/">http://matlipe.com/go-live-update-urls/developer-docs-go-live-update-urls/</a>
+
 
 == Screenshots ==
 
