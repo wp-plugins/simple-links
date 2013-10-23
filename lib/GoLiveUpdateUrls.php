@@ -4,7 +4,7 @@
  * @author Mat Lipe
  * @since 2.2
  * 
- * @since 10.22.13
+ * @since 10.23.13
  * 
  * @TODO Cleanup the Names and formatting
  */
@@ -141,7 +141,7 @@ class GoLiveUpdateUrls{
     * 
     * @since 2.2
     * 
-    * @since 10.22.13
+    * @since 10.23.13
     * @uses by the view admin-tools-page.php
     * 
     * @filter 'gluu_table_checkboxes' with 2 param
@@ -158,11 +158,11 @@ class GoLiveUpdateUrls{
          //Done this way because like wp_% will return all other tables as well such as wp_2
          if( is_multisite() ){
             if( $wpdb->blogid == 1 ){
-                for( $i = 1; $i <= 100; $i++ ){
+                for( $i = 1; $i <= 9; $i++ ){
                     $not_like .= "'".$wpdb->prefix.$i."',";
                 }
                 $not_like = substr($not_like, 0, -1);
-                $god_query .= ' AND SUBSTRING(TABLE_NAME,1,4) NOT IN ('. $not_like .') AND SUBSTRING(TABLE_NAME,1,5) NOT IN ('. $not_like .')';
+                $god_query .= ' AND SUBSTRING(TABLE_NAME,1,4) NOT IN ('. $not_like .')';
             }
          }
          
