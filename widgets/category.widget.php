@@ -141,7 +141,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
                 echo '</select></p></span>';
                 
                 
-           do_action('advanced_sidebar_menu_category_widget_form', $instance );        
+           do_action('advanced_sidebar_menu_category_widget_form', $instance, $this );        
                 
         }
 

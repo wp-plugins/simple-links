@@ -120,7 +120,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
                 echo '</select></p></span>';
                 
                 
-           do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only') );   
+           do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'), $this );   
                 
             
         }
