@@ -167,7 +167,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
     /**
      * Outputs the categories widget to the page
      * 
-     * @since 6.26.13
+     * @since 10.30.13
      * @uses loads the views/category_list.php
      * 
      * @filters apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );
@@ -199,6 +199,8 @@ class advanced_sidebar_menu_category extends WP_Widget {
         $asm = new advancedSidebarMenu;
         $asm->instance = $instance;
         $asm->args = $args;
+           
+        do_action( 'advanced_sidebar_menu_category_widget_pre_render', $asm, $this );  
         
         $legacy = $asm->checked('legacy_mode');
 
