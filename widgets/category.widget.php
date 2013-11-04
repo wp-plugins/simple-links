@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 8.1.13
+           * @since 11.4.13
            * @package Advanced Sidebar Menu
            *
            * @todo Clean this bad boy up. Still rookie code from years ago
@@ -49,7 +49,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
     /**
      * Creates a form for the Widget Options
      * 
-     * @since 8.1.13
+     * @since 11.4.13
      * 
      * @param array $instance
      * 
@@ -141,7 +141,9 @@ class advanced_sidebar_menu_category extends WP_Widget {
                 echo '</select></p></span>';
                 
                 
-           do_action('advanced_sidebar_menu_category_widget_form', $instance, $this );        
+           do_action('advanced_sidebar_menu_category_widget_form', $instance, $this );   
+           
+           do_action('advanced_sidebar_menu_after_widget_form', $instance, $this );     
                 
         }
 

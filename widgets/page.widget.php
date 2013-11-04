@@ -3,7 +3,7 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 9.24.13
+           * @since 11.4.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -46,7 +46,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * 
      * @filters do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'));
      * 
-     * @since 8.1.13
+     * @since 11.4.13
      */
     function form( $instance ) {
         
@@ -120,7 +120,10 @@ class advanced_sidebar_menu_page extends WP_Widget {
                 echo '</select></p></span>';
                 
                 
-           do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'), $this );   
+           do_action('advanced_sidebar_menu_page_widget_form', $instance, $this->get_field_name('parent_only'), $this->get_field_id('parent_only'), $this ); 
+           
+           
+           do_action('advanced_sidebar_menu_after_widget_form', $instance, $this );  
                 
             
         }
