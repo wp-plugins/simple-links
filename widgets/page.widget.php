@@ -161,7 +161,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
      *         apply_filters('advanced_sidebar_menu_post_type', 'page', $args, $instance );
      * 
      * 
-     * @since 10.30.13
+     * @since 11.4.13
      * 
      * @see Geansai - pointed out a notice level error. Thanks Geansai!!
      */
@@ -173,7 +173,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
         $asm->instance = $instance;
         $asm->args = $args;
          
-        do_action( 'advanced_sidebar_menu_page_widget_pre_render', $asm, $this );               
+        do_action( 'advanced_sidebar_menu_widget_pre_render', $asm, $this );               
         
         //The excluded pages
         $exclude = apply_filters( 'advanced_sidebar_menu_excluded_pages', explode(',', $instance['exclude']), $post, $args, $instance, $asm );
