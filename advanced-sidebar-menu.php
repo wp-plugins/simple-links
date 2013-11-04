@@ -6,8 +6,11 @@ Description: Creates dynamic menu based on child/parent relationship.
 Author: Mat Lipe
 Version: 4.5.0
 Author URI: http://matlipe.com
-Since: 9.24.13
+Since: 11.4.13
 */
+
+define( 'ADVANCED_SIDEBAR_BASIC_VERSION', '4.6' );
+
 
 
 #-- Define Constants
