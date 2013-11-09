@@ -4,9 +4,9 @@ Plugin Name: Advanced Sidebar Menu
 Plugin URI: http://matlipe.com/advanced-sidebar-menu/
 Description: Creates dynamic menu based on child/parent relationship.
 Author: Mat Lipe
-Version: 4.5.0
+Version: 4.6.0
 Author URI: http://matlipe.com
-Since: 11.4.13
+Since: 11.9.13
 */
 
 define( 'ADVANCED_SIDEBAR_BASIC_VERSION', '4.6' );
@@ -38,3 +38,22 @@ function advanced_sidebar_menu_script() {
             '4.4.0'
         );
 };
+
+
+#-- Let know about new Pro Version
+add_action( 'advanced_sidebar_menu_after_widget_form', 'advanced_sidebar_menu_pro_notice' );
+function advanced_sidebar_menu_pro_notice(){
+    if( defined( 'ADVANCED_SIDEBAR_MENU_PRO_VERSION' ) ) return;
+    ?>
+        <fieldset style="border: 1px solid black; border-radius: 10px; padding: 10px;">
+            <legend style="font-size: 14px; font-weight: bold;">Want More Options?</legend>
+                <p>
+                    <strong><big><a target="blank" href="http://matlipe.com/product/advanced-sidebar-menu-pro/">Go Pro!</a></big></strong>
+                <p>
+        </fieldset>
+  <?php
+}
+
+
+
+
