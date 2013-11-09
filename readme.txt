@@ -15,6 +15,11 @@ Creates a widget for both page and categories that will display the current page
 Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
 Keeps the menu clean and usable.
 
+<h5>Want More Options?</h5>
+	
+<strong><big><a href="http://matlipe.com/product/advanced-sidebar-menu-pro/">Go Pro!</a></big></strong>
+
+
 Includes Page options:
 <ol>
    <li>Add a title to the widget</li>
