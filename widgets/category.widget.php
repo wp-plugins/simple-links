@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 11.4.13
+           * @since 11.15.13
            * @package Advanced Sidebar Menu
            *
            * @todo Clean this bad boy up. Still rookie code from years ago
@@ -169,7 +169,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
     /**
      * Outputs the categories widget to the page
      * 
-     * @since 11.4.13
+     * @since 11.15.13
      * @uses loads the views/category_list.php
      * 
      * @filters apply_filters('advanced_sidebar_menu_category_widget_output', $content, $args, $instance );
@@ -190,7 +190,8 @@ class advanced_sidebar_menu_category extends WP_Widget {
             'exclude'                  => '',
             'legacy_mode'              => false,      
             'display_all'              => false,
-            'levels'                   => 1
+            'levels'                   => 1,
+            'order'                    => 'DESC'
             );
             
         $instance = wp_parse_args( $instance, $defaults);
@@ -201,6 +202,9 @@ class advanced_sidebar_menu_category extends WP_Widget {
         $asm = new advancedSidebarMenu;
         $asm->instance = $instance;
         $asm->args = $args;
+        
+        //Had to display twice for backward compat - because originaly not set to anything
+        $asm->order_by = apply_filters('advanced_sidebar_menu_category_orderby', null, $args, $instance );
            
         do_action( 'advanced_sidebar_menu_widget_pre_render', $asm, $this );  
         
@@ -223,7 +227,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
             global $post;
             $category_array = wp_get_object_terms($post->ID, $asm->taxonomy);
            
-            //Sort by term_order to work with some plugins
+            //Sort by a field like term order for other plugins
             $asm->order_by = apply_filters('advanced_sidebar_menu_category_orderby', 'name', $args, $instance );
 
             uasort( $category_array, array( $asm, 'sortTerms'));
@@ -234,6 +238,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
             
         //IF on a category page get the id of the category
         } elseif( is_tax() || is_category() ){
+            
             $asm->current_term = get_queried_object()->term_id;
             $cat_ids[] = get_queried_object()->term_id;
         }
@@ -254,14 +259,17 @@ class advanced_sidebar_menu_category extends WP_Widget {
              if( in_array( $asm->top_id, $already_top ) ) continue;
              
              $already_top[] = $asm->top_id;
-             
-       
+
             //Check for children
-            $all_categories = $all = array_filter( get_terms( $asm->taxonomy, array( 
-                                                                                        'child_of' => $asm->top_id, 
-                                                                                        'orderby' => $asm->order_by )
-                                                             ) 
-                                                 );
+            $all_categories = $all = array_filter( 
+                get_terms( 
+                    $asm->taxonomy, array( 
+                              'child_of' => $asm->top_id, 
+                              'orderby' => $asm->order_by,
+                              'order'   => $instance['order']
+                    )
+                ) 
+            );
 
             //For Backwards Compatibility
             foreach( $all_categories as $tc ){

@@ -18,11 +18,6 @@ class advancedSidebarMenu{
       var $taxonomy; //For filters to override the taxonomy
       var $current_term; //Current category or taxonomy
          
-         
-      
-
-      
-      
       
       /**
        * Check is a page has children by id
