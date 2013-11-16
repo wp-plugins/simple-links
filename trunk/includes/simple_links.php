@@ -4,7 +4,7 @@
                   * 
                   * @author Mat Lipe <mat@matlipe.com>
                   * 
-                  * @since 9.22.13
+                  * @since 11.16.13
                   * 
                   * @uses These methods are used in both the admin output of the site
                   * 
@@ -139,7 +139,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 7.5.13
+	 * @since 11.16.13
 	 * @param $atts = 'title'              => false,
                       'category'           => false,
                        'orderby'           => 'menu_order',
@@ -187,10 +187,10 @@ class simple_links extends SL_post_type_tax{
                
         $output =  apply_filters( 'simple_links_shortcode_output', $links->output(), $links->links, $links->full_args );
         if( isset( $atts['id'] ) ){
-            $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $links->output(), $links->links, $links->full_args );
+            $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links->links, $links->full_args );
         }
         
-        return $links->output();
+        return $output;
 	
 	}
 	
