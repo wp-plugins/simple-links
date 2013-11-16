@@ -47,7 +47,7 @@ if( is_admin() ){
 add_action('simple_links_widget_form',  'simple_links_pro_notice'  );                                
 add_action('simple_links_shortcode_form', 'simple_links_pro_notice' );                               
 function simple_links_pro_notice(){
-    if( !defined( 'SIMPLE_LINKS_DISPLAY_BY_CATEGORY_VERSION' ) ) return;
+    if( defined( 'SIMPLE_LINKS_DISPLAY_BY_CATEGORY_VERSION' ) ) return;
     ?>
     
         <fieldset style="border: 1px solid black; border-radius: 10px; padding: 10px;">
