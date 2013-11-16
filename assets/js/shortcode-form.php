@@ -3,7 +3,7 @@
                                * @uses called with a template redirect using a query var send from the mce plugin
                                * @see simple_links->load_outside_page();
                                * @see js/editor_plugin.js
-                               * @since 7.9.13
+                               * @since 11.16.13
  * 
                                * @author Mat Lipe <mat@lipeimagination.info>
                                */
@@ -157,8 +157,11 @@ body,input{
         <em><small><small><?php _e('HTML is Allowed and Will show up Formatted in the Editor','simple-links');?>:</small><small></em><br>
         <input type="text" value="-" id="separator" size="50"/></p>
         
+        <?php do_action('simple_links_shortcode_form' ); ?>
+        
       <input type="button" id="generate" class="button-primary" value="Generate">
 
+      
 
 </body>
 
