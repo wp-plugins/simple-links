@@ -61,7 +61,7 @@ class SimpleLinksFactory{
     function __construct($args, $type = false){
              
         $factory = apply_filters('simple_links_factory_class', 'SimpleLinksFactory', $args, $this);
-        
+
         If( $factory != 'SimpleLinksFactory' ){
             return new $factory($args, $type);   
         }
@@ -101,6 +101,7 @@ class SimpleLinksFactory{
         if( isset($args['count']) ){
             $args['numberposts'] = $args['count'];   
         }
+
         
          //Merge with defaults - done this way to split to two lists
         $this->args = shortcode_atts($this->args, $args); 
@@ -162,7 +163,7 @@ class SimpleLinksFactory{
      * 
      * @return obj
      * 
-     * @since 9.21.13
+     * @since 11.16.13
      */
     protected  function getLinks(){
  
@@ -176,7 +177,7 @@ class SimpleLinksFactory{
         //Get the links
         $links = get_posts( $this->query_args );
 
-        $links = apply_filters( 'simple_links_object', $links, $this->args );
+        $links = apply_filters( 'simple_links_object', $links, $this->args, $this );
 
 
         //backwards compatible
@@ -220,6 +221,7 @@ class SimpleLinksFactory{
         } else {
             $output .= sprintf($markup, ' '.$this->args['id'], 'id="'.$this->args['id'].'"' );
         }
+
             //Add the links to the list
             foreach( $this->links as $link ){
                 $link_class = apply_filters('simple_links_link_class', 'SimpleLinksTheLink', $this->type, $this->args, $this);   

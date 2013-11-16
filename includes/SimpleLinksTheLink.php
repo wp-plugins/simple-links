@@ -7,7 +7,7 @@
  * @author Mat Lipe <mat@matlipe.com>
  * @since 2.0
  * 
- * @since 9.23.13
+ * @since 11.16.13
  * 
  * @uses May be constructed a link object or ID and using a echo will output the formatted link
  * 
@@ -69,10 +69,9 @@ class SimpleLinksTheLink{
      * 
      * @return string
      * 
-     * @since 9.23.13
+     * @since 11.16.13
      */
     function output($echo = false){
-        
         if( !$this->link instanceof WP_post ) return false;
         
         
@@ -145,6 +144,7 @@ class SimpleLinksTheLink{
             $output .= '</li>';
         }
 
+        $output = apply_filters('simple_links_list_item', $output, $this->link, $this);
         
         //handle the output
         if( $echo ){
