@@ -6,6 +6,8 @@
  * @author Mat Lipe <mat@matlipe.com>
  * @since 2.0
  * 
+ * @since 11.16.13
+ * 
  * @uses May be constructed with $args then $this->output() will output the links list
  * 
  * @filters May be overridden using the 'simple_links_factory_class' filter
@@ -198,7 +200,7 @@ class SimpleLinksFactory{
      * 
      * @param bool $echo - defaults to false
      * 
-     * @since 9.21.13
+     * @since 11.16.13
      * 
      * @return String|void
      */
@@ -215,7 +217,7 @@ class SimpleLinksFactory{
         }
         
         //Start the list
-        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list%s" %s>', $this->args );
+        $markup = apply_filters( 'simple_links_markup','<ul class="simple-links-list%s" %s>', $this->args, $this );
         if( empty( $this->args['id'] ) ){
             $output .= sprintf($markup, '',''); 
         } else {
