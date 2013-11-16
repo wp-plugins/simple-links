@@ -3,7 +3,7 @@
 Plugin Name: Simple Links
 Plugin URI: http://matlipe.com/simple-links-docs/
 Description: Replacement for Wordpress Links Manager with many added features.
-Version: 2.0.1
+Version: 2.1.0
 Author: Mat Lipe
 Author URI: http://matlipe.com/
 */
@@ -39,6 +39,25 @@ $simple_links_func = $simple_links;
 if( is_admin() ){
     require( 'includes/simple_links_admin.php' );
     $simple_links_admin_func = new simple_links_admin();
+}
+
+
+
+#-- Let know about new Pro Version
+add_action('simple_links_widget_form',  'simple_links_pro_notice'  );                                
+add_action('simple_links_shortcode_form', 'simple_links_pro_notice' );                               
+function simple_links_pro_notice(){
+    if( !defined( 'SIMPLE_LINKS_DISPLAY_BY_CATEGORY_VERSION' ) ) return;
+    ?>
+    
+        <fieldset style="border: 1px solid black; border-radius: 10px; padding: 10px;">
+            <legend style="font-size: 14px; font-weight: bold;">Want More Options?</legend>
+                
+                <p>
+                    <strong><big><a target="blank" href="http://matlipe.com/product-category/simple-links-addons/">Premium Add-ons!</a></big></strong>
+                <p>
+        </fieldset>
+  <?php
 }
 
 
