@@ -2,11 +2,11 @@
 
                                /**
                                 * The jquery required for the shortcode MCE Form
-                                * @since 7.5.13
+                                * @since 11.16.13
                                 * 
                                 * @TODO Cleanup the code and turn it into an array of checkboxes and values
                                 * 
-                                * @author Mat Lipe <mat@lipeimagination.info>
+                                * @author Mat Lipe <mat@matlipe.com>
                                 */
 var output = '[simple-links';
 
@@ -32,10 +32,12 @@ var myObj = {
 //Initiate the object This is required
 tinyMCEPopup.onInit.add(myObj.init, myObj);
 
+
 //The Jquery which grabs the form data
 jQuery(document).ready(function ($) {
 
-	     var fields = ['count','orderby','title'];
+	       var fields = ['count','orderby','title'];
+
           //Generate the Code
           $('#generate').click( function(){
 
@@ -115,7 +117,8 @@ jQuery(document).ready(function ($) {
                   output += ' remove_line_break="true"';
               }
               
-              
+              //add custom values here by using a $(document).on('simple-links-js-form-output', function(o){});
+              $(document).trigger('simple-links-js-form-output', [output]);
 
               output += ']'; //Finish out the shortcode
               

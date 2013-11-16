@@ -1,8 +1,8 @@
 
         /**               
          * The MCE plugin to add Simple LInks Shortcodes
-         * @author Mat Lipe <mat@lipeimagination.info>
-         * @since 10.30.12
+         * @author Mat Lipe <mat@matlipe.com>
+         * @since 11.16.12
          */
 
 (function(){
@@ -19,7 +19,7 @@
 				ed.windowManager.open({
 					file : userSettings.url+'?simple_links_shortcode=form',
 					width : 500 + parseInt(ed.getLang('highlight.delta_width', 0)),
-					height : 750 + parseInt(ed.getLang('highlight.delta_height', 0)),
+					height : 800 + parseInt(ed.getLang('highlight.delta_height', 0)),
 					inline : 1,
 					title  : 'Simple Links Shortcode'
 				}, {
@@ -37,8 +37,8 @@
 			return{
 				longname : 'Simple Links Shortcode Generator',
 				author: 'Mat Lipe',
-				authorurl: 'http://lipeimagination.info',
-				inforurl : 'http://lipeimagination.info',
+				authorurl: 'http://matlipe.com',
+				inforurl : 'http://matlipe.com',
 				version : '1.0'
 			};
 		}

@@ -115,7 +115,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * The output of the widget to the site
-     * @since 9.22.13
+     * @since 11.16.13
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
@@ -125,8 +125,9 @@ class SL_links_main extends WP_Widget {
      * @see nofollow error was remove with help from Heiko Manfrass
      */
     function widget( $args, $instance ) {
-        global $simple_links;
-
+        
+        do_action( 'simple_links_widget_pre_render', $args, $instance );
+        
         extract( $args );
 
         //Filter for Changing the widget args
