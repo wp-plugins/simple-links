@@ -529,6 +529,7 @@ class simple_links extends SL_post_type_tax{
 				                                           		),
 															'hierachical'          => false,
 															'supports'	           => array( 'thumbnail','title','page-attributes','revisions' ),
+															'publicly_queryable'              => false,
 															'show_in_nav_menus'    => false,
 				                                            'has_archive'          => false,
 															'rewrite'              => false,
