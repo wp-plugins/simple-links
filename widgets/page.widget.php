@@ -2,8 +2,8 @@
           /**
            * Creates a Widget of parent Child Pages
            * 
-           * @author mat lipe
-           * @since 11.4.13
+           * @author mat lipe <mat@matlipe.com>
+           * @since 12.12.13
            * @package Advanced Sidebar Menu
            *
            */
@@ -31,11 +31,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
      */
     function __construct() {
                 /* Widget settings. */
-        $widget_ops = array( 'classname' => 'advanced-sidebar-menu', 'description' => 'Creates a menu of all the pages using the child/parent relationship' );
+        $widget_ops = array( 'classname' => 'advanced-sidebar-menu', 'description' => __('Creates a menu of all the pages using the child/parent relationship', 'advanced-sidebar-menu') );
         $control_ops = array( 'width' => 290 );
 
         /* Create the widget. */
-        $this->WP_Widget( 'advanced_sidebar_menu', 'Advanced Sidebar Pages Menu', $widget_ops, $control_ops);
+        $this->WP_Widget( 'advanced_sidebar_menu', __('Advanced Sidebar Pages Menu','advanced-sidebar-menu'), $widget_ops, $control_ops);
     }
     
     
@@ -53,21 +53,21 @@ class advanced_sidebar_menu_page extends WP_Widget {
         $instance = wp_parse_args($instance, $this->defaults);
         
          ?>
-            <p> Title <br>
+            <p> <?php _e('Title','advanced-sidebar-menu'); ?> <br>
              <input id="<?php echo $this->get_field_id('title'); ?>" 
-                name="<?php echo $this->get_field_name('title'); ?>" size="50" type="text" value="<?php echo $instance['title']; ?>"/></p>
+                name="<?php echo $this->get_field_name('title'); ?>" class="widefat" type="text" value="<?php echo $instance['title']; ?>"/></p>
 
-            <p> Include Parent Page: <input id="<?php echo $this->get_field_id('include_parent'); ?>" 
+            <p> <?php _e('Include Parent Page','advanced-sidebar-menu'); ?>: <input id="<?php echo $this->get_field_id('include_parent'); ?>" 
                 name="<?php echo $this->get_field_name('include_parent'); ?>" type="checkbox" value="checked" 
                 <?php echo $instance['include_parent']; ?>/></p>
             
                         
-            <p> Include Parent Even With No Children: <input id="<?php echo $this->get_field_id('include_childless_parent'); ?>"
+            <p> <?php _e('Include Parent Even With No Children','advanced-sidebar-menu'); ?>: <input id="<?php echo $this->get_field_id('include_childless_parent'); ?>"
             name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['include_childless_parent']; ?>/>
             </p>
             
-            <p> Order By: <select id="<?php echo $this->get_field_id('order_by'); ?>" 
+            <p> <?php _e( 'Order By','advanced-sidebar-menu'); ?>: <select id="<?php echo $this->get_field_id('order_by'); ?>" 
             name="<?php echo $this->get_field_name('order_by'); ?>">
                 <?php
                 
@@ -85,18 +85,19 @@ class advanced_sidebar_menu_page extends WP_Widget {
              </select>
            </p>
              
-            <p> Use this Plugin's Styling: <input id="<?php echo $this->get_field_id('css'); ?>"
+            <p> <?php _e("Use this Plugin's Styling",'advanced-sidebar-menu'); ?>: <input id="<?php echo $this->get_field_id('css'); ?>"
             name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['css']; ?>/></p>
                     
-            <p> Pages to Exclude, Comma Separated: <input id="<?php echo $this->get_field_id('exclude'); ?>" 
-                name="<?php echo $this->get_field_name('exclude'); ?>" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
-            <p> Legacy Mode: (use pre 4.0 structure and css) <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
+            <p> <?php _e( "Pages to Exclude, Comma Separated",'advanced-sidebar-menu'); ?>: <input id="<?php echo $this->get_field_id('exclude'); ?>" 
+                name="<?php echo $this->get_field_name('exclude'); ?>" class="widefat" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
+                
+            <p> <?php _e( "Legacy Mode: (use pre 4.0 structure and css)",'advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
             name="<?php echo $this->get_field_name('legacy_mode'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['legacy_mode']; ?>/>
             </p>    
                 
-            <p> Always Display Child Pages: <input id="<?php echo $this->get_field_id('display_all'); ?>" 
+            <p> <?php _e( "Always Display Child Pages", 'advanced-sidebar-menu'); ?>: <input id="<?php echo $this->get_field_id('display_all'); ?>" 
                 name="<?php echo $this->get_field_name('display_all'); ?>" type="checkbox" value="checked" 
                 onclick="javascript:asm_reveal_element( 'levels-<?php echo $this->get_field_id('levels'); ?>' )"
                 <?php echo $instance['display_all']; ?>/></p>
@@ -107,7 +108,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
                   } else {
                     echo 'display:none';
                   } ?>"> 
-            <p> Levels to Display: <select id="<?php echo $this->get_field_id('levels'); ?>" 
+            <p> <?php _e("Levels to Display",'advanced-sidebar-menu'); ?>: <select id="<?php echo $this->get_field_id('levels'); ?>" 
             name="<?php echo $this->get_field_name('levels'); ?>">
             <?php 
                 for( $i= 1; $i<6; $i++ ){

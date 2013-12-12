@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 11.15.13
+           * @since 12.12.13
            * @package Advanced Sidebar Menu
            *
            * @todo Clean this bad boy up. Still rookie code from years ago
@@ -60,25 +60,25 @@ class advanced_sidebar_menu_category extends WP_Widget {
               $instance = wp_parse_args($instance, $this->defaults);
                  
             ?>
-             <p> Title <br>
+             <p> <?php _e('Title','advanced-sidebar-menu'); ?> <br>
              <input id="<?php echo $this->get_field_name('title'); ?>" 
-                name="<?php echo $this->get_field_name('title'); ?>" size="50" type="text" value="<?php echo $instance['title']; ?>"/></p>
+                name="<?php echo $this->get_field_name('title'); ?>" class="widefat" type="text" value="<?php echo $instance['title']; ?>"/></p>
             
             
-            <p> Include Parent Category <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
+            <p> <?php _e( 'Include Parent Category','advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
                 name="<?php echo $this->get_field_name('include_parent'); ?>" type="checkbox" value="checked" 
                 <?php echo $instance['include_parent']; ?>/></p>
             
                         
-            <p> Include Parent Even With No Children <input id="<?php echo $this->get_field_name('include_childless_parent'); ?>"
+            <p> <?php _e( 'Include Parent Even With No Children','advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('include_childless_parent'); ?>"
             name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['include_childless_parent']; ?>/></p>
                     
-            <p> Use this plugins styling <input id="<?php echo $this->get_field_name('css'); ?>"
+            <p> <?php _e('Use this plugins styling','advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('css'); ?>"
             name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['css']; ?>/></p>
                     
-            <p> Display Categories on Single Posts <input id="<?php echo $this->get_field_name('single'); ?>"
+            <p> <?php _e( 'Display Categories on Single Posts','advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('single'); ?>"
             name="<?php echo $this->get_field_name('single'); ?>" type="checkbox" value="checked" 
             onclick="javascript:asm_reveal_element( 'new-widget-<?php echo $this->get_field_name('new_widget'); ?>' )"
                     <?php echo $instance['single']; ?>/></p>    
@@ -89,7 +89,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
                   } else {
                     echo 'display:none';
                   } ?>">        
-                 <p>Display Each Single Post's Category 
+                 <p><?php _e("Display Each Single Post's Category",'advanced-sidebar-menu'); ?> 
                     <select id="<?php echo $this->get_field_name('new_widget'); ?>" 
                             name="<?php echo $this->get_field_name('new_widget'); ?>">
                     <?php 
@@ -107,17 +107,17 @@ class advanced_sidebar_menu_category extends WP_Widget {
          
                 
                     
-            <p> Categories to Exclude, Comma Separated:<input id="<?php echo $this->get_field_name('exclude'); ?>" 
-                name="<?php echo $this->get_field_name('exclude'); ?>" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
+            <p> <?php _e( "Categories to Exclude, Comma Separated", 'advanced-sidebar-menu'); ?>:<input id="<?php echo $this->get_field_name('exclude'); ?>" 
+                name="<?php echo $this->get_field_name('exclude'); ?>" type="text" class="widefat" value="<?php echo $instance['exclude']; ?>"/></p>
             
             
-            <p> Legacy Mode: (use pre 4.0 structure and css) <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
+            <p> <?php _e( "Legacy Mode: (use pre 4.0 structure and css)",'advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
             name="<?php echo $this->get_field_name('legacy_mode'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['legacy_mode']; ?>/>
             </p>    
                 
                 
-            <p> Always Display Child Categories <input id="<?php echo $this->get_field_name('display_all'); ?>" 
+            <p> <?php _e("Always Display Child Categories",'advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('display_all'); ?>" 
                 name="<?php echo $this->get_field_name('display_all'); ?>" type="checkbox" value="checked" 
                 onclick="javascript:asm_reveal_element( 'levels-<?php echo $this->get_field_name('levels'); ?>' )"
                 <?php echo $instance['display_all']; ?>/></p>
@@ -128,7 +128,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
                   } else {
                     echo 'display:none';
                   } ?>"> 
-            <p> Levels to Display <select id="<?php echo $this->get_field_name('levels'); ?>" 
+            <p> <?php _e( "Levels to Display",'advanced-sidebar-menu'); ?> <select id="<?php echo $this->get_field_name('levels'); ?>" 
             name="<?php echo $this->get_field_name('levels'); ?>">
             <?php 
                 for( $i= 1; $i<6; $i++ ){

@@ -4,9 +4,9 @@ Plugin Name: Advanced Sidebar Menu
 Plugin URI: http://matlipe.com/advanced-sidebar-menu/
 Description: Creates dynamic menu based on child/parent relationship.
 Author: Mat Lipe
-Version: 4.6.1
+Version: 4.7.0
 Author URI: http://matlipe.com
-Since: 11.15.13
+Since: 12.12.13
 */
 
 define( 'ADVANCED_SIDEBAR_BASIC_VERSION', '4.6.1' );
@@ -25,6 +25,12 @@ require( ADVANCED_SIDEBAR_WIDGETS_DIR.'init.php' );
 #-- Bring in the functions
 require( ADVANCED_SIDEBAR_DIR.'lib/advancedSidebarMenu.php' );
 $asm = new advancedSidebarMenu();
+
+#-- Translate
+add_action('plugins_loaded', array( $this,'advanced_sidebar_menu_translate') );
+function advanced_sidebar_menu_translate(){
+    load_plugin_textdomain('advanced-sidebar-menu', false, 'advanced-sidebar-menu/languages');
+}
 
 
 
@@ -46,9 +52,9 @@ function advanced_sidebar_menu_pro_notice(){
     if( defined( 'ADVANCED_SIDEBAR_MENU_PRO_VERSION' ) ) return;
     ?>
         <fieldset style="border: 1px solid black; border-radius: 10px; padding: 10px;">
-            <legend style="font-size: 14px; font-weight: bold;">Want More Options?</legend>
+            <legend style="font-size: 14px; font-weight: bold;"><?php _e('Want More Options','advanced-sidebar-menu'); ?>?</legend>
                 <p>
-                    <strong><big><a target="blank" href="http://matlipe.com/product/advanced-sidebar-menu-pro/">Go Pro!</a></big></strong>
+                    <strong><big><a target="blank" href="http://matlipe.com/product/advanced-sidebar-menu-pro/"><?php _e('Go Pro', 'advanced-sidebar-menu'); ?>!</a></big></strong>
                 <p>
         </fieldset>
   <?php

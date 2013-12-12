@@ -5,12 +5,13 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.1
 Tested up to: 3.8.0
-Stable tag: 4.6.1
+Stable tag: 4.7.0
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
 == Description ==
-<h4>Now Supports Unlimited Levels of Pages</h4>
+
+<h4>Now Supports Internationalization Text Domain 'advanced-sidebar-menu'</h4>
 
 Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
 Keeps the menu clean and usable.
@@ -75,6 +76,11 @@ e.g.
 Developer docs may be found here:
 <a href="http://matlipe.com/advanced-sidebar-menu/developer-docs/">http://matlipe.com/advanced-sidebar-menu/developer-docs/</a>
 
+= What text domain do I use for translation and where is the .pot file? =
+
+The .pot file may be found in the plugins' languages folder. Use the 'advanced-sidebar-menu' text domain.
+
+
 = Version 4.0+ is not displaying the same as previous version of the plugin. How do I bring this back? =
 
 You will find a checkbox in the widget options for Legacy Mode. 
@@ -124,6 +130,9 @@ I do offer preminum services for buiding custom add-ons for additional functiona
 
 
 == Changelog ==
+= 4.7.0 =
+* Added Internationalization (I18n) support
+
 = 4.6.0 =
 * Added support for Pro Version
 
@@ -179,39 +188,6 @@ I do offer preminum services for buiding custom add-ons for additional functiona
 * Added a categories menu widget with the same functionality as the pages widget
 * Added the ability to edit "views" files through your child theme to edit output and css
 * Cleanedup the output
-
-= 2.1 =
-* Added default syling.
-
-= 2.0 =
-* Brought back the ability to exclude pages with support for excluding single pages from the menu.
-* Added the ability to display all levels of child pages always.
-* Added the option to select how many levels of pages to display when the "Always Display Child Pages" is selected
-
-
-= 1.4.5 =
-* Added compatibility for sites with non wp_ prefix tables
-* Removed All traces of Each menu level if no pages to list
-* Removed Error created by some search forms
-
-= 1.4.4 =
-* Cleaned up the way the plugin displays
-* Added class to match normal widgets
-* Removed the <div> completely when no menu present
-
-
-= 1.4 =
-* Removed Menu from pages with no children
-* Added a checkbox for including menu on page with no children
-* Removed ability to exclude items from menu
-
-
-= 1.2 =
-* Added support for the built in page ordering.
-
-= 1.1 =
-* Added support for separate css classes on each level of the menu.
-
 
 
 == Upgrade Notice ==
