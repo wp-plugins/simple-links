@@ -4,7 +4,7 @@
                   * 
                   * @author Mat Lipe <mat@matlipe.com>
                   * 
-                  * @since 11.16.13
+                  * @since 12.26.13
                   * 
                   * @uses These methods are used in both the admin output of the site
                   * 
@@ -437,9 +437,11 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * The output of the standard meta boxes and fields
-	 * @param $post
+     * 
+	 * @param WP_Post $post
 	 * @param array $box the args sent to keep track of what fields is sent over
-	 * @since 12.15.12
+     * 
+	 * @since 12.26.12
 	 */
 	function link_meta_box_output($post, $box){
 	    $box = $box['args'];
@@ -447,7 +449,7 @@ class simple_links extends SL_post_type_tax{
         if( $box != 'description' ){
                  printf('<input type="text" name="%s" value="%s" size="100" class="simple-links-input">', $box, get_post_meta( $post->ID, $box, true ) );
         } else {
-               printf('<textarea name="%s" class="simple-links-input">%s</textarea>', $box, get_post_meta( $post->ID, $box, true ) );
+              wp_editor(get_post_meta( $post->ID, $box, true ), $box, array('media_buttons' => false ) );
         }
 	    
 	    if( isset( $this->meta_box_descriptions[$box] ) ){

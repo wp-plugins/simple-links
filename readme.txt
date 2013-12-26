@@ -3,8 +3,8 @@ Contributors: Mat Lipe
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Simple%20Links%20&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
-Tested up to: 3.8.0
-Stable tag: 2.1.3
+Tested up to: 3.9.0
+Stable tag: 2.2.0
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -66,6 +66,10 @@ For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-lin
 2. The Shortcode Generating Form
 
 == Changelog ==
+
+= 2.2.0 =
+* Added mce to link description
+
 = 2.1.0 = 
 * Prep for premium add-ons
 * New filters
