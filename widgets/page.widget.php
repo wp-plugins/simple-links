@@ -89,7 +89,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
             name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
                     <?php echo $instance['css']; ?>/></p>
                     
-            <p> <?php _e( "Pages to Exclude, Comma Separated",'advanced-sidebar-menu'); ?>: <input id="<?php echo $this->get_field_id('exclude'); ?>" 
+            <p> <?php _e( "Pages to Exclude (ids), Comma Separated",'advanced-sidebar-menu'); ?>: <input id="<?php echo $this->get_field_id('exclude'); ?>" 
                 name="<?php echo $this->get_field_name('exclude'); ?>" class="widefat" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
                 
             <p> <?php _e( "Legacy Mode: (use pre 4.0 structure and css)",'advanced-sidebar-menu'); ?> <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
