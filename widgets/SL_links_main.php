@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 9.21.13
+                    * @since 1.3.14
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -186,7 +186,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * Outputs the Widget form on the Widgets Page
-     * @since 9.22.13
+     * @since 1.3.14
      * @see WP_Widget::form()
      */
     function form( $instance ) {
@@ -227,7 +227,7 @@ class SL_links_main extends WP_Widget {
             <?php 
             
             foreach( $simple_links->get_categories() as $cat ){
-                if( !isset( $instance[$cat] ) ) $instance[$cat] = 0;
+                if( !isset( $instance['category'][$cat] ) ) $instance['category'][$cat] = 0;
                 printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $cat, $this->get_field_name('category'), $cat, checked($instance['category'][$cat], $cat, false), $cat );
             }
             ?>
