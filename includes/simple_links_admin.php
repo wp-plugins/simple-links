@@ -4,10 +4,11 @@
 
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 9.22.13
+                      * @since 1.7.14
                       * @author Mat Lipe
                       * @uses called by init.php
                       * @uses $simple_links_admin_func
+                      * 
                       */
 
 if( !class_exists( 'simple_links_admin' ) ){
@@ -221,9 +222,11 @@ class simple_links_admin extends simple_links{
     
     
     /**
+     * 
      * Generates all contextual help screens for this plugin
-     * @since 7.5.13
+     * @since 1.7.14
      * @uses Called at load by __construct
+     * 
      */
     function help(){
     
@@ -298,9 +301,11 @@ class simple_links_admin extends simple_links{
                 'content'        => '<p>'.__('If they haven\'t already, Wordpress will be deprecating the built in links functionality').'.<br>
                                         '.__('These settings take care of cleaning up the Built In Links right now'). '<br>
                                         '.__('By Checking "Remove the Built in Links", the Links menu will disappear along with the add new Admin Bar link'). '. <br>
-                                        '.__('By Checking "Replace Link Widgets with Simple Link Replica widgets, the Wordpress Link Widgets will automatically'). 'be replaced with widgets labeled "Simple Links Replica". All existing "links" widgets will remain in place and uneffected by deprececation. They will simply have a new title'). '.<br>
-                                       '.__(' Pressing the "Import Links" button will automatically copy the Wordpress Links into Simple Links. Keep in mind if you press this button twice it will copy the links twice and you will have duplicates'). '.</p>'
-                 );
+                                        '.__('By Checking "Replace Link Widgets with Simple Link Replica widgets, the Wordpress Link Widgets will automatically be replaced with widgets labeled "Simple Links Replica". All existing "links" widgets will remain in place and uneffected by deprececation. They will simply have a new title'). '. <br>
+                                        '.__(' Pressing the "Import Links" button will automatically copy the Wordpress Links into Simple Links. Keep in mind if you press this button twice it will copy the links twice and you will have duplicates'). '.</p>'
+                 
+                 
+                 ) );
     
     
                 $screen->add_help_tab( array(

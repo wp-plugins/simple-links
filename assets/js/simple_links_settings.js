@@ -1,34 +1,35 @@
 /**
  * The js for the Settings page on the Simple Links
- * @author mat lipe <mat@lipeimagination.info>
- * @since 8/18/12
+ * 
+ * @author mat lipe <mat@matlipe.com>
+ * 
+ * @since 1.7.14
+ * 
  */
 
-jQuery(document).ready( function($) {
+jQuery(function($) {
 			// close postboxes that should be closed
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 		
 			// postboxes setup  These need to be set the handlers (screens) of the post boxes
 			postboxes.add_postbox_toggles('sl-settings-boxes');
-			
-			
 
 			SLsettingsAjax.init();
-			SLsettingsQtips.init();
-			
-			
-			
+			SLsettingsQtips.init();		
 });
+
+var $s = jQuery.noConflict();
 
 /**
  * Any Ajax Requests for the Settings page
  * 
  * @since 8/19/12
+ * 
  */
 var SLsettingsAjax = {
 		init : function(){
 			//the import links ajax
-			$('#sl-import-links').click( function(){
+			$s('#sl-import-links').click( function(){
 				SLsettingsAjax.importLinks();
 				return false;
 			});
@@ -43,29 +44,32 @@ var SLsettingsAjax = {
 			
 			var data = '';
 			
-			$.post(SLajaxURL.importLinksURL, data, function(respon){
+			$s.post(SLajaxURL.importLinksURL, data, function(respon){
 				
 				   //  alert( respon );
-				    $('#import-links-success').slideDown('slow');
+				    $s('#import-links-success').slideDown('slow');
 				});
 				
 		}
 	
 		
-}
+};
 
 
 
 /**
+ * 
  * The Toopltips
  * @since 8/19/12
+ * 
+ * 
  */
 var SLsettingsQtips = {
 		
 		init : function(){
 			
 			//The Hide Ordering Option
-			$('#SL-hide-ordering').qtip({
+			$s('#SL-hide-ordering').qtip({
 				'content'  : 'This will prevent editors from using the drag and drop ordering.',
 				style: { 
 					border: {
@@ -78,7 +82,7 @@ var SLsettingsQtips = {
 			});
 			
 			//The show setting option
-			$('#SL-show-settings').qtip({
+			$s('#SL-show-settings').qtip({
 				'content'  : 'This will allow editors access to this Settings Page.',
 				style: { 
 					border: {
@@ -91,7 +95,7 @@ var SLsettingsQtips = {
 			});
 			
 			//The replace widgets option
-			$('#SL-replace-widgets').qtip({
+			$s('#SL-replace-widgets').qtip({
 				'content'  : 'This will replace all the "Links" widgets with "Simple Links Replica" widgets to keep existing "Links" widgets in place and prevent deprecation.',
 				style: { 
 					border: {
@@ -104,7 +108,7 @@ var SLsettingsQtips = {
 			});
 			
 			//The remove links option
-			$('#SL-remove-links').qtip({
+			$s('#SL-remove-links').qtip({
 				'content'  : 'This will remove all traces of the Wordpres built in links except data and widgets',
 				style: { 
 					border: {
@@ -118,7 +122,7 @@ var SLsettingsQtips = {
 			
 			
 			//The import links
-			$('#SL-import-links').qtip({
+			$s('#SL-import-links').qtip({
 				content : 'This will import all existing Wordpress Links into the Simple Links',
 				style: { 
 					border: {
@@ -128,11 +132,9 @@ var SLsettingsQtips = {
 				      },
 				      tip: 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners
 				   }
-			})
+			});
 		}
-		
-		
-}
+};
 
 
 
