@@ -111,8 +111,8 @@ class SimpleLinksTheLink{
             $link_output = apply_filters( 'simple_links_link_output', $link_output, $this->meta_data, $this->link, $image, $this->args, $this );
             
             //backward compatibility
-            $link_output = apply_filters('simple_links_'.$this->args['type'].'_link_output', $link_output, $this->getData, $this->link, $image, $this->args );
-            $link_output = apply_filters('simple_links_'.$this->args['type'].'_link_output_' . $this->args['id'], $link_output, $this->getData, $this->link, $image, $this->args );
+            $link_output = apply_filters('simple_links_'.$this->args['type'].'_link_output', $link_output, $this->getData(), $this->link, $image, $this->args );
+            $link_output = apply_filters('simple_links_'.$this->args['type'].'_link_output_' . $this->args['id'], $link_output, $this->getData(), $this->link, $image, $this->args );
  
  
             $output .= $link_output;

@@ -115,8 +115,8 @@ class SimpleLinksFactory{
             $this->query_args['orderby'] = 'rand';
         } else {
             //For Backwards Compatibility
-            if( $atts['orderby'] == 'name' ){
-                $args['orderby'] = 'title';
+            if( $this->query_args['orderby'] == 'name' ){
+                $this->query_args['orderby'] = 'title';
             }
         }
 
@@ -152,8 +152,10 @@ class SimpleLinksFactory{
 
 
         $this->query_args = apply_filters('simple_links_parsed_query_args', $this->query_args, $this);
-
+        
         $this->args['type'] = $this->type;
+        
+        
         return $this->args = apply_filters( 'simple_links_parsed_args', $this->args, $this );
         
 
@@ -165,16 +167,13 @@ class SimpleLinksFactory{
      * 
      * @return obj
      * 
-     * @since 11.16.13
+     * @since 1.7.14
      */
     protected  function getLinks(){
- 
+
         $this->query_args['post_type'] = 'simple_link';
-        $this->query_args['posts_per_page'] = $this->query_args['count'];
-        $this->query_args['posts_per_archive_page'] = $this->query_args['count'];
-        if( !isset( $this->query_args['numberposts'] ) ){
-            $this->query_args['numberposts'] = $this->query_args['count'];
-        }
+        $this->query_args['posts_per_page'] = $this->query_args['numberposts'];
+        $this->query_args['posts_per_archive_page'] = $this->query_args['numberposts'];
 
         //Get the links
         $links = get_posts( $this->query_args );

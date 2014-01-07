@@ -4,7 +4,7 @@
                   * 
                   * @author Mat Lipe <mat@matlipe.com>
                   * 
-                  * @since 12.26.13
+                  * @since 1.7.14
                   * 
                   * @uses These methods are used in both the admin output of the site
                   * 
@@ -139,7 +139,7 @@ class simple_links extends SL_post_type_tax{
 	 * @return the created list based on attributes
 	 * @uses [simple-links $atts]
 	 * @param string $atts the attributes specified in shortcode
-	 * @since 11.16.13
+	 * @since 1.7.14
 	 * @param $atts = 'title'              => false,
                       'category'           => false,
                        'orderby'           => 'menu_order',
@@ -185,9 +185,9 @@ class simple_links extends SL_post_type_tax{
         $links = new SimpleLinksFactory($atts, 'shortcode');
         
                
-        $output =  apply_filters( 'simple_links_shortcode_output', $links->output(), $links->links, $links->full_args );
+        $output =  apply_filters( 'simple_links_shortcode_output', $links->output(), $links->links, $links->args, $links->query_args );
         if( isset( $atts['id'] ) ){
-            $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links->links, $links->full_args );
+            $output = apply_filters( 'simple_links_shortcode_output_' . $atts['id'], $output, $links->links, $links->args, $links->query_args  );
         }
         
         return $output;
@@ -260,7 +260,7 @@ class simple_links extends SL_post_type_tax{
 	
 	/**
 	 * Saves the meta fields
-	 * @since 9.22.13
+	 * @since 1.7.14
 	 */
 	function meta_save(){
 		global $post;
@@ -274,24 +274,25 @@ class simple_links extends SL_post_type_tax{
 		}
 	
 		//got here some other way
-		if( !is_array( $this->{$type . '_meta_fields'} ) ){
+		if( empty( $this->{$type . '_meta_fields'} ) || !is_array( $this->{$type . '_meta_fields'} ) ){
 			return;
 		}
 		
 		
 		//Apply Filters to Add or remove meta boxes from the links
 		$this->simple_link_meta_fields  = apply_filters('simple_links_meta_boxes', $this->simple_link_meta_fields );
-		
-	
+
 		//Go through the options extra fields
 		foreach( $this->{$type . '_meta_fields'} as $field ){
-			if( $field != 'link_aditional_fields' ){
+			if( $field != 'additional_fields' ){
 				update_post_meta( $post->ID, $field, $_POST[$field] );
 			}
 		}
         
         //for the no follow checkbox
-        update_post_meta( $post->ID, 'link_target_nofollow', $_POST['link_target_nofollow'] );
+        if( isset( $_POST['link_target_nofollow'] ) ){
+            update_post_meta( $post->ID, 'link_target_nofollow', $_POST['link_target_nofollow'] );
+        }
         
     
 		//Escape Hatch
@@ -364,7 +365,7 @@ class simple_links extends SL_post_type_tax{
 	 * Output of the additional fields meta box
      * 
      * 
-	 * @since 9.22.13
+	 * @since 1.7.14
      * 
      * 
 	 */
@@ -378,6 +379,7 @@ class simple_links extends SL_post_type_tax{
 
 		if( is_array( $names ) ){
 			foreach( $names as $key => $value ){
+			    if( empty( $values[$value] ) ) $values[$value] = null;
 				
 				printf('<p>%s:  <input type="text" name="link_additional_value[%s]" value="%s" size="70" class="SL-additonal-input">', 
 																		$value, $value, $values[$value]

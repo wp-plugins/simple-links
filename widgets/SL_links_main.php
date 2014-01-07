@@ -3,7 +3,7 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 1.3.14
+                    * @since 1.7.14
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -115,7 +115,7 @@ class SL_links_main extends WP_Widget {
     
     /**
      * The output of the widget to the site
-     * @since 11.16.13
+     * @since 1.7.14
      * @see WP_Widget::widget()
      * @param $args the widget necessaties like $before_widget and $title
      * @param $instance all the settings for this particular widget
@@ -146,7 +146,7 @@ class SL_links_main extends WP_Widget {
         
     //--------------- Starts the Output --------------------------------------  
         
-        $output .= $before_widget;
+        $output = $before_widget;
             //Add the title
             if( !empty( $instance['title'] ) ){
                 $output .= $before_title. $instance['title'].$after_title;
