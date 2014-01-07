@@ -15,8 +15,6 @@
 
 $asm->title();
 
-$content = '';
-
 #-- list the parent page if chosen
 if( $asm->include_parent() ){
 	$content .= '<ul class="parent-sidebar-menu" >';
