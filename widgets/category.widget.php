@@ -5,7 +5,7 @@
            * Creates a Widget of parent Child Categories
            * 
            * @author mat lipe
-           * @since 12.12.13
+           * @since 1.7.14
            * @package Advanced Sidebar Menu
            *
            * @todo Clean this bad boy up. Still rookie code from years ago
@@ -49,7 +49,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
     /**
      * Creates a form for the Widget Options
      * 
-     * @since 11.4.13
+     * @since 1.7.14
      * 
      * @param array $instance
      * 
@@ -84,7 +84,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
                     <?php echo $instance['single']; ?>/></p>    
             
             <span id="new-widget-<?php echo $this->get_field_name('new_widget'); ?>" style="<?php 
-                  if( $instance['single'] == checked ){
+                  if( $instance['single'] == 'checked' ){
                     echo 'display:block';
                   } else {
                     echo 'display:none';
@@ -123,7 +123,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
                 <?php echo $instance['display_all']; ?>/></p>
             
             <span id="levels-<?php echo $this->get_field_name('levels'); ?>" style="<?php 
-                  if( $instance['display_all'] == checked ){
+                  if( $instance['display_all'] == 'checked' ){
                     echo 'display:block';
                   } else {
                     echo 'display:none';
