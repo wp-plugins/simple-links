@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
 Tested up to: 3.9.0
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -66,6 +66,9 @@ For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-lin
 2. The Shortcode Generating Form
 
 == Changelog ==
+
+= 2.2.4 =
+* Fixed issue with pre WP 3.5 installs
 
 = 2.2.0 =
 * Added mce to link description
