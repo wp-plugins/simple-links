@@ -204,7 +204,7 @@ class SimpleLinksFactory{
      * @return String|void
      */
      function output($echo = false){
-        
+
         if( empty( $this->links ) ) return false;
         
         $output = '';
@@ -228,7 +228,7 @@ class SimpleLinksFactory{
                 $link_class = apply_filters('simple_links_link_class', 'SimpleLinksTheLink', $this->type, $this->args, $this);   
                 
                 $link = new $link_class($link, $this->args, $this->type);
-                
+
                 $output .= $link->output();   
             }
  

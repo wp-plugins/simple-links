@@ -3,23 +3,20 @@
                                * @uses called with a template redirect using a query var send from the mce plugin
                                * @see simple_links->load_outside_page();
                                * @see js/editor_plugin.js
-                               * @since 11.16.13
+                               * @since 1.17.14
  * 
                                * @author Mat Lipe <mat@lipeimagination.info>
                                */
 
-wp_head();
+wp_enqueue_script('jquery');
+wp_enqueue_script('sl-shortcode-form', SIMPLE_LINKS_JS_DIR.'shortcode-form.js');
 
 ?> 
 <title>Add Simple Links</title>
 <script type="text/javascript" src="<?php echo includes_url(); ?>js/tinymce/tiny_mce_popup.js?v=3211"></script>
 <?php 
 
-//Bring in the JQuery
-echo '<script type="text/javascript">';
-	include( SIMPLE_LINKS_JS_PATH . 'shortcode-form.js' );
-echo '</script>';
-
+wp_head();
 
 //The plugins functions
 global $simple_links_func;
@@ -27,7 +24,7 @@ global $simple_links_func;
 ?>
 
 <style type="text/css">
-			#generate{
+            #generate{
 background-attachment: scroll;
 background-clip: border-box;
 background-color: #21759B;
@@ -81,9 +78,9 @@ width: 80px;
    }
    
 body,input{
-	font-size: 14px;
-	padding: 5px;
-	border-radius: 5px;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 5px;
 }
 </style>
 </head>
@@ -97,32 +94,32 @@ body,input{
         
         <fieldset>
         <p><?php _e('Categories (optional)','simple-links');?>: <br><br>
-        	<?php 
-       		 foreach( $simple_links_func->get_categories() as $cat ){
-        		printf('<input class="cat" type="checkbox" value="%s"/ > %s <br>', $cat, $cat );
-	        	}
-	        ?>
+            <?php 
+             foreach( $simple_links_func->get_categories() as $cat ){
+                printf('<input class="cat" type="checkbox" value="%s"/ > %s <br>', $cat, $cat );
+                }
+            ?>
         </p>
         </fieldset>
         
         
         <p><?php _e('Number of Links','simple-links');?>: 
-        	<select id="count">
-        		<option value=""><?php _e('All','simple-links');?></option>
-        		<?php 
-          		for( $i = 1; $i<30; $i++){
-          			printf('<option value="%s">%s</option>', $i, $i );
-          		}
-        		?>
-        	</select>
+            <select id="count">
+                <option value=""><?php _e('All','simple-links');?></option>
+                <?php 
+                for( $i = 1; $i<30; $i++){
+                    printf('<option value="%s">%s</option>', $i, $i );
+                }
+                ?>
+            </select>
         </p>
         
         <p><?php _e('Order By (optional)','simple-links');?>: 
-        	<select id="orderby">
-        		<option value=""><?php _e('Link Order','simple-links');?></option>
-        	   	<option value="title"><?php _e('Title','simple-links');?></option>
-        	   	<option value="random"><?php _e('Random','simple-links');?></option>
-        	</select>
+            <select id="orderby">
+                <option value=""><?php _e('Link Order','simple-links');?></option>
+                <option value="title"><?php _e('Title','simple-links');?></option>
+                <option value="random"><?php _e('Random','simple-links');?></option>
+            </select>
         </p>
         
         <p><?php _e('Show Description','simple-links');?> <input type="checkbox" id="description" value="true" /></p>
@@ -144,11 +141,11 @@ body,input{
         <p><?php _e('Include Additional Fields','simple-links');?>:<br>
             <?php 
             if( empty( $simple_links_func->additional_fields ) ){
-            	echo '<em>'.__('There have been no additional fields added','simple-links'). '</em>';
+                echo '<em>'.__('There have been no additional fields added','simple-links'). '</em>';
             } else {
             foreach( $simple_links_func->additional_fields as $field ){
-            			printf( '<input class="additional" type="checkbox" value="%s">%s<br>', $field, $field );
-            	  }
+                        printf( '<input class="additional" type="checkbox" value="%s">%s<br>', $field, $field );
+                  }
             }
         ?>
         </p>

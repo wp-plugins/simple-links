@@ -7,7 +7,7 @@
  * @author Mat Lipe <mat@matlipe.com>
  * @since 2.0
  * 
- * @since 11.16.13
+ * @since 1.17.14
  * 
  * @uses May be constructed a link object or ID and using a echo will output the formatted link
  * 
@@ -69,10 +69,12 @@ class SimpleLinksTheLink{
      * 
      * @return string
      * 
-     * @since 11.26.13
+     * @since 1.17.14
      */
     function output($echo = false){
-        if( !$this->link instanceof WP_post ) return false;
+        
+        if( !is_object($this->link) ) return '';
+        
         
         
         if( $this->args['show_image'] ){
@@ -188,12 +190,13 @@ class SimpleLinksTheLink{
      * 
      * @param string $name - name of meta data key (defaults to all meta data );
      * 
+     * @since 1.17.14
      * @return mixed
      */
     function getData($name = false){
         
         if( empty( $this->meta_data ) ){
-            $this->meta_data = get_post_meta($this->link->ID); 
+            $this->meta_data = get_post_meta($this->link->ID, ''); 
             $this->link->meta = $this->meta_data;
             
             $this->meta_data = apply_filters( 'simple_links_meta', $this->meta_data, $this->link, $this );
