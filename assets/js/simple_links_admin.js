@@ -2,7 +2,7 @@
                           /**
                            * Simple links admin jquery
                            * @author Mat Lipe
-                           * @since 12.26.13
+                           * @since 1.23.14
                            */
 
 var isSimpleLinks = false;
@@ -65,10 +65,12 @@ var SLsettings = {
 
 /**
  * The link Sorting Page methods
- * @since 10.10.12
+ * @since 1.23.14
  */
 var SLsortPage = {
 		init : function(){
+		    if( $s( '.draggable-children' ).length < 1 ) return;
+		    
 			  //Settup the Draggable list
 		    $s( '.draggable-children' ).sortable( {
 		  	  							placeholder: 'sortable-placeholder menu-item-depth-1',
