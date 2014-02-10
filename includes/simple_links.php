@@ -4,7 +4,7 @@
                   * 
                   * @author Mat Lipe <mat@matlipe.com>
                   * 
-                  * @since 1.7.14
+                  * @since 2.10.14
                   * 
                   * @uses These methods are used in both the admin output of the site
                   * 
@@ -99,7 +99,7 @@ class simple_links extends SL_post_type_tax{
     /**
      * Generates an html link from a links ID
      * 
-     * @since 5.31.13
+     * @since 2.10.14
      * 
      * @param int  $linksId - the links post->ID
      */
@@ -110,7 +110,7 @@ class simple_links extends SL_post_type_tax{
        $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s</a>',
                     $meta['web_address'][0],
                     $meta['target'][0],
-                    strip_tags($meta['description'][0]),
+                    htmlentities(strip_tags($meta['description'][0]), ENT_QUOTES, 'UTF-8'),
                     empty( $meta['link_target_nofollow'][0] ) ? '': 'rel="nofollow"',
                     $link->post_title
         );

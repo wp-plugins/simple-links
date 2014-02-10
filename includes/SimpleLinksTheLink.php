@@ -5,9 +5,10 @@
  * Each link should be a new instance of the class
  * 
  * @author Mat Lipe <mat@matlipe.com>
+ * 
  * @since 2.0
  * 
- * @since 1.17.14
+ * @since 2.10.14
  * 
  * @uses May be constructed a link object or ID and using a echo will output the formatted link
  * 
@@ -69,7 +70,7 @@ class SimpleLinksTheLink{
      * 
      * @return string
      * 
-     * @since 1.17.14
+     * @since 2.10.14
      */
     function output($echo = false){
         
@@ -104,7 +105,7 @@ class SimpleLinksTheLink{
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
                                     $this->getData('web_address'),
                                     $this->getData('target'),
-                                    strip_tags( $this->getData('description') ),
+                                    htmlentities(strip_tags( $this->getData('description') ), ENT_QUOTES, 'UTF-8'),
                                     empty( $this->meta_data['link_target_nofollow'][0] ) ? '': 'rel="nofollow"', 
                                     $image,
                                     $this->link->post_title
