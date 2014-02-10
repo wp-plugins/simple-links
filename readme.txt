@@ -19,14 +19,14 @@ The built in Wordpress Links Manager had become Deprecated due to many shortcomi
 
 Some of the features this plugin offers:
 
-*   Drag and Drop link ordering
-*   Featured Image Style Image Attaching
-*   Shortcode Capabilites with a shortcode generating form
-*   Additional Usuable Fields
-*   Many Widget Options
-*   Replacement of Wordpresses Links Widgets to hinder deprecation
-*   Options to remove the built in Links Manager from the dashboard
-*   Flexible Permissions
+* Drag and Drop link ordering
+* Featured Image Style Image Attaching
+* Short-code capabilities with a short-code generating form
+* Additional usable Fields
+* Many Widget Options
+* Import links from the WordPress Links manager
+* Options to remove the WordPress Links Manager from the dashboard
+* Flexible Permissions
 
 <div>
   The outputs, admin screens, and permissions are extendable for developers familiar with using filters.
