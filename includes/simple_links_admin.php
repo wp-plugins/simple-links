@@ -451,7 +451,7 @@ class simple_links_admin extends simple_links{
                         },
                         close: function() {
                             jQuery.post( ajaxurl, {
-                                pointer: '<?php echo $handle; ?>',
+                                pointer: 'simple-links-flag',
                                 action: 'dismiss-wp-pointer'
                             });
                         }
