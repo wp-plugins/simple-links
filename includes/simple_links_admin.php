@@ -1,13 +1,15 @@
 <?php 
-
-
-
                      /**
                       * Methods for the Admin Area of Simple Links
-                      * @since 1.7.14
-                      * @author Mat Lipe
+                      * 
+                      * @since 2.10.14
+                      * 
+                      * @author Mat Lipe <mat@matlipe.com>
+                      * 
                       * @uses called by init.php
-                      * @uses $simple_links_admin_func
+                      * 
+                      * @uses simple_links
+                      * 
                       * 
                       */
 
@@ -224,7 +226,7 @@ class simple_links_admin extends simple_links{
     /**
      * 
      * Generates all contextual help screens for this plugin
-     * @since 1.7.14
+     * @since 1.10.14
      * @uses Called at load by __construct
      * 
      */
@@ -237,6 +239,7 @@ class simple_links_admin extends simple_links{
                         'id'             => 'simple-links-shortcode' ,
                         'title'          => 'Simple Links Shortcode',
                         'content'        => '<h5>'.__('You Can add a Simple Links List anywhere on the site by using the shortcode'). '[simple-links]</h5>
+                        <p><em>'.__('Look for the puzzle button on the content editors for a form that generates the shortcode for you'). '</em><br></p>
                                                 <strong>Supported Options:</strong><br>
                                                 category   = '.__('"Comma separated list of Link Category Names" - defaults to all'). '<br>
                                                 orderby    = '.__('"title or random" - defaults to link order'). '<br>
@@ -251,8 +254,8 @@ class simple_links_admin extends simple_links{
                                                 separator   = '.__('"Any characters to display between fields and description" - defaults to "-"'). '<br>
                                                 id          = '.__('"An optional id for the outputed list'). '"
                                                 <br>
-                                                e.g. [simple-links show_image="true" image_size="medium" count="12"]<br>
-                                                <em>'.__('Look for the puzzle button on the post and page content editors for a form that generates the shortcode for you'). '</em>'
+                                                e.g. [simple-links show_image="true" image_size="medium" count="12"]<br>'
+                                                
                 );
         
         //help for the widgets
@@ -414,51 +417,83 @@ class simple_links_admin extends simple_links{
     
     /**
      * Creates an Admin Flag to let new uses know where the menu is
-     * @since 8/19/12
+     * 
+     * @since 2.10.14
+     * 
      * @uses called in the admin_scripts function
+     * 
+     * 
      */
     function pointer_flag(){
-        $handle = 'simple-links-flag'; 
-        
 
         // Get the list of dismissed pointers for the user
         $dismissed = explode( ',' , (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
         
         // Check whether our pointer has been dismissed
-        if ( in_array( $handle , $dismissed ) ) {
-            return;
-        }
-        
-        //This is the content that will be displayed
-        $pointer_content  = '<h3>Simple Links</h3>' ;
-        $pointer_content .= '<p>'.__('Manage your Links Here. Enjoy','simple-links').'! </p>' ;
+        if ( !in_array( 'simple-links-flag', $dismissed  ) ) {
+  
+            //This is the content that will be displayed
+            $pointer_content  = '<h3>Simple Links</h3>' ;
+            $pointer_content .= '<p>'.__('Manage your Links Here. Enjoy','simple-links').'! </p>' ;
         
         
-        ?>
-        <script type= "text/javascript">
-        //<![CDATA[
-        jQuery(document).ready( function($) {
+            ?>
+            <script type="text/javascript">
+                //<![CDATA[
+                jQuery(document).ready( function($) {
         
-        //The element to point to
-        $( '#menu-posts-simple_link').pointer({
-        content: ' <?php echo $pointer_content; ?>',
-            position: {
-                edge: 'left', 
-                align: 'center'
-            },
-            close: function() {
-                jQuery.post( ajaxurl, {
-                    pointer: '<?php echo $handle; ?>',
-                    action: 'dismiss-wp-pointer'
+                    //The element to point to
+                    $( '#menu-posts-simple_link').pointer({
+                        content: ' <?php echo $pointer_content; ?>',
+                        position: {
+                            edge: 'left', 
+                            align: 'center'
+                        },
+                        close: function() {
+                            jQuery.post( ajaxurl, {
+                                pointer: '<?php echo $handle; ?>',
+                                action: 'dismiss-wp-pointer'
+                            });
+                        }
+                    }).pointer( 'open');
                 });
-            }
-        }).pointer( 'open');
-        });
-        //]]>
-        </script>
-        <?php
-    
-        
+                //]]>
+            </script>
+            <?php
+        }
+        // Check whether our pointer has been dismissed
+        if ( !in_array( 'simple-links-shortcode-flag', $dismissed ) ) {
+  
+            //This is the content that will be displayed
+            $pointer_content  = '<h3>Simple Links Shortcode Form</h3>' ;
+            $pointer_content .= '<p>'.__('Use this icon to generate a Simple Links shortcode','simple-links').'! </p>' ;
+            
+            ?>
+            
+            <script type="text/javascript">
+                //<![CDATA[
+                jQuery(document).ready( function($) {
+                   setTimeout(function(){ 
+                        //The element to point to
+                        $('#content_simpleLinks').pointer({
+                            content: ' <?php echo $pointer_content; ?>',
+                            position: {
+                                edge: 'left', 
+                                align: 'center'
+                            },
+                            close: function() {
+                                $.post( ajaxurl, {
+                                    pointer: 'simple-links-shortcode-flag',
+                                    action: 'dismiss-wp-pointer'
+                                });
+                            }
+                        }).pointer( 'open');
+                    }, 2000 );
+                });
+                //]]>
+            </script>
+            <?php
+        }
     }
     
     

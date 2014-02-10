@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
 Tested up to: 3.8.1
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -50,13 +50,20 @@ For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-lin
 = Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin. =
 *Once this plugin is activated, uou will find documentation on the "widgets", "pages", "posts", and "simple links settings" screens.
 
-= The full documentation can be found at <a href="http://lipeimagination.info/simple-links-docs/">http://lipeimagination.info/simple-links-docs/</a> which is the same as the plugin link. 
+= The full documentation can be found here =
+<a href="http://lipeimagination.info/simple-links-docs/">http://lipeimagination.info/simple-links-docs/</a> which is the same as the plugin link. 
 
-= For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-links-developer-docs/">http://matlipe.com/simple-links-docs/simple-links-developer-docs/</a> 
+= For Developers Docs See =
+<a href="http://matlipe.com/simple-links-docs/simple-links-developer-docs/">http://matlipe.com/simple-links-docs/simple-links-developer-docs/</a> 
 
-= For all other questions, start a support thread and myself or someone from the community can probably help you out. =
 
-= If you are looking for custom functionality, I do offer premium add-on creation services =
+
+= For all other questions =
+Start a support thread and myself or someone from the community can probably help you out. Support thread will be answered faster than contact submissions from my website.
+
+= If you are looking for custom functionality =
+There are some premium add-ons available here <a href="http://matlipe.com/product-category/simple-links-addons/">http://matlipe.com/product-category/simple-links-addons/</a>
+I also offer plugin customization services.
 
 
 
@@ -66,6 +73,9 @@ For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-lin
 2. The Shortcode Generating Form
 
 == Changelog ==
+
+= 2.2.8 =
+* Improved help section and flags
 
 = 2.2.7 =
 * Fixed issue with double quotes in descriptions
