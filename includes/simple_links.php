@@ -80,22 +80,17 @@ class simple_links extends SL_post_type_tax{
     /**
      * Register the widgets
      * 
-     * @since 9.21.13
+     * @since 3.2.14
      * 
      * @uses added to the widgets_init hook by self::__construct();
      */
     function addWidgets(){
         //Register the main widget
         register_widget( 'SL_links_main' );
-        //If the settigs has been set to replace Widgets
-        if( get_option('sl-replace-widgets', false ) ){
-            register_widget('SL_links_replica');
-        }
 
     }
 
 
-    
     /**
      * Generates an html link from a links ID
      * 

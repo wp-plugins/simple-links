@@ -2,13 +2,12 @@
                      /**
                       * Methods for the Admin Area of Simple Links
                       * 
-                      * @since 2.10.14
+                      * @since 3.2.14
                       * 
                       * @author Mat Lipe <mat@matlipe.com>
                       * 
-                      * @uses called by init.php
+                      * @uses called by simple-links.php
                       * 
-                      * @uses simple_links
                       * 
                       * 
                       */
@@ -28,12 +27,13 @@ class simple_links_admin extends simple_links{
     
     
     function __construct(){
+
         
         //Change the post updating messages
         add_filter('post_updated_messages', array( $this, 'linksUpdatedMessages' ) );
         
         //Remove the Wordpress Links from admin menu
-        add_action( 'admin_menu', array( $this, 'remove_links' ) );
+        add_filter( 'map_meta_cap', array( $this, 'remove_links' ), 99, 2 );
     
         //Add the jquery
         add_action( 'admin_print_scripts', array( $this, 'admin_scripts') );
@@ -47,7 +47,7 @@ class simple_links_admin extends simple_links{
         //Image uploader mod
         add_action( 'admin_head-media-upload-popup', array( $this, 'upload_mod') );
         
-        //The LInk Ordering page
+        //The Link Ordering page
         add_action( 'admin_menu', array( $this, 'sub_menu' ) );
         
         //The Meta Boxes
@@ -498,38 +498,24 @@ class simple_links_admin extends simple_links{
     
     
     /**
-     * Removes all traces of the Wordpress Built in Links from the Admin
-     * @since 8/19/12
-     * @uses called by construct
+     * Remove Links
+	 * 
+	 * Removes all traces of the Wordpress Built in Links from the Admin
+	 * 
+     * @since 3.2.14
+	 * 
+     * @uses added to the map_meta_cap filter by self::__construct()
      */
-    function remove_links(){
-        
-        //Escape hatch
-        if( !get_option('sl-remove-links', false ) ) return;
-        
-            
-        //Remove the menu page
-        remove_menu_page('link-manager.php');
-            
-        //Remove the Add link in the admin bar
-        /** Changed to different structure on 8/31/12 **/
-        add_action( 'wp_before_admin_bar_render', array( $this, 'remove_new_link_menu') );
-        
-    }
-    
-    /**
-     * Remove original links manager link
-     * @since 8/31/12
-     * @uses called by remove_links();
-     */
-    function remove_new_link_menu() {
-        global $wp_admin_bar;
-        $wp_admin_bar->remove_menu( 'new-link' );
-    
-    }
-    
+    function remove_links($caps, $cap){
 
-    
+		if( $cap == 'manage_links' && get_option('sl-remove-links', true ) ){
+			return array('do_not_allow');
+	    }
+		
+		return $caps;
+    }
+
+	
     
     /**
      * Imports the Wordpress links into this custom post type
@@ -655,22 +641,24 @@ class simple_links_admin extends simple_links{
     
     
     /**
-     * The meta box output for the wordpress links section of the settings page
-     * @since 8/19/12
-     * @uses called by add_meta_box
-     * @package Settings Page
+     * Settings for Wordpress Links
+	 * 
+	 * The meta box output for the wordpress links section of the settings page
+     * 
+	 * @since 3.2.14
+     * 
+	 * @uses called by add_meta_box
+     * 
+	 * @package Settings Page
+	 * 
      */
-    function wordpress_links(){
+    function settings_for_wordpress_links(){
         ?>
         <h4><?php _e('These Settings Will Effect the built in Wordpress Links','simple-links');?></h4>
         <ul>
             <li><?php _e('Remove Wordpress Built in Links','simple-links');?>: <input type="checkbox" name="sl-remove-links" <?php checked(get_option('sl-remove-links')); ?> value="1" />
                 <?php simple_links_questions('SL-remove-links'); ?>
              </li>
-            <li><?php _e('Replace Link Widgets with "Simple Links Replica" widgets','simple-links');?>: <input type="checkbox" name="sl-replace-widgets" 
-                <?php checked(get_option('sl-replace-widgets')); ?> value="1" />
-                <?php simple_links_questions('SL-replace-widgets'); ?>
-            </li>
             <li><br>
                  <div class="updated" id="import-links-success" style="display:none"><p><?php _e('The links have been imported Successfully','simple-links');?></p></div>
                  <?php submit_button(__('Import Links','simple-links'),'secondary','sl-import-links', false); echo ' &nbsp; ';  simple_links_questions('SL-import-links');?>
@@ -681,9 +669,14 @@ class simple_links_admin extends simple_links{
     
     
     /**
+	 * Meta Boxes
+	 * 
      * Creates the custom meta boxes
-     * @since 8/19/12
+	 * 
+     * @since 3.2.14
+	 * 
      * @package Settings Page
+	 * 
      */
     function meta_boxes(){
     
@@ -691,7 +684,7 @@ class simple_links_admin extends simple_links{
         //For the Settings Additional Fields
         add_meta_box('sl-additional-fields', __('Additional Fields','simple-links'), array( $this, 'additional_fields' ), 'sl-settings-boxes','advanced','core');
         //For the Settings Wordpress Links
-        add_meta_box('sl-wordpress-links', __('Wordpress Links','simple-links'), array( $this, 'wordpress_links' ), 'sl-settings-boxes','advanced','core');
+        add_meta_box('sl-wordpress-links', __('Wordpress Links','simple-links'), array( $this, 'settings_for_wordpress_links' ), 'sl-settings-boxes','advanced','core');
         //For the Settings Permissions
         add_meta_box('sl-permissions', __('Permissions','simple-links'), array( $this, 'permissions' ), 'sl-settings-boxes','advanced','core');
 
@@ -726,8 +719,12 @@ class simple_links_admin extends simple_links{
     
     
     /**
-     * Create the settings Page
-     * @since 8/19/12
+     * Settings
+	 * 
+	 * Create the settings Page
+	 * 
+     * @since 3.2.14
+	 * 
      * @package Settings Page
      */
     function settings(){
@@ -753,13 +750,7 @@ class simple_links_admin extends simple_links{
                 //Allow storing of the open and closed box states
                 wp_nonce_field('closedpostboxes', 'closedpostboxesnonce', false ); ?>
                 <?php wp_nonce_field('meta-box-order', 'meta-box-order-nonce', false ); ?>
-                <div id="poststuff" class="metabox-holder  has-right-sidebar">
-                    <div id="side-info-column" class="inner-sidebar">
-        
-                        <?php //do_meta_boxes('SL-additional-fields','advanced', null ); ?>
-                    </div>
-                    
-                    
+                <div id="poststuff" class="metabox-holder  has-right-sidebar">       
                     <div id="post-body" class="has-sidebar">
                         <div id="post-body-content" class="has-sidebar-content">
     

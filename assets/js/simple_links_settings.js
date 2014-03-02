@@ -60,7 +60,7 @@ var SLsettingsAjax = {
 /**
  * 
  * The Toopltips
- * @since 8/19/12
+ * @since 3.2.14
  * 
  * 
  */
@@ -93,20 +93,7 @@ var SLsettingsQtips = {
 				      tip: 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners
 				   }
 			});
-			
-			//The replace widgets option
-			$s('#SL-replace-widgets').qtip({
-				'content'  : 'This will replace all the "Links" widgets with "Simple Links Replica" widgets to keep existing "Links" widgets in place and prevent deprecation.',
-				style: { 
-					border: {
-				         width: 1,
-				         radius: 8,
-				         color: '#21759B'
-				      },
-				      tip: 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners
-				   }
-			});
-			
+
 			//The remove links option
 			$s('#SL-remove-links').qtip({
 				'content'  : 'This will remove all traces of the Wordpres built in links except data and widgets',
