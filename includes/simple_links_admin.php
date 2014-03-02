@@ -654,7 +654,7 @@ class simple_links_admin extends simple_links{
      */
     function settings_for_wordpress_links(){
         ?>
-        <h4><?php _e('These Settings Will Effect the built in Wordpress Links','simple-links');?></h4>
+        <h4><?php _e('These Settings Will Effect the built in WordPress Links','simple-links');?></h4>
         <ul>
             <li><?php _e('Remove Wordpress Built in Links','simple-links');?>: <input type="checkbox" name="sl-remove-links" <?php checked(get_option('sl-remove-links')); ?> value="1" />
                 <?php simple_links_questions('SL-remove-links'); ?>
@@ -679,12 +679,11 @@ class simple_links_admin extends simple_links{
 	 * 
      */
     function meta_boxes(){
-    
-    
+
         //For the Settings Additional Fields
         add_meta_box('sl-additional-fields', __('Additional Fields','simple-links'), array( $this, 'additional_fields' ), 'sl-settings-boxes','advanced','core');
         //For the Settings Wordpress Links
-        add_meta_box('sl-wordpress-links', __('Wordpress Links','simple-links'), array( $this, 'settings_for_wordpress_links' ), 'sl-settings-boxes','advanced','core');
+        add_meta_box('sl-wordpress-links', __('WordPress Links','simple-links'), array( $this, 'settings_for_wordpress_links' ), 'sl-settings-boxes','advanced','core');
         //For the Settings Permissions
         add_meta_box('sl-permissions', __('Permissions','simple-links'), array( $this, 'permissions' ), 'sl-settings-boxes','advanced','core');
 
