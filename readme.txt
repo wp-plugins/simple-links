@@ -36,6 +36,7 @@ For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-lin
 
 
 == Upgrade Notice ==
+
 = 2.1.0 =
 * Must upgrade to this version to use premium addons
 
@@ -47,6 +48,11 @@ For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-lin
 
 
 == Frequently Asked Questions ==
+
+= Where did the Replica Widget Go? =
+The widget was deprecated over a year ago and has been removed completed. If you are looking for the original WordPress links manager widget, see this plugin http://wordpress.org/plugins/link-manager/
+
+
 = Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin. =
 *Once this plugin is activated, uou will find documentation on the "widgets", "pages", "posts", and "simple links settings" screens.
 
@@ -73,6 +79,10 @@ I also offer plugin customization services.
 2. The Shortcode Generating Form
 
 == Changelog ==
+
+= 2.3.0 =
+* Improved WP integrations 
+* Removed deprecated Replica Widget
 
 = 2.2.8 =
 * Improved help section and flags
