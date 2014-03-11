@@ -118,7 +118,7 @@ var SLsortPage = {
 	    	//Show and fix the id of all list items in this category by slug
 	    	$s('#SL-drag-ordering li.'+slug).show('slow');
 	    	$s('#SL-drag-ordering li.'+slug).each( function(){
-	    		cleanID = $(this).attr('id').replace(/x/g,'');
+	    		cleanID = $s(this).attr('id').replace(/x/g,'');
 	    		$s(this).attr({'id': cleanID });
 	    	});
 	    	
