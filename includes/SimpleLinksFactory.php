@@ -6,7 +6,6 @@
  * @author Mat Lipe <mat@matlipe.com>
  * @since 2.0
  * 
- * @since 11.16.13
  * 
  * @uses May be constructed with $args then $this->output() will output the links list
  * 
@@ -18,15 +17,17 @@ class SimpleLinksFactory{
     
     //Default args - used for output
     public $args = array(  
-       'title'              => false,
-       'show_image'         => false,
-       'show_image_only'    => false,
-       'image_size'         => 'thumbnail',
-       'fields'             => false,
-       'description'        => false,
-       'separator'          =>  '-',
-       'id'                 => '',
-       'remove_line_break'  => false
+       'title'                        => false,
+       'show_image'                   => false,
+       'show_image_only'              => false,
+       'image_size'                   => 'thumbnail',
+       'fields'                       => false,
+       'description'                  => false,
+       'show_description_formatting' => false,
+       'separator'                    =>  '-',
+       'id'                           => '',
+       'remove_line_break'            => false
+       
       );
     
       //Default Query Args - used by getLinks();

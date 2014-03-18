@@ -124,6 +124,8 @@ body,input{
         
         <p><?php _e('Show Description','simple-links');?> <input type="checkbox" id="description" value="true" /></p>
         
+        <p><?php _e('Show Description Formatting','simple-links');?> <input type="checkbox" id="description-formatting" value="true" /></p>
+        
         
         <p><?php _e('Show Image','simple-links');?> <input type="checkbox" id="show_image" value="true" /></p>
         <p><?php _e('Display Image Without Title','simple-links');?> <input type="checkbox" id="show_image_only" value="true" /></p>

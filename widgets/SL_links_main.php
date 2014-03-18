@@ -253,6 +253,17 @@ class SL_links_main extends WP_Widget {
         
         
         <br><br>
+        
+        <strong><?php _e('Show Description Formatting', 'simple-links');?></strong> 
+            <input type="checkbox" id="<?php echo $this->get_field_id( 'show_description_formatting' ); ?>" name="<?php echo $this->get_field_name( 'show_description_formatting' ); ?>" 
+                    <?php 
+                    
+                    if( !isset( $instance['show_description_formatting']) ) $instance['show_description_formatting'] = 0;
+                    checked($instance['show_description_formatting']); ?> value="1"/>
+        
+        
+        <br><br>
+        
         <strong><?php _e('Remove Line Break Between Image and Link', 'simple-links');?></strong> 
             <input type="checkbox" id="<?php echo $this->get_field_id( 'remove_line_break' ); ?>" name="<?php echo $this->get_field_name( 'remove_line_break' ); ?>" 
                     <?php 

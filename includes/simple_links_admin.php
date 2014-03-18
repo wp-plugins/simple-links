@@ -251,6 +251,7 @@ class simple_links_admin extends simple_links{
                                                 remove_line_break = "true or false" - '.__('Remove Line Break Between Images and Links'). ' - default to false<br>
                                                 fields     = '.__('"Comma separated list of the Link\'s Additional Fields to show"'). '<br>
                                                 description = '.__('"true or false" - to show the description - defaults to false'). '<br>
+                                                show_description_formatting = '.__('"true or false" - to display paragraphs to match the editor content - defaults to false'). '<br>
                                                 separator   = '.__('"Any characters to display between fields and description" - defaults to "-"'). '<br>
                                                 id          = '.__('"An optional id for the outputed list'). '"
                                                 <br>
@@ -268,6 +269,7 @@ class simple_links_admin extends simple_links{
                                 Order Links By   = "'.__('The Order in Which the Links will Display" - defaults to link order'). '<br>
                                 Order            = "'.__('The Order in which the links will Display'). '"<br>
                                 Show Description = "'.__('Display the Link\'s Description'). '<br>
+                                Show Description Formatting = "'.__('Display paragraphs to match the editor content'). '"<br> 
                                 Number of LInks  = "'.__('Number of links to show'). '"<br>
                                 Show Image       = "'.__('Check the box to display the Link\'s Image'). '<br>
                                 Display Image Without Title       = "'.__('Check this box display the Link\'s Image without the Link\'s title under it. If Show Image is not checked, this will do nothing"'). '<br>

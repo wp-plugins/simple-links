@@ -122,7 +122,12 @@ class SimpleLinksTheLink{
             
             //The description
             if( ($this->args['description']) && ($this->getData('description') != '') ){
-                $output .= sprintf('%s <span class="link-description">%s</span>',  $this->args['separator'], wpautop( $this->getData('description')) );
+            	if( $this->args['show_description_formatting'] ){
+            		$description = wpautop( $this->getData('description') );
+            	} else {
+            		$description = $this->getData('description');
+				}
+                $output .= sprintf('%s <span class="link-description">%s</span>',  $this->args['separator'], $description );
             }
  
             //The additional fields

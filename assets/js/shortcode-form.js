@@ -112,6 +112,11 @@ jQuery(document).ready(function ($) {
             	  output += ' description="true"';
               }
               
+              //Add the description to the shortcode
+              if( $('#description-formatting').is(':checked') ){
+            	  output += ' show_description_formatting="true"';
+              }
+              
               //Add the line break to the code
               if( $('#line_break').is(':checked') ){
                   output += ' remove_line_break="true"';
