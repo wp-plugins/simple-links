@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.3.1
 Tested up to: 3.8.1
-Stable tag: 2.3.2
+Stable tag: 2.4.0
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -79,6 +79,10 @@ I also offer plugin customization services.
 2. The Shortcode Generating Form
 
 == Changelog ==
+
+= 2.4.0 =
+* Added ability to include paragraphs in the link descriptions
+* Updated .pot file for translation
 
 = 2.3.0 =
 * Improved WP integrations 
