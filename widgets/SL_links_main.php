@@ -101,7 +101,19 @@ class SL_links_main extends WP_Widget {
                 }
             }
             
-            $instance['remove_line_break'] = $instance['line_break'];
+			if( !empty( $instance['line_break'] ) ){
+            	$instance['remove_line_break'] = $instance['line_break'];
+			}
+			
+			
+			if( empty( $instance['orderby'] ) ){
+				$instance['orderby'] = 'menu_order';
+			}
+			
+			if( empty( $instance['order'] ) ){
+				$instance['order'] = 'ASC';
+			}
+			
             foreach( $simple_links->additional_fields as $field ){
                 if( isset( $instance[$field]) && $instance[$field] ){
                     $instance['fields'][] = $field;
