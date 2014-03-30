@@ -2,7 +2,6 @@
                      /**
                       * Methods for the Admin Area of Simple Links
                       * 
-                      * @since 3.2.14
                       * 
                       * @author Mat Lipe <mat@matlipe.com>
                       * 
@@ -14,6 +13,15 @@
 
 if( !class_exists( 'simple_links_admin' ) ){
 class simple_links_admin extends simple_links{
+	
+	/**
+	 * Link Manager Deactive
+	 * 
+	 * Keeps track if the setting is on to remove the links manger
+	 * 
+	 * @var bool
+	 */
+	public $link_manager_deactivate;
     
     public $cap_for_settings; //The capabilites need to see settings page
     
@@ -33,7 +41,11 @@ class simple_links_admin extends simple_links{
         add_filter('post_updated_messages', array( $this, 'linksUpdatedMessages' ) );
         
         //Remove the Wordpress Links from admin menu
-        add_filter( 'map_meta_cap', array( $this, 'remove_links' ), 99, 2 );
+        $this->link_manager_deactivate = get_option('sl-remove-links', true );
+        if( !empty( $this->link_manager_deactivate ) ){
+        	add_filter( 'map_meta_cap', array( $this, 'remove_links' ), 99, 2 );
+			add_action( 'widgets_init', array( $this, 'remove_links_widget' ),1 );
+		}
     
         //Add the jquery
         add_action( 'admin_print_scripts', array( $this, 'admin_scripts') );
@@ -224,9 +236,11 @@ class simple_links_admin extends simple_links{
     
     
     /**
-     * 
+     * Help
+	 * 
      * Generates all contextual help screens for this plugin
-     * @since 1.10.14
+	 * 
+	 * 
      * @uses Called at load by __construct
      * 
      */
@@ -305,8 +319,7 @@ class simple_links_admin extends simple_links{
                 'title'          => 'Wordpress Links',
                 'content'        => '<p>'.__('If they haven\'t already, Wordpress will be deprecating the built in links functionality').'.<br>
                                         '.__('These settings take care of cleaning up the Built In Links right now'). '<br>
-                                        '.__('By Checking "Remove the Built in Links", the Links menu will disappear along with the add new Admin Bar link'). '. <br>
-                                        '.__('By Checking "Replace Link Widgets with Simple Link Replica widgets, the Wordpress Link Widgets will automatically be replaced with widgets labeled "Simple Links Replica". All existing "links" widgets will remain in place and uneffected by deprececation. They will simply have a new title'). '. <br>
+                                        '.__('By Checking "Remove Wordpress Built in Links", the Links menu will disappear along with the add new Admin Bar link'). '. <br>
                                         '.__(' Pressing the "Import Links" button will automatically copy the Wordpress Links into Simple Links. Keep in mind if you press this button twice it will copy the links twice and you will have duplicates'). '.</p>'
                  
                  
@@ -504,18 +517,30 @@ class simple_links_admin extends simple_links{
 	 * 
 	 * Removes all traces of the Wordpress Built in Links from the Admin
 	 * 
-     * @since 3.2.14
 	 * 
      * @uses added to the map_meta_cap filter by self::__construct()
      */
     function remove_links($caps, $cap){
-
-		if( $cap == 'manage_links' && get_option('sl-remove-links', true ) ){
-			return array('do_not_allow');
+		if( $cap == 'manage_links' ){
+			return array( 'do_not_allow' );
 	    }
 		
 		return $caps;
     }
+	
+	
+	
+	/**
+     * Remove Links Widget
+	 * 
+	 * Remove the links widget from the admin
+	 * 
+	 * 
+     * @uses added to the init hook by self::__construct()
+     */
+    function remove_links_widget(){
+    	unregister_widget( 'WP_Widget_Links' );	
+	}
 
 	
     
@@ -647,11 +672,10 @@ class simple_links_admin extends simple_links{
 	 * 
 	 * The meta box output for the wordpress links section of the settings page
      * 
-	 * @since 3.2.14
      * 
 	 * @uses called by add_meta_box
      * 
-	 * @package Settings Page
+	 * @package Simple Links
 	 * 
      */
     function settings_for_wordpress_links(){

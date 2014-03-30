@@ -3,7 +3,6 @@
                                * @uses called with a template redirect using a query var send from the mce plugin
                                * @see simple_links->load_outside_page();
                                * @see js/editor_plugin.js
-                               * @since 1.17.14
  * 
                                * @author Mat Lipe <mat@lipeimagination.info>
                                */
@@ -24,80 +23,100 @@ global $simple_links_func;
 ?>
 
 <style type="text/css">
-            #generate{
-background-attachment: scroll;
-background-clip: border-box;
-background-color: #21759B;
-background-image: url(/wp-admin/images/button-grad.png);
-background-origin: padding-box;
-background-size: auto;
-border-bottom-color: #13455B;
-border-bottom-left-radius: 11px;
-border-bottom-right-radius: 11px;
-border-bottom-style: solid;
-border-bottom-width: 1px;
-border-left-color: #13455B;
-border-left-style: solid;
-border-left-width: 1px;
-border-right-color: #13455B;
-border-right-style: solid;
-border-right-width: 1px;
-border-top-color: #13455B;
-border-top-left-radius: 11px;
-border-top-right-radius: 11px;
-border-top-style: solid;
-border-top-width: 1px;
-box-sizing: content-box;
-color: #EAF2FA;
-cursor: pointer;
-display: inline-block;
-float: none;
-font-family: sans-serif;
-font-size: 12px;
-font-weight: bold;
-height: 13px;
-letter-spacing: normal;
-line-height: 13px;
-margin-bottom: 1px;
-margin-left: 1px;
-margin-right: 1px;
-margin-top: 1px;
-min-width: 80px;
-outline-color: #EAF2FA;
-outline-style: none;
-outline-width: 0px;
-padding-bottom: 3px;
-padding-left: 8px;
-padding-right: 8px;
-padding-top: 3px;
-text-align: center;
-text-decoration: none;
-text-shadow: rgba(0, 0, 0, 0.296875) 0px -1px 0px;
-width: 80px;
 
-   }
+	<?php 
+	if( get_bloginfo('version') >= 3.8 ){
+		?>
+		html{
+			margin-top: 46px important!;
+		}
+	
+		body{
+			margin-top: -66px; important;
+		}
+		<?php
+	} else {
+		?>
+		html{
+			margin-top: 28px important!;
+		}
+	
+		body{
+			margin-top: -23px; important;
+		}
+		<?php
+		
+	}
+	?>
+	
+	
+	
+	.wrap{
+		padding: 0 10px 15px !important;	
+	}
+	
+    #generate{
+		background: #2ea2cc;
+		border-color: #0074a2;
+		-webkit-box-shadow: inset 0 1px 0 rgba(120,200,230,0.5), 0 1px 0 rgba(0,0,0,.15);
+		box-shadow: inset 0 1px 0 rgba(120,200,230,0.5), 0 1px 0 rgba(0,0,0,.15);
+		color: #fff;
+		text-decoration: none;
+		height: 30px;
+		line-height: 28px;
+		padding: 0 12px 2px;
+		display: inline-block;
+		font-size: 13px;
+		margin: 0;
+		cursor: pointer;
+		border-width: 1px;
+		border-style: solid;
+		-webkit-appearance: none;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		white-space: nowrap;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+    }
+    
+    #generate:hover{
+    	background: #1e8cbe;
+		border-color: #0074a2;
+		-webkit-box-shadow: inset 0 1px 0 rgba(120,200,230,0.6);
+		box-shadow: inset 0 1px 0 rgba(120,200,230,0.6);
+		color: #fff;	
+    }
    
-body,input{
-    font-size: 14px;
-    padding: 5px;
-    border-radius: 5px;
-}
+	body,input{
+    	font-size: 14px;
+    	padding: 5px;
+    	border-radius: 5px;
+    	
+	}
 </style>
 </head>
 
 <body>
+	<div class="wrap">
 
-      <h3><?php _e('This Will Generate the Shortcode to Display Simple Links','simple-links');?></h3>
+      <h4><?php _e('This Will Generate the Shortcode to Display Simple Links','simple-links');?></h4>
         <p><em><?php _e('If no links match the options chosen, this will not display anything','simple-links');?>.</em></p>
 
-        <p><?php _e('Title (optional)','simple-links');?>: <input type="text" id="title"  size="50"/></p>
+        <p><?php _e( 'Title (optional)', 'simple-links' );?>: <input type="text" id="title"  size="50"/></p>
         
         <fieldset>
-        <p><?php _e('Categories (optional)','simple-links');?>: <br><br>
-            <?php 
-             foreach( $simple_links_func->get_categories() as $cat ){
-                printf('<input class="cat" type="checkbox" value="%s"/ > %s <br>', $cat, $cat );
-                }
+        <p>
+        	<?php _e( 'Categories (optional)', 'simple-links' );?>: <br><br>
+           	<?php 
+           	$cats = $simple_links_func->get_categories();
+           	if( !empty( $cats ) ){
+            	foreach( $cats as $cat ){
+                	printf('<input class="cat" type="checkbox" value="%s"/ > %s <br>', $cat, $cat );
+             	}
+			} else {
+				_e( 'No link categories have been created yet.', 'simple-links' );
+			}
             ?>
         </p>
         </fieldset>
@@ -158,10 +177,16 @@ body,input{
         
         <?php do_action('simple_links_shortcode_form' ); ?>
         
-      <input type="button" id="generate" class="button-primary" value="Generate">
+      	<?php if( get_bloginfo('version') < 3.8 ){
+      		?><p>&nbsp;</p><?php
+      	}
+		?>
+      		  
+      	<input type="button" id="generate" class="button-primary" value="Generate">
+		
 
       
-
+	</div>
 </body>
 
 

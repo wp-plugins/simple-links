@@ -18,7 +18,7 @@
 			ed.addCommand('mceHighlight', function() {
 				ed.windowManager.open({
 					file : userSettings.url+'?simple_links_shortcode=form',
-					width : 500 + parseInt(ed.getLang('highlight.delta_width', 0)),
+					width : 550 + parseInt(ed.getLang('highlight.delta_width', 0)),
 					height : 800 + parseInt(ed.getLang('highlight.delta_height', 0)),
 					inline : 1,
 					title  : 'Simple Links Shortcode'

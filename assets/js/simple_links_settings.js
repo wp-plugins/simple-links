@@ -3,7 +3,6 @@
  * 
  * @author mat lipe <mat@matlipe.com>
  * 
- * @since 1.7.14
  * 
  */
 
@@ -96,7 +95,7 @@ var SLsettingsQtips = {
 
 			//The remove links option
 			$s('#SL-remove-links').qtip({
-				'content'  : 'This will remove all traces of the Wordpres built in links except data and widgets',
+				'content'  : 'This will remove all traces of the Wordpres built in links',
 				style: { 
 					border: {
 				         width: 1,
