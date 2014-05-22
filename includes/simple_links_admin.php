@@ -75,7 +75,8 @@ class simple_links_admin extends simple_links{
         
         //Add Contextual help to the necessary screens
         add_action( "load-simple_link_page_simple-link-settings", array( $this, 'help' ) );
-        add_action( "load-{$GLOBALS['pagenow']}", array( $this, 'help' ) );
+        add_action( "load-post.php", array( $this, 'help' ) );
+		add_action( "load-widgets.php", array( $this, 'help' ) );
         
         
         //Add the shortcode button the MCE editor
