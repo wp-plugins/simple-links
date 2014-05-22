@@ -507,19 +507,19 @@ msgstr ""
 msgid "Link Ordering"
 msgstr ""
 
-#: includes/simple_links_admin.php:683
-msgid "These Settings Will Effect the built in WordPress Links"
+#: admin-views/settings-wordpress-links:1
+msgid "These settings will effect the default WordPress Links Manager"
 msgstr ""
 
-#: includes/simple_links_admin.php:685
-msgid "Remove Wordpress Built in Links"
+#: admin-views/settings-wordpress-links:4
+msgid "Remove default WordPress Links Manager"
 msgstr ""
 
-#: includes/simple_links_admin.php:689
-msgid "The links have been imported Successfully"
+#: admin-views/settings-wordpress-links:10
+msgid "The links have been imported successfully"
 msgstr ""
 
-#: includes/simple_links_admin.php:690
+#: admin-views/settings-wordpress-links:18
 msgid "Import Links"
 msgstr ""
 
@@ -638,3 +638,13 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://matlipe.com/"
 msgstr ""
+
+#: admin-views/pro-notice.php:3
+msgid "Want More Options"
+msgstr ""
+
+#: admin-views/pro-notice.php:6
+msgid "Premium Add-Ons"
+msgstr ""
+
+

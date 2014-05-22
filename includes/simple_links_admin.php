@@ -679,18 +679,8 @@ class simple_links_admin extends simple_links{
 	 * 
      */
     function settings_for_wordpress_links(){
-        ?>
-        <h4><?php _e('These Settings Will Effect the built in WordPress Links','simple-links');?></h4>
-        <ul>
-            <li><?php _e('Remove Wordpress Built in Links','simple-links');?>: <input type="checkbox" name="sl-remove-links" <?php checked(get_option('sl-remove-links')); ?> value="1" />
-                <?php simple_links_questions('SL-remove-links'); ?>
-             </li>
-            <li><br>
-                 <div class="updated" id="import-links-success" style="display:none"><p><?php _e('The links have been imported Successfully','simple-links');?></p></div>
-                 <?php submit_button(__('Import Links','simple-links'),'secondary','sl-import-links', false); echo ' &nbsp; ';  simple_links_questions('SL-import-links');?>
-            </li>
-        </ul>
-    <?php   
+       require( SIMPLE_LINKS_DIR . 'admin-views/settings-wordpress-links.php' );
+	    
     }
     
     
