@@ -298,6 +298,7 @@ class simple_links_admin extends simple_links{
         //The screen we are on
         $screen = get_current_screen();
         
+		if( empty( $screen->id ) ) return;
 
         //Each page will have different help content
         switch ($screen->id){
