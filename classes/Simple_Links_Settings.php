@@ -165,7 +165,7 @@ class Simple_Links_Settings extends simple_links {
         		?>
         		<p>
 					<?php _e( 'Field Name', 'simple-links' ); ?>:
-					<input type="text" name="link_additional_fields[]" value="<?php echo trim( $field ); ?>" />
+					<input type="text" name="link_additional_fields[]" value="<?php echo trim( $field ); ?>" /> <span class="link_delete_additional"> X </span>
 				</p>
 				<?php				
         	}
@@ -175,14 +175,14 @@ class Simple_Links_Settings extends simple_links {
 		?>
 		<p>
 			<?php _e( 'Field Name', 'simple-links' ); ?>:
-			<input type="text" name="link_additional_fields[] value="">
+			<input type="text" name="link_additional_fields[] value=""> <span class="link_delete_additional"> X </span>
 		</p>
     	 
     	<!-- Placeholder for JQuery -->
     	<span id="link-extra-field" style="display:none">
     		<p>
     			<?php _e( 'Field Name', 'simple-links' ); ?>:
-    			<input type="text" name="link_additional_fields[] value="">
+    			<input type="text" name="link_additional_fields[] value=""> <span class="link_delete_additional"> X </span>
     		</p>
     	</span>
     	

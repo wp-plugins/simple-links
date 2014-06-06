@@ -12,6 +12,10 @@ jQuery(function($) {
 
 	// postboxes setup  These need to be set the handlers (screens) of the post boxes
 	postboxes.add_postbox_toggles('sl-settings-boxes');
+	
+	$('.link_delete_additional').click( function(){
+		$(this).parent().remove();
+	});
 
 	SLsettingsAjax.init();
 	SLsettingsQtips.init();

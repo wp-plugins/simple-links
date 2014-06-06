@@ -159,11 +159,11 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
 
       #-- Add additional Fields
       try {
-          $this->getValue("name=link_additional_field[]") == 'Account';
+          $this->getValue("name=link_additional_fields[]") == 'Account';
       } catch (Exception $e) {
-          $this->type("css=input[name=\"link_additional_field[] value=\"]", "Account");
+          $this->type("css=input[name=\"link_additional_fields[] value=\"]", "Account");
           $this->click("id=simple-link-additional");
-          $this->type("xpath=(//input[@name='link_additional_field[] value='])[3]", "My Usage");
+          $this->type("xpath=(//input[@name='link_additional_fields[] value='])[3]", "My Usage");
           $this->click("id=simple-link-additional");
           $this->click("id=SL-setting-submit");
           $this->waitForPageToLoad("30000");
