@@ -37,6 +37,10 @@ $simple_links_func = $simple_links;
 
 if( is_admin() ){
     require( 'includes/simple_links_admin.php' );
+	require( 'classes/Simple_Links_Settings.php' );
+	
+	add_action( 'plugins_loaded', array( 'Simple_Links_Settings', 'get_instance' ) );
+	
     $simple_links_admin_func = new simple_links_admin();
 }
 
