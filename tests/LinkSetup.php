@@ -165,7 +165,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
           $this->click("id=simple-link-additional");
           $this->type("xpath=(//input[@name='link_additional_fields[] value='])[3]", "My Usage");
           $this->click("id=simple-link-additional");
-          $this->click("id=SL-setting-submit");
+          $this->click("id=submit");
           $this->waitForPageToLoad("30000");
       }
 
