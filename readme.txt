@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.8.0
 Tested up to: 3.9.1
-Stable tag: 2.4.5
+Stable tag: 2.5.0
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -25,7 +25,7 @@ Some of the features this plugin offers:
 * Additional usable Fields
 * Many Widget Options
 * Import links from the WordPress Links manager
-* Options to remove the WordPress Links Manager from the dashboard
+* Options to remove the WordPress Links Manager from the admin
 * Flexible Permissions
 
 <div>
@@ -79,6 +79,9 @@ I also offer plugin customization services.
 2. The Shortcode Generating Form
 
 == Changelog ==
+
+= 2.5.0 =
+* Improved settings section
 
 = 2.4.0 =
 * Added ability to include paragraphs in the link descriptions

@@ -3,13 +3,13 @@
 Plugin Name: Simple Links
 Plugin URI: http://matlipe.com/simple-links-docs/
 Description: Replacement for Wordpress Links Manager with many added features.
-Version: 2.4.5
+Version: 2.5.0
 Author: Mat Lipe
 Author URI: http://matlipe.com/
 */
 
 
-define( 'SIMPLE_LINKS_VERSION', '2.4.5' );
+define( 'SIMPLE_LINKS_VERSION', '2.5.0' );
 
 define( 'SIMPLE_LINKS_DIR', plugin_dir_path(__FILE__) );
 define( 'SIMPLE_LINKS_URL', plugin_dir_url(__FILE__) );
@@ -37,6 +37,10 @@ $simple_links_func = $simple_links;
 
 if( is_admin() ){
     require( 'includes/simple_links_admin.php' );
+	require( 'classes/Simple_Links_Settings.php' );
+	
+	add_action( 'plugins_loaded', array( 'Simple_Links_Settings', 'get_instance' ) );
+	
     $simple_links_admin_func = new simple_links_admin();
 }
 

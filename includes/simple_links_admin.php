@@ -23,8 +23,6 @@ class simple_links_admin extends simple_links{
 	 */
 	public $link_manager_deactivate;
     
-    public $cap_for_settings; //The capabilites need to see settings page
-    
     
     //The addtional fields from the settings page
     public $addtional_fields = array();
@@ -36,7 +34,6 @@ class simple_links_admin extends simple_links{
     
     function __construct(){
 
-        
         //Change the post updating messages
         add_filter('post_updated_messages', array( $this, 'linksUpdatedMessages' ) );
         
@@ -50,20 +47,12 @@ class simple_links_admin extends simple_links{
         //Add the jquery
         add_action( 'admin_print_scripts', array( $this, 'admin_scripts') );
         add_action( 'admin_print_styles', array( $this, 'admin_style' ) );
-        if( isset( $_GET['page'] ) && $_GET['page']=='simple-link-settings' ){
-            //Bring in the scripts for the setting page only
-            add_action( 'admin_print_scripts', array( $this, 'settings_scripts' ) );
-        }
-        
         
         //Image uploader mod
         add_action( 'admin_head-media-upload-popup', array( $this, 'upload_mod') );
         
         //The Link Ordering page
         add_action( 'admin_menu', array( $this, 'sub_menu' ) );
-        
-        //The Meta Boxes
-        add_action( 'admin_menu', array( $this, 'meta_boxes'));
         
         
         //Add the function to an ajax request to sort the links in the list
@@ -597,272 +586,39 @@ class simple_links_admin extends simple_links{
         
     }
     
-    
+	
+	
+    public function get_ordering_cap(){
+		if( get_option('sl-hide-ordering',false) ){
+            $cap_for_ordering = apply_filters('simple-link-ordering-cap','manage_options');
+        } else {
+            $cap_for_ordering = apply_filters('simple-link-ordering-cap','edit_posts');
+        }
+		
+		return $cap_for_ordering;
+	}
     
     
     /**
-     * Create the submenus
-     * @since 8/27/12
+     * Create the submenu
+	 * 
      * @uses This has built in filters to change the permissions of the link ordering and settings
      * @uses to change the permissions outside of the dashboard settings setup the filters here
      * 
      */
     function sub_menu(){
-    
-        //Use the setting page options to change permissions for the link ordering
-        //A filter to change the permissions required to order links
-        if( get_option('sl-hide-ordering',false) ){
-            $cap_for_ordering = apply_filters('simple-link-ordering-cap','manage_options');
-        } else {
-            $cap_for_ordering = apply_filters('simple-link-ordering-cap','edit_posts');
-        }
-    
-        //Use the settings page to change the permission for the setting menu
-        //This permission may also be used in other place to determine if user can use things
-        //A Filter may be used here as well
-        if( !get_option('sl-show-settings',false) ){
-            $this->cap_for_settings = apply_filters('simple-link-settings-cap','manage_options');
-        } else {
-            $this->cap_for_settings = apply_filters('simple-link-settings-cap','edit_posts');
-        }
-        
-        
-        
+    	            
         //The link ordering page
-        add_submenu_page( 'edit.php?post_type=simple_link','simple-link-ordering',__('Link Ordering','simple-links'),$cap_for_ordering,'simple-link-ordering', array( $this, 'link_ordering_page' ) );
-        
-        
-        //The Settings Page
-        add_submenu_page( 'edit.php?post_type=simple_link','simple-link-settings',__('Settings','simple-links'),$this->cap_for_settings,'simple-link-settings', array( $this, 'settings' ) );
-    
-    
-    
+        add_submenu_page( 
+        	'edit.php?post_type=simple_link', 
+        	'simple-link-ordering', 
+        	__( 'Link Ordering', 'simple-links' ),
+        	$this->get_ordering_cap(),
+        	'simple-link-ordering', 
+        	array( $this, 'link_ordering_page' ) 
+		);
     }
-    
-    
-    
-    /**
-     * The js for just the settings page
-     * prevents conflicts later keeping it separate
-     * @since 8/18/12
-     * @package Settings Page
-     */
-    function settings_scripts(){
-        
-        wp_enqueue_script('common');
-        wp_enqueue_script('wp-lists');
-        wp_enqueue_script('postbox');
-        
-        wp_enqueue_script(
-                'simple_links_settings_script',
-                SIMPLE_LINKS_JS_DIR . 'simple_links_settings.js',
-                array('jquery'),  //The scripts this depends on
-                '1.0.0'     //The Version of your script
-        
-        );
-    }
-    
-
-    
-
-    
-
-    
-    
-    /**
-     * Settings for Wordpress Links
-	 * 
-	 * The meta box output for the wordpress links section of the settings page
-     * 
-     * 
-	 * @uses called by add_meta_box
-     * 
-	 * @package Simple Links
-	 * 
-     */
-    function settings_for_wordpress_links(){
-       require( SIMPLE_LINKS_DIR . 'admin-views/settings-wordpress-links.php' );
-	    
-    }
-    
-    
-    /**
-	 * Meta Boxes
-	 * 
-     * Creates the custom meta boxes
-	 * 
-     * @since 3.2.14
-	 * 
-     * @package Settings Page
-	 * 
-     */
-    function meta_boxes(){
-
-        //For the Settings Additional Fields
-        add_meta_box('sl-additional-fields', __('Additional Fields','simple-links'), array( $this, 'additional_fields' ), 'sl-settings-boxes','advanced','core');
-        //For the Settings Wordpress Links
-        add_meta_box('sl-wordpress-links', __('WordPress Links','simple-links'), array( $this, 'settings_for_wordpress_links' ), 'sl-settings-boxes','advanced','core');
-        //For the Settings Permissions
-        add_meta_box('sl-permissions', __('Permissions','simple-links'), array( $this, 'permissions' ), 'sl-settings-boxes','advanced','core');
-
-    }
-    
-    /**
-     * The output of the Permissions box in the settings page
-     * @since 8/19/12
-     * @package Settings Page
-     */
-    function permissions(){
-        ?>
-        <h4><?php _e('These Settings Will Effect Access to this Plugins Features','simple-links');?></h4>
-        <ul>
-            <li><?php _e('Hide Link Ordering From Editors','simple-links');?>: <input type="checkbox" name="sl-hide-ordering" <?php checked(get_option('sl-hide-ordering')); ?> value="1" />
-            <?php simple_links_questions('SL-hide-ordering'); ?>
-            </li>
-            <li><?php _e('Show Simple Link Settings to Editors','simple-links');?>: <input type="checkbox" name="sl-show-settings"
-                <?php checked(get_option('sl-show-settings')); ?> value="1" />
-                <?php simple_links_questions('SL-show-settings'); ?>
-            </li>
-        
-        </ul>
-        
-        <?php 
-    }
-    
-    
-
-    
-
-    
-    
-    /**
-     * Settings
-	 * 
-	 * Create the settings Page
-	 * 
-     * @since 3.2.14
-	 * 
-     * @package Settings Page
-     */
-    function settings(){
-     
-        //If it came from the right place Update the settings
-        if( isset( $_POST['SL-setting-submit'] ) && wp_verify_nonce($_POST['SL-settings'], plugin_basename(__FILE__)) ){
-            self::settings_save();
-        }
-        
-    
-        echo '<div class="wrap">';
-            screen_icon('simple_link');
-            ?><h2><?php _e('Simple Links Settings','simple-links');?></h2>
-                <em><?php _e('Be sure to see the help menu for descriptions','simple-links');?></em>
-            
-               <form action="#" method="post">
-            
-                <?php    
-                //Verification for this form
-                wp_nonce_field( plugin_basename(__FILE__), 'SL-settings', true, true );
-                
-                
-                //Allow storing of the open and closed box states
-                wp_nonce_field('closedpostboxes', 'closedpostboxesnonce', false ); ?>
-                <?php wp_nonce_field('meta-box-order', 'meta-box-order-nonce', false ); ?>
-                <div id="poststuff" class="metabox-holder  has-right-sidebar">       
-                    <div id="post-body" class="has-sidebar">
-                        <div id="post-body-content" class="has-sidebar-content">
-    
-                            <?php do_meta_boxes('sl-settings-boxes','advanced', null ); ?>
-                
-                      </div>
-                    </div>
-                
-                    
-                <br class="clear"/>
-
-                </div><!-- end poststuff --><?php 
-
-            
-            submit_button(null,'primary','SL-setting-submit');
-        ?>
-            </form>
-        </div><!-- End .wrap -->
-    <?php 
-    }
-
-
-    
-    /**
-     * The Additional_fields Meta box
-     * @since 9.22.13
-     * @uses called by the add_meta_box function
-     */
-    function additional_fields(){
-    
-     ?><h4><?php _e('These Fields Will Be Available on All Link\'s Edit Screen, Widgets, and Shortcodes','simple-links');?>.</h4><?php
-     
-
-     if( is_array( $this->getAdditionalFields() ) ){
-        foreach( $this->getAdditionalFields() as $field ){
-            printf( 'Field Name: <input type="text" name="link_additional_field[]" value="%s"><br>', $field );
-        }
-     }
-    
-    
-    
-    //The new field
-    ?>
-    <?php _e('Field Name','simple-links');?>: <input type="text" name="link_additional_field[] value=""><br>
-    
-    <!-- Placeholder for JQuery -->
-    <span id="link-extra-field" style="display:none">Field Name: <input type="text" name="link_additional_field[] value=""><br></span>
-    <span id="link-additional-placeholder"></span>
-    <?php
-    submit_button(__('Add Another','simple-links'),'secondary', 'simple-link-additional');
-    
-    }
-    
-    
-    /**
-     * Saves the values from the settings page
-     * @since 9.22.13
-     * @package Settings Page
-     * @uses Called from above the setting's page form
-     */
-    function settings_save(){
-        
-        /*
-         * Saves the checkboxes, update the classes var to add new ones
-         */
-        foreach( $this->settings_checkboxes as $checkbox ){
-          if( isset( $_POST[$checkbox] ) ){
-             update_option( $checkbox, $_POST[$checkbox] );
-          } else {
-            update_option( $checkbox, 0);
-          }
-        }
-        
-     
-          
-      //The additional Fields Settings
-      if( isset( $_POST['link_additional_field'] ) ){
-         $fields = array_filter( $_POST['link_additional_field'] );
-         
-         update_option('link_additional_fields', $fields);
-      }
-      
-      
-     ?>
-        <div class="updated"><p><?php _e('The Settings have been Updated!','simple-links');?></p></div>
-     <?php 
-     
-     
-     
-    }
-    
-    
-    
-    
-    
+ 
     
     /**
      * The link Ordering Page

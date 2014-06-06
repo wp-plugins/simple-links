@@ -24,8 +24,7 @@ class Cleanup extends PHPUnit_Extensions_SeleniumTestCase
     $this->click("css=#cb > input[type=\"checkbox\"]");
     $this->select("name=action", "label=Move to Trash");
     $this->click("id=doaction");
-    $this->waitForPageToLoad("30000");
-    $this->click("xpath=(//a[contains(text(),'Link Categories')])[2]");
+    $this->click("xpath=(//a[contains(@href, 'edit-tags.php?taxonomy=simple_link_category&post_type=simple_link')])");
     $this->waitForPageToLoad("30000");
     $this->click("css=#cb > input[type=\"checkbox\"]");
     $this->select("name=action", "label=Delete");
@@ -34,14 +33,14 @@ class Cleanup extends PHPUnit_Extensions_SeleniumTestCase
     $this->click("link=Settings");
     $this->waitForPageToLoad("30000");
     try {
-        $this->getValue("name=link_additional_field[]") == 'Account';
+        $this->getValue("name=link_additional_fields[]") == 'Account';
     } catch (Exception $e) {
         $none = true;
     }
     if( !isset($none) ){
         $this->type("xpath=(//input[@value='My Usage'])", "");
         $this->type("xpath=(//input[@value='Account'])", "");
-        $this->click("id=SL-setting-submit");
+        $this->click("id=submit");
         $this->waitForPageToLoad("30000");
     }
     
