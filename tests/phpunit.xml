@@ -1,7 +1,7 @@
 <phpunit>
   <testsuites>
     <testsuite name="SimpleLinks">
-      <file>Setup.php</file>
+      <file>LinkSetup.php</file>
       <file>Shortcode.php</file>
       <file>Cleanup.php</file>
     </testsuite>
