@@ -387,7 +387,7 @@ class simple_links extends SL_post_type_tax{
 		    echo '<p>' . $this->meta_box_descriptions['additional_fields'] . '</p>';
 		
 		   //this one has a default link to settins so don't show if can't see settings
-		   if( current_user_can($simple_links_admin_func->cap_for_settings)){
+		   if( current_user_can( Simple_Links_Settings::get_instance()->get_settings_cap() )){
 		   	       echo '<p>'.__('You may add additonal fields which will be available for all links in the ', 'simple-links' ).'
 					 				<a href="/wp-admin/edit.php?post_type=simple_link&page=simple-link-settings">'.__('Settings', 'simple-links' ).'</a>
 			  														</p>';
@@ -401,34 +401,21 @@ class simple_links extends SL_post_type_tax{
 	
 	
 	/**
+	 * Target Meta Box Output
+	 * 
 	 * The Link Target Radio Buttons Meta Box
-	 * @since 12.15.12
+	 * 
+	 * @return void
+	 * 
 	 */
-	function target_meta_box_output($post){
-	
-		?>
-		<p><label for="link_target_blank" class="selectit">
-		<input id="link_target_blank" type="radio" name="target" value="_blank" <?php checked( get_post_meta( $post->ID, 'target', true), '_blank' );?>>
-		<code>_blank</code> &minus; <?php _e('new window or tab','simple-links');?>.</label></p>
-		<p><label for="link_target_top" class="selectit">
-		<input id="link_target_top" type="radio" name="target" value="_top" <?php checked( get_post_meta( $post->ID, 'target', true), '_top' );?>>
-		<code>_top</code> &minus; <?php _e('current window or tab, with no frames','simple-links');?>.</label></p>
-		<p><label for="link_target_none" class="selectit">
-		<input id="link_target_none" type="radio" name="target" value="" <?php checked( get_post_meta( $post->ID, 'target', true), '' );?>>
-		<code>_none</code> &minus; <?php _e('same window or tab','simple-links');?>.</label></p>
-		<?php 
-		if( isset( $this->meta_box_descriptions['target'] ) ){
-			echo '<p>' . $this->meta_box_descriptions['target'] . '</p>';
+	function target_meta_box_output($post){	
+		$target = get_post_meta( $post->ID, 'target', true );
+		if( empty( $target ) ){
+			$target = apply_filters( 'simple-links-default-target', "" );		
 		}
 		
-		?>
-		<p>
-		<input id="link_target_nofollow" type="checkbox" name="link_target_nofollow" value="1" 
-		      <?php checked( get_post_meta( $post->ID, 'link_target_nofollow', true), 1 );?>> 
-		      &nbsp; <?php _e('Add a','simple-links');?> <code>nofollow</code> <?php _e('rel to this link','simple-links');?> 
-		</p>
-		<?php
-
+		require( SIMPLE_LINKS_DIR . 'admin-views/link-target.php' );
+	    
 	}
 	
 	

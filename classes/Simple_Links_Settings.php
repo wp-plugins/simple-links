@@ -134,7 +134,7 @@ class Simple_Links_Settings extends simple_links {
             <?php simple_links_questions( 'SL-hide-ordering' ); ?>
             </li>
             <li><?php _e('Show Simple Link Settings to Editors','simple-links');?>: <input type="checkbox" name="sl-show-settings"
-                <?php checked(get_option('sl-show-settings')); ?> value="1" />
+                <?php checked( get_option('sl-show-settings') ); ?> value="1" />
                 <?php simple_links_questions('SL-show-settings'); ?>
             </li>
         
@@ -239,12 +239,19 @@ class Simple_Links_Settings extends simple_links {
 	}
 	
 	
-	
+	/**
+	 * Get Settings Cap
+	 * 
+	 * Get the required capability to manage settings
+	 * 
+	 * @return string
+	 *
+	 */
 	public function get_settings_cap(){
-		if( !get_option('sl-show-settings',false) ){
-            $cap_for_settings = apply_filters('simple-link-settings-cap','manage_options');
+		if( !get_option( 'sl-show-settings', false ) ){
+            $cap_for_settings = apply_filters( 'simple-link-settings-cap', 'manage_options' );
         } else {
-            $cap_for_settings = apply_filters('simple-link-settings-cap','edit_posts');
+            $cap_for_settings = apply_filters( 'simple-link-settings-cap', 'edit_posts' );
         }
 		
 		return $cap_for_settings;

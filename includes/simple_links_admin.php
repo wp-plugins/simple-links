@@ -27,11 +27,11 @@ class simple_links_admin extends simple_links{
     //The addtional fields from the settings page
     public $addtional_fields = array();
     
-    //The checkboxes from the settings page used in the settings_save function update this to auto save the new checkboxes
-    private $settings_checkboxes = array( 'sl-remove-links','sl-replace-widgets','sl-hide-ordering','sl-show-settings' );
     
-    
-    
+    /**
+	 * Constructor
+	 * 
+	 */
     function __construct(){
 
         //Change the post updating messages
@@ -587,12 +587,18 @@ class simple_links_admin extends simple_links{
     }
     
 	
-	
+	/**
+	 * Get Ordering Cap
+	 * 
+	 * Get the capability required to order links
+	 * 
+	 * @return string
+	 */
     public function get_ordering_cap(){
-		if( get_option('sl-hide-ordering',false) ){
-            $cap_for_ordering = apply_filters('simple-link-ordering-cap','manage_options');
+		if( get_option( 'sl-hide-ordering', false ) ){
+            $cap_for_ordering = apply_filters( 'simple-link-ordering-cap', 'manage_options' );
         } else {
-            $cap_for_ordering = apply_filters('simple-link-ordering-cap','edit_posts');
+            $cap_for_ordering = apply_filters( 'simple-link-ordering-cap', 'edit_posts' );
         }
 		
 		return $cap_for_ordering;
