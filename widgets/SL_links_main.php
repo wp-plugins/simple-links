@@ -50,31 +50,35 @@ class SL_links_main extends WP_Widget {
      * Secret Method when outputing 2 columns and want them ordered alphabetical
      * 
      * @since 1.7.0
-     * @uses add to the filter like so add_filter('simple_links_widget_links_object', array( 'SL_links_main', 'simpleLinksAdjust'), 1, 4 );
+	 * 
+     * @uses add to the filter like so add_filter('simple_links_widget_links_object', array( 'SL_links_main', 'twoColumns'), 1, 4 );
      * @uses currently just hanging out for future use
      * 
      * @TODO integrate this into core options
+	 * 
      */
-    function twoColumns( $links_object, $instance, $args){
-      $per_row = floor(count($links_object)/2);
-      $count = 0;
-      foreach( $links_object as $key => $l ){
-        $count++;
-          if( $count > $per_row ){
-              $second[] = $l;
-          } else {
-              $first[] = $l;
-          }
-      }
-      
-      foreach( $first as $k => $l ){
-        $new[] = $l;
+   	public static function twoColumns( $links_object, $args){
+    	$per_row = floor( count( $links_object ) / 2 );
+    	$count = 0;
+    	foreach( $links_object as $key => $l ){
+    		$count++;
+        	if( $count > $per_row ){
+            	$second[] = $l;
+				
+        	} else {
+            	$first[] = $l;
+				
+          	}
+      	}
+      	foreach( $first as $k => $l ){
+        	$new[] = $l;
             if( isset( $second[$k] ) ){
                 $new[] = $second[$k]; 
             }  
-      }
-      
-      return $new;
+      	}
+
+    	return $new;
+		
     }
     
     
