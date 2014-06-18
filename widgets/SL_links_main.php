@@ -22,6 +22,31 @@
                     *
                     */
 class SL_links_main extends WP_Widget {
+	
+	
+	/**
+	 * Defaults 
+	 * 
+	 * Default instance args
+	 * 
+	 * @var array
+	 * 
+	 */
+	public $defaults = array(
+		'title'                       => '',
+		'orderby'                     => 'menu_order',
+		'order'                       => 'ASC',
+		'numberposts'                 => -1,
+		'description'                 => 0,
+		'show_description_formatting' => 0,
+		'remove_line_break' 		  => 0,
+		'show_image'   				  => 0,
+		'show_image_only'             => 0,
+		'image_size'                  => 'thumbnail',
+		'separator'                   => ''
+	
+	);
+	
     
     /**
      * Setup the Widget
@@ -205,15 +230,20 @@ class SL_links_main extends WP_Widget {
     
     
     /**
-     * Outputs the Widget form on the Widgets Page
-     * @since 1.3.14
+     * Form
+	 * 
+	 * Outputs the Widget form on the /wp-admin/widgets.php Page
+	 * 
      * @see WP_Widget::form()
+	 * 
      */
     function form( $instance ) {
         global $simple_links;
  
         //backward compatibility - to allow for checkboxes to still be checked
         $instance = $this->migrateOldData($instance);
+		
+		$instance = wp_parse_args( $instance, $this->defaults );
 
         ?>
         <input type="hidden" name="<?php echo $this->get_field_name( 'simple_links_version' ); ?>" value="<?php echo SIMPLE_LINKS_VERSION; ?>" />
@@ -223,7 +253,6 @@ class SL_links_main extends WP_Widget {
         <strong><?php _e('Links Title', 'simple-links');?>:</strong>
         <input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php 
         
-        if( !isset( $instance['title']  ) ) $instance['title']  = '';
         echo esc_attr( $instance['title'] ); ?>" class="widefat" />
         
         <br><br>
@@ -267,8 +296,6 @@ class SL_links_main extends WP_Widget {
        <strong><?php _e('Show Description', 'simple-links');?></strong> 
             <input type="checkbox" id="<?php echo $this->get_field_id( 'description' ); ?>" name="<?php echo $this->get_field_name( 'description' ); ?>" 
                     <?php 
-                    
-                    if( !isset( $instance['description']) ) $instance['description'] = 0;
                     checked($instance['description']); ?> value="1"/>
         
         
@@ -277,8 +304,6 @@ class SL_links_main extends WP_Widget {
         <strong><?php _e('Show Description Formatting', 'simple-links');?></strong> 
             <input type="checkbox" id="<?php echo $this->get_field_id( 'show_description_formatting' ); ?>" name="<?php echo $this->get_field_name( 'show_description_formatting' ); ?>" 
                     <?php 
-                    
-                    if( !isset( $instance['show_description_formatting']) ) $instance['show_description_formatting'] = 0;
                     checked($instance['show_description_formatting']); ?> value="1"/>
         
         
@@ -287,8 +312,6 @@ class SL_links_main extends WP_Widget {
         <strong><?php _e('Remove Line Break Between Image and Link', 'simple-links');?></strong> 
             <input type="checkbox" id="<?php echo $this->get_field_id( 'remove_line_break' ); ?>" name="<?php echo $this->get_field_name( 'remove_line_break' ); ?>" 
                     <?php 
-                    
-                    if( !isset( $instance['remove_line_break']) ) $instance['remove_line_break'] = 0;
                     checked($instance['remove_line_break']); ?> value="1"/>
         
         
@@ -296,7 +319,6 @@ class SL_links_main extends WP_Widget {
        <strong><?php _e('Show Image', 'simple-links');?></strong> 
             <input type="checkbox" id="<?php echo $this->get_field_id( 'show_image' ); ?>" name="<?php echo $this->get_field_name( 'show_image' ); ?>" 
                     <?php 
-                    if( !isset( $instance['show_image']) ) $instance['show_image'] = 0;
                     checked($instance['show_image']); ?> value="1"/>
         
         
@@ -304,7 +326,6 @@ class SL_links_main extends WP_Widget {
         <strong><?php _e('Display Image Without Title', 'simple-links');?></strong> 
             <input type="checkbox" id="<?php echo $this->get_field_id( 'show_image_only' ); ?>" name="<?php echo $this->get_field_name( 'show_image_only' ); ?>" 
                     <?php 
-                    if( !isset( $instance['show_image_only']) ) $instance['show_image_only'] = 0;
                     checked($instance['show_image_only']); ?> value="1"/>
         <br><br>
        <strong><?php _e('Image Size', 'simple-links');?>:</strong>
@@ -317,22 +338,22 @@ class SL_links_main extends WP_Widget {
             </select>
         
         <br><br>
-       <strong><?php _e('Include Additional Fields', 'simple-links');?>:</strong><br>
-            <?php 
-            
+       <strong>
+       		<?php _e('Include Additional Fields', 'simple-links');?>:
+       </strong>
+       		<br>
+            <?php          
             $fields = $simple_links->getAdditionalFields();
-            
-            
-            if( empty( $fields ) ){
-                
+            if( empty( $fields ) ){              
                 echo '<em>'.__('There have been no additional fields added', 'simple-links').'</em>';
                 
             } else {
-
                 foreach( $fields as $field ){
                     if( !isset( $instance['fields'][$field]) ) $instance['fields'][$field] = 0;
+					
                     printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $field, $this->get_field_name('fields'), $field, checked($instance['fields'][$field], $field, false), $field);
                 }
+				
             }
             ?>
             
@@ -341,7 +362,6 @@ class SL_links_main extends WP_Widget {
         <em><?php _e('HTML is allowed', 'simple-links');?>: - e.g. '&lt;br&gt;'</em><br>
         <input type="text" id="<?php echo $this->get_field_id( 'separator' ); ?>" name="<?php echo $this->get_field_name( 'separator' ); ?>" value="<?php 
         
-        if( !isset( $instance['separator']  ) ) $instance['separator'] = '';
         echo esc_attr( $instance['separator'] ); ?>" class="widefat" />
 
         <?php 
