@@ -90,7 +90,7 @@ class SL_links_main extends WP_Widget {
        global $simple_links; 
 
 
-       if( isset( $instance['simple_links_version'] ) && ($instance['simple_links_version'] >= '2') ){
+       if( !empty( $instance['simple_links_version'] ) && ( version_compare( 2, $instance[ 'simple_links_version' ] ) == -1 ) ){
             return $instance;   
        }
         
@@ -126,15 +126,19 @@ class SL_links_main extends WP_Widget {
     
     
     /**
-     * The output of the widget to the site
-     * @since 1.7.14
+     * Widget
+	 * 
+	 * The output of the widget to the site
+	 * 
      * @see WP_Widget::widget()
-     * @param $args the widget necessaties like $before_widget and $title
-     * @param $instance all the settings for this particular widget
-     * @uses See Class Docs for filtering the output,settings,and args
+     * @param array $args
+     * @param array $instance
+	 * 
+     * @see See Class Docs for filtering the output,settings,and args
      * 
      * @see Notice error removed with help from WebEndev
      * @see nofollow error was remove with help from Heiko Manfrass
+	 * 
      */
     function widget( $args, $instance ) {
         
