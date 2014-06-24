@@ -97,11 +97,15 @@ class SL_post_type_tax{
 	 */
 	function meta_save(){
 		global $post;
+		if( empty( $post->post_type ) ) return;
 		$type = $post->post_type;
 	
 		//Make sure this is valid
 		if ( defined('DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
+		
+		if( empty( $_POST[$type.'_meta_box'] ) ) return;
+		
 		if ( !wp_verify_nonce( $_POST[$type.'_meta_box'], plugin_basename(__FILE__ ) ) )
 			return;
 	
