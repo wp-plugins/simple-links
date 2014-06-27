@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Simple Links The Link
+ * 
  * Class for generating and interacting with each individual link
  * Each link should be a new instance of the class
  * 
@@ -8,19 +10,46 @@
  * 
  * @since 2.0
  * 
- * @since 2.10.14
- * 
  * @uses May be constructed a link object or ID and using a echo will output the formatted link
  * 
  * @filter may be overridden using the 'simple_links_link_class' filter
+ * 
+ * @class SimpleLinksTheLink
+ * @package Simple Links
+ * 
  */
 class SimpleLinksTheLink{
     
-    public $link; //The Post object
-    public $meta_data = array(); //The post meta data
-    public $additional_fields = array(); //custom additional fields
+	/**
+	 * Link
+	 * 
+	 * This post
+	 * 
+	 * @var WP_Post
+	 */
+    public $link;
+	
+	/**
+	 * Meta Data
+	 * 
+	 * @var array
+	 */
+    public $meta_data = array();
+	
+	/**
+	 * Additional Fields
+	 * 
+	 * @var array
+	 */
+    public $additional_fields = array();
     
-    
+    /**
+	 * Args
+	 * 
+	 * Arguments used throughout
+	 * 
+	 * @var array
+	 */
     public $args = array(
         'type'              => false,
         'show_image'        => false,
@@ -32,22 +61,19 @@ class SimpleLinksTheLink{
     
     
     /**
-     * @param WP_Post|int $link - id or post or post object
+     * Constructor
+	 * 
+	 * @param WP_Post|int $link - ID or WP_Post
      * @param array $args
+	 * 
      */
-    function __construct($link, $args = array()){
+    function __construct( $link, $args = array() ){
         
-        $this->args = wp_parse_args($args, $this->args);
+        $this->args = wp_parse_args( $args, $this->args );      
+        $this->args = apply_filters( 'simple_links_the_link_args', $this->args, $this );
         
-        $this->args = apply_filters('simple_links_the_link_args', $this->args, $this);
+		$this->link = get_post( $link );
         
-        
-        if( is_numeric($link) ){
-            $this->link = get_post($link);
-        } else {
-            $this->link = $link;
-        }
-
     }
     
     
@@ -64,19 +90,26 @@ class SimpleLinksTheLink{
     
     
     /**
-     * The actual links Output
+     * Output
+	 * 
+	 * A single links output
      * 
      * @param bool $echo - defaults to false;
      * 
      * @return string
      * 
-     * @since 2.10.14
      */
-    function output($echo = false){
-        
-        if( !is_object($this->link) ) return '';
-        
-        
+    function output( $echo = false ){
+        if( !class_exists( 'WP_Post' )  ){
+        	if( !is_object($this->link) ){
+        		 return '';
+			}
+		} else {
+			if( !is_a( $this->link, 'WP_Post' ) ){
+				return;	
+			}	
+		}
+
         
         if( $this->args['show_image'] ){
             $image = $this->getImage();
@@ -96,17 +129,16 @@ class SimpleLinksTheLink{
         }
 
 
-        $markup = apply_filters('simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this);
-        $output = sprintf($markup, $class, $this->link->ID ); 
+        $markup = apply_filters( 'simple_links_link_markup', '<li class="%s" id="link-%s">', $this->link, $this );
         
-            
+        $output = sprintf( $markup, $class, $this->link->ID ); 
         
             //Main link output
             $link_output = sprintf('<a href="%s" target="%s" title="%s" %s>%s%s</a>', 
-                                    $this->getData('web_address'),
-                                    $this->getData('target'),
-                                    htmlentities(strip_tags( $this->getData('description') ), ENT_QUOTES, 'UTF-8'),
-                                    empty( $this->meta_data['link_target_nofollow'][0] ) ? '': 'rel="nofollow"', 
+                                    esc_attr( $this->getData('web_address') ),
+                                    esc_attr( $this->getData('target') ),
+                                    esc_attr( strip_tags( $this->getData('description') ) ),
+                                    esc_attr( empty( $this->meta_data['link_target_nofollow'][0] ) ? '': 'rel="nofollow"' ), 
                                     $image,
                                     $this->link->post_title
             );     
@@ -127,7 +159,7 @@ class SimpleLinksTheLink{
             	} else {
             		$description = $this->getData('description');
 				}
-                $output .= sprintf('%s <span class="link-description">%s</span>',  $this->args['separator'], $description );
+                $output .= sprintf( '%s <span class="link-description">%s</span>',  $this->args['separator'], $description );
             }
  
             //The additional fields
@@ -147,12 +179,12 @@ class SimpleLinksTheLink{
           
         //done this way to allow for filtering  
         if( has_filter('simple_links_link_markup' ) ){
-            $output = force_balance_tags($output);  
+            $output = force_balance_tags( $output );  
         } else {
             $output .= '</li>';
         }
 
-        $output = apply_filters('simple_links_list_item', $output, $this->link, $this);
+        $output = apply_filters( 'simple_links_list_item', $output, $this->link, $this );
         
         //handle the output
         if( $echo ){
@@ -165,11 +197,11 @@ class SimpleLinksTheLink{
     
     
     /**
-     * Gets the links image formatted based on args
+     * Get Image
+	 * 
+	 * Gets the links image formatted based on args
      * 
-     * @since 9.21.13
-     * 
-     * return string
+     * @return string
      */
    function getImage(){
         //Remove the post Title if showing image only
@@ -177,11 +209,10 @@ class SimpleLinksTheLink{
              $this->link->post_title = '';
         }
   
-        $image = get_the_post_thumbnail($this->link->ID, $this->args['image_size']);
-         
-        //more for the filterable object
+        $image = get_the_post_thumbnail( $this->link->ID, $this->args[ 'image_size' ] );
         $this->link->image = $image;
-        if( $image != '' && !$this->args['remove_line_break']){
+		
+    	if( !empty( $image ) && !$this->args[ 'remove_line_break' ] ){
              $image .= '<br>';  //make the ones with returned image have the links below
         }   
         
