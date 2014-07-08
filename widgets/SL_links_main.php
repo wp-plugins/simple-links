@@ -3,7 +3,6 @@
                    /**
                     * Creates the main widget for the simple links plugin
                     * @author mat lipe
-                    * @since 1.7.14
                     * @uses registerd by init
                     * @uses the output can be filtered by using the 'simple_links_widget_output' filter
                     *       *   apply_filters( 'simple_links_widget_output', $output, $args );
@@ -275,9 +274,27 @@ class SL_links_main extends WP_Widget {
        <strong><?php _e('Categories (optional)', 'simple-links');?>:</strong><br>
             <?php 
             
-            foreach( $simple_links->get_categories() as $cat ){
-                if( !isset( $instance['category'][$cat] ) ) $instance['category'][$cat] = 0;
-                printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $cat, $this->get_field_name('category'), $cat, checked($instance['category'][$cat], $cat, false), $cat );
+            foreach( Simple_Links_Categories::get_categories() as $category ){
+            	$cat = $category->name;
+				
+                if( empty( $instance['category'][$cat] ) ){
+                	 $instance['category'][$cat] = 0;
+                }
+				
+                printf('&nbsp; &nbsp; <input style="margin: 3px 0" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $cat, $this->get_field_name('category'), $cat, checked($instance['category'][$cat], $cat, false), $cat );
+				
+				if( !empty( $category->children ) ){
+					foreach( $category->children as $child ){
+						$cat = $child->name;
+						if( empty( $instance['category'][$cat] ) ){
+                	 		$instance['category'][$cat] = 0;
+                		}
+				
+                		printf('&nbsp; &nbsp; <input style="margin: 3px 0 3px 20px" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $cat, $this->get_field_name('category'), $cat, checked($instance['category'][$cat], $cat, false), $cat );
+						
+					}	
+				}
+				
             }
             ?>
        
@@ -351,7 +368,7 @@ class SL_links_main extends WP_Widget {
                 foreach( $fields as $field ){
                     if( !isset( $instance['fields'][$field]) ) $instance['fields'][$field] = 0;
 					
-                    printf('&nbsp; &nbsp; <input class="cat" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $field, $this->get_field_name('fields'), $field, checked($instance['fields'][$field], $field, false), $field);
+                    printf('&nbsp; &nbsp; <input type="checkbox" style="margin: 3px 0" value="%s" name="%s[%s]" %s/> %s <br>', $field, $this->get_field_name('fields'), $field, checked($instance['fields'][$field], $field, false), $field);
                 }
 				
             }

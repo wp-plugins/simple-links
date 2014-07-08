@@ -19,17 +19,18 @@ define( 'SIMPLE_LINKS_JS_DIR',  SIMPLE_LINKS_ASSETS_URL. 'js/' );
 define( 'SIMPLE_LINKS_JS_PATH',  SIMPLE_LINKS_DIR. 'assets/js/' );
 define( 'SIMPLE_LINKS_CSS_DIR', SIMPLE_LINKS_ASSETS_URL. 'css/' );
 
-require( 'includes/template-tags.php' );
-
-require( 'includes/SimpleLinksFactory.php' );
-require( 'includes/SimpleLinksTheLink.php' );
-require( 'includes/SL_post_type_tax.php'   );
-require( 'includes/simple_links.php'       );
-require( 'classes/Simple_Link.php'         );
-require('widgets/SL_links_main.php' );
+require( 'includes/template-tags.php' 					);
+require( 'includes/SL_post_type_tax.php'   				);
+require( 'classes/Simple_Links_Categories.php' 			);
+require( 'includes/SimpleLinksFactory.php'              );
+require( 'includes/SimpleLinksTheLink.php' 				);
+require( 'includes/simple_links.php'       				);
+require( 'classes/Simple_Link.php'         				);
+require( 'widgets/SL_links_main.php'       				);
 
 $simple_link = new Simple_Link;
-add_action( 'init', array( $simple_link, 'register_sl_post_type' ) );
+add_action( 'init',           array( $simple_link, 'register_sl_post_type' ) );
+add_action( 'plugins_loaded', array( 'Simple_Links_Categories', 'get_instance' ) );
 
 $simple_links = new simple_links();
 

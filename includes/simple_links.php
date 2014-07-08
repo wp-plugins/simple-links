@@ -14,6 +14,7 @@
 if( !class_exists( 'simple_links' ) ){
 class simple_links extends SL_post_type_tax{
 	
+	
 	public $additional_fields = array();
 
     /**
@@ -28,10 +29,6 @@ class simple_links extends SL_post_type_tax{
 	    add_action('plugins_loaded', array( $this,'translate') );
 
 		parent::__construct();
-		
-
-		//Add the Link Categories
-		add_action( 'init', array( $this, 'link_categories' ) );
 		
 		
 		//Setup the form output for the new button
@@ -184,18 +181,14 @@ class simple_links extends SL_post_type_tax{
 	
 	
 	/**
-	 * Retrieves all link categories 
-	 * @since 8/19/12
-	 * @return object
+	 * @deprecated use Simple_Links_Categories::get_category_names()
+	 * 
+	 * @todo find all uses of this and convert to new object
+	 * 
 	 */
 	function get_categories(){
+		return Simple_Links_Categories::get_category_names();
 		
-		$args = array(
-				  'hide_empty' => false,
-				  'fields'     => 'names'
-				);
-		
-		return get_terms('simple_link_category', $args );
 	}
 	
 	
@@ -294,28 +287,6 @@ class simple_links extends SL_post_type_tax{
 	}
 	
 	
-	
-	
-	/**
-	 * Adds the link categories taxonomy
-	 */
-	function link_categories(){
-		self::register_taxonomy( 'simple_link_category', 'simple_link', array(
-															'labels' => array(
-																		'name'             => __('Link Categories','simple-links'),
-																	    'singular_name'    => __('Link Category','simple-links'),
-																		'all_items'        => __('Link Categories','simple-links'),
-																		'menu_name'        => __('Link Categories','simple-links'),
-																		'add_new_item'     => __('Add New Category','simple-links'),
-																		'update_item'      => __('Update Category','simple-links')	
-															),
-															'show_in_nav_menus'    => false,
-															'query_var'            => 'simple_link_category'
-															
-													)
-				);
-		
-	}
 
 
 	}

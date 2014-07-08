@@ -49,7 +49,9 @@ global $simple_links_func;
 	}
 	?>
 	
-	
+	.cat.child{
+		margin-left: 15px !important;
+	}
 	
 	.wrap{
 		padding: 0 10px 15px !important;	
@@ -108,11 +110,19 @@ global $simple_links_func;
         <fieldset>
         <p>
         	<?php _e( 'Categories (optional)', 'simple-links' );?>: <br><br>
+        	
            	<?php 
-           	$cats = $simple_links_func->get_categories();
+           	$cats = Simple_Links_Categories::get_categories();
            	if( !empty( $cats ) ){
-            	foreach( $cats as $cat ){
-                	printf('<input class="cat" type="checkbox" value="%s"/ > %s <br>', $cat, $cat );
+            	foreach( $cats as $cat ){          		
+                	printf('<input class="cat" type="checkbox" value="%1$s" /> %1$s <br>', $cat->name );
+					
+					if( !empty( $cat->children ) ){
+						foreach( $cat->children as $child ){
+							printf('<input class="cat child" type="checkbox" value="%1$s" /> %1$s <br>', $child->name );
+						}	
+					}
+					
              	}
 			} else {
 				_e( 'No link categories have been created yet.', 'simple-links' );
