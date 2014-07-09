@@ -9,6 +9,7 @@
 
 wp_enqueue_script('jquery');
 wp_enqueue_script('sl-shortcode-form', SIMPLE_LINKS_JS_DIR.'shortcode-form.js');
+require_once( ABSPATH . '/wp-admin/includes/template.php' );
 
 ?> 
 <title>Add Simple Links</title>
@@ -49,8 +50,13 @@ global $simple_links_func;
 	}
 	?>
 	
-	.cat.child{
-		margin-left: 15px !important;
+	.sl-categories ul{
+		margin: 0 0 0 18px;	
+	}
+	
+	.sl-categories, .sl-categories ul{
+		list-style: none;
+		list-style-type: none;
 	}
 	
 	.wrap{
@@ -108,27 +114,25 @@ global $simple_links_func;
         <p><?php _e( 'Title (optional)', 'simple-links' );?>: <input type="text" id="title"  size="50"/></p>
         
         <fieldset>
-        <p>
         	<?php _e( 'Categories (optional)', 'simple-links' );?>: <br><br>
-        	
-           	<?php 
-           	$cats = Simple_Links_Categories::get_categories();
-           	if( !empty( $cats ) ){
-            	foreach( $cats as $cat ){          		
-                	printf('<input class="cat" type="checkbox" value="%1$s" /> %1$s <br>', $cat->name );
-					
-					if( !empty( $cat->children ) ){
-						foreach( $cat->children as $child ){
-							printf('<input class="cat child" type="checkbox" value="%1$s" /> %1$s <br>', $child->name );
-						}	
-					}
-					
-             	}
-			} else {
-				_e( 'No link categories have been created yet.', 'simple-links' );
-			}
-            ?>
-        </p>
+        	<ul class="sl-categories">
+           		<?php 
+           		$cats = Simple_Links_Categories::get_category_names();
+           		if( !empty( $cats ) ){
+            		$term_args = array(
+            			'walker'        => new Simple_Links_Category_Checklist(),
+						'taxonomy'      => Simple_Links_Categories::TAXONOMY,
+						'checked_ontop' => false
+			
+					);
+            		wp_terms_checklist( 0,  $term_args );
+				
+				} else {
+					_e( 'No link categories have been created yet.', 'simple-links' );
+				}
+            	?>
+            </ul>
+       
         </fieldset>
         
         

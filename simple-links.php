@@ -3,13 +3,13 @@
 Plugin Name: Simple Links
 Plugin URI: http://matlipe.com/simple-links-docs/
 Description: Replacement for Wordpress Links Manager with many added features.
-Version: 2.5.6
+Version: 2.5.7
 Author: Mat Lipe
 Author URI: http://matlipe.com/
 */
 
 
-define( 'SIMPLE_LINKS_VERSION', '2.5.6' );
+define( 'SIMPLE_LINKS_VERSION', '2.5.7' );
 
 define( 'SIMPLE_LINKS_DIR', plugin_dir_path(__FILE__) );
 define( 'SIMPLE_LINKS_URL', plugin_dir_url(__FILE__) );
@@ -21,12 +21,17 @@ define( 'SIMPLE_LINKS_CSS_DIR', SIMPLE_LINKS_ASSETS_URL. 'css/' );
 
 require( 'includes/template-tags.php' 					);
 require( 'includes/SL_post_type_tax.php'   				);
-require( 'classes/Simple_Links_Categories.php' 			);
 require( 'includes/SimpleLinksFactory.php'              );
 require( 'includes/SimpleLinksTheLink.php' 				);
 require( 'includes/simple_links.php'       				);
-require( 'classes/Simple_Link.php'         				);
 require( 'widgets/SL_links_main.php'       				);
+
+function simple_links_autoload( $class ){
+	if( file_exists( SIMPLE_LINKS_DIR . 'classes/' . $class . '.php' ) ){
+		require( SIMPLE_LINKS_DIR . 'classes/' . $class . '.php' );
+	}	
+}
+spl_autoload_register( 'simple_links_autoload' );
 
 $simple_link = new Simple_Link;
 add_action( 'init',           array( $simple_link, 'register_sl_post_type' ) );
@@ -39,7 +44,6 @@ $simple_links_func = $simple_links;
 
 if( is_admin() ){
     require( 'includes/simple_links_admin.php' );
-	require( 'classes/Simple_Links_Settings.php' );
 	
 	add_action( 'plugins_loaded', array( 'Simple_Links_Settings', 'get_instance' ) );
 	

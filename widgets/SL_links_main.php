@@ -42,7 +42,8 @@ class SL_links_main extends WP_Widget {
 		'show_image'   				  => 0,
 		'show_image_only'             => 0,
 		'image_size'                  => 'thumbnail',
-		'separator'                   => ''
+		'separator'                   => '',
+		'category'                    => array()
 	
 	);
 	
@@ -272,32 +273,29 @@ class SL_links_main extends WP_Widget {
         
         <br><br>
        <strong><?php _e('Categories (optional)', 'simple-links');?>:</strong><br>
-            <?php 
-            
-            foreach( Simple_Links_Categories::get_categories() as $category ){
-            	$cat = $category->name;
-				
-                if( empty( $instance['category'][$cat] ) ){
-                	 $instance['category'][$cat] = 0;
-                }
-				
-                printf('&nbsp; &nbsp; <input style="margin: 3px 0" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $cat, $this->get_field_name('category'), $cat, checked($instance['category'][$cat], $cat, false), $cat );
-				
-				if( !empty( $category->children ) ){
-					foreach( $category->children as $child ){
-						$cat = $child->name;
-						if( empty( $instance['category'][$cat] ) ){
-                	 		$instance['category'][$cat] = 0;
-                		}
-				
-                		printf('&nbsp; &nbsp; <input style="margin: 3px 0 3px 20px" type="checkbox" value="%s" name="%s[%s]" %s/> %s <br>', $cat, $this->get_field_name('category'), $cat, checked($instance['category'][$cat], $cat, false), $cat );
-						
-					}	
-				}
-				
-            }
-            ?>
        
+       <?php
+       $cats = Simple_Links_Categories::get_category_names();
+       if( !empty( $cats ) ){
+       		?>
+       		<ul class="sl-categories">
+            	<?php 
+            
+            		$term_args = array(
+            			'walker'        => new Simple_Links_Category_Checklist( $this->get_field_name( 'category' ), $instance[ 'category' ] ),
+						'taxonomy'      => Simple_Links_Categories::TAXONOMY,
+						'checked_ontop' => false
+			
+					);
+            		wp_terms_checklist( 0,  $term_args );
+				?>
+			</ul>
+		<?php
+	   } else {
+	   		_e( 'No link categories have been created yet.', 'simple-links' );
+	   }
+	   ?>
+
        <br><br>
        <strong><?php _e('Number of Links', 'simple-links');?>:</strong>
             <select id="<?php echo $this->get_field_id( 'numberposts' ); ?>" name="<?php echo $this->get_field_name( 'numberposts' ); ?>">
