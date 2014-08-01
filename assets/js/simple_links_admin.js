@@ -1,14 +1,14 @@
+/**
+ * Simple links admin jquery
+ *
+ * @author Mat Lipe
+ *
+ */
 
-                          /**
-                           * Simple links admin jquery
-                           * @author Mat Lipe
-                           * @since 1.23.14
-                           */
 
 var isSimpleLinks = false;
 
-
-jQuery(document).ready(function ($) {
+jQuery( function ($) {
  
 	//A boolean to make sure we are on the right page
 	if( $('input[type="hidden"][name="post_type"]').val() == 'simple_link' ){
@@ -18,6 +18,16 @@ jQuery(document).ready(function ($) {
 	        isSimpleLinks = true;
 	    }
 	}
+	
+	//easter egg
+	$('.simple-links-title').change(function(){
+		if( $(this).val() == "Simple Links" ){
+			for( var i = 0; i < 10; i++ ){
+				$(this).css({'box-shadow': '0px 0px 10px '+i+'px yellow'});
+			}
+			$(this).after( '<h2><center>HALLELUJAH!!</center></h2>' );
+		}	
+	});
 
 
     SLcatPage.init(isSimpleLinks);	

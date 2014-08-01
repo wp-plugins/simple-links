@@ -608,7 +608,7 @@ msgid "Order"
 msgstr ""
 
 #: widgets/SL_links_main.php:221
-msgid "Acending"
+msgid "Ascending"
 msgstr ""
 
 #: widgets/SL_links_main.php:222

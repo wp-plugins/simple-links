@@ -2,7 +2,6 @@
         /**               
          * The MCE plugin to add Simple LInks Shortcodes
          * @author Mat Lipe <mat@matlipe.com>
-         * @since 11.16.12
          */
 
 (function(){
@@ -19,7 +18,7 @@
 				ed.windowManager.open({
 					file : userSettings.url+'?simple_links_shortcode=form',
 					width : 550 + parseInt(ed.getLang('highlight.delta_width', 0)),
-					height : 800 + parseInt(ed.getLang('highlight.delta_height', 0)),
+					height : 650 + parseInt(ed.getLang('highlight.delta_height', 0)),
 					inline : 1,
 					title  : 'Simple Links Shortcode'
 				}, {

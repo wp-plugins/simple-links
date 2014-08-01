@@ -251,7 +251,7 @@ class SL_links_main extends WP_Widget {
         <em><?php _e('Be sure the see the Help Section in the Top Right Corner of the Screen for Questions!', 'simple-links');?></em><br><br>
         
         <strong><?php _e('Links Title', 'simple-links');?>:</strong>
-        <input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php 
+        <input class="simple-links-title widefat" type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php 
         
         echo esc_attr( $instance['title'] ); ?>" class="widefat" />
         
@@ -267,7 +267,7 @@ class SL_links_main extends WP_Widget {
         <br><br>
         <strong><?php _e('Order', 'simple-links');?>:</strong>
         <select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>">
-            <option value="ASC" <?php selected($instance['order'],'ASC'); ?>><?php _e('Acending', 'simple-links');?></option>
+            <option value="ASC" <?php selected($instance['order'],'ASC'); ?>><?php _e('Ascending', 'simple-links');?></option>
             <option value="DESC" <?php selected($instance['order'],'DESC'); ?>><?php _e('Descending', 'simple-links');?></option>
         </select>
         
@@ -385,10 +385,5 @@ class SL_links_main extends WP_Widget {
         
         
     }
-    
-    
-    
-    
-    
-    
+
 }

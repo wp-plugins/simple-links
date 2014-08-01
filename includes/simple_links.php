@@ -204,23 +204,50 @@ class simple_links extends SL_post_type_tax{
 	
 	
 	/**
-	 * Brings in the PHP page for the mce buttons shortcode popup
-	 * @since 9.22.13
-     * 
-     * @uses added to the template_redirect hook by self::__construct();
-     * 
+	 * Load Shortcode Form 
+	 * 
+	 * Loads the output of the shortcode form into the modal
+	 * 
+	 * @uses added to the template_redirect hook by self::__construct();
+	 * 
 	 * @uses called by the mce icon
+	 * 
+	 * @return void
 	 */
 	function loadShortcodeForm(){
-		//Escape Hatch
-		if( !is_user_logged_in() ){ return; }
-		//Check the query var
-		switch(get_query_var('simple_links_shortcode')) {
-			case 'form':
-				include(SIMPLE_LINKS_JS_PATH . 'shortcode-form.php' );
-				die();
-            break;
+		
+		require_once( ABSPATH . '/wp-admin/includes/template.php' );
+		
+		$var = get_query_var('simple_links_shortcode');
+		if( $var != 'form' ){
+			return;	
 		}
+		
+		wp_enqueue_style( 
+			'simple-links-shortcode-css', 
+			SIMPLE_LINKS_CSS_DIR. 'simple-links-shortcode.css', 
+			array(), 
+			SIMPLE_LINKS_VERSION 
+		);
+		
+		wp_enqueue_script( 
+			'mce_popup', 
+			includes_url().'js/tinymce/tiny_mce_popup.js',
+			array( 'jquery' ),
+			SIMPLE_LINKS_VERSION 
+		);
+		
+		wp_enqueue_script( 
+			'sl-shortcode-form', 
+			SIMPLE_LINKS_JS_DIR.'shortcode-form.js', 
+			array( 'jquery', 'mce_popup' ),
+			SIMPLE_LINKS_VERSION
+		);
+
+		include( SIMPLE_LINKS_DIR . '/admin-views/shortcode-form.php' );
+		
+		die();
+
 	}
 	
 	
