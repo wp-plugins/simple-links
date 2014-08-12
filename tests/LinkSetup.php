@@ -2,7 +2,6 @@
 
 /**
  * Setup the simple Links for TEsting
- * @since 1.17.13
  * @author Mat Lipe
  * @requires Selenium
  */
@@ -10,7 +9,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
 {
     
     protected $captureScreenshotOnFailure = TRUE;
-    protected $screenshotPath = 'D:\htdocs/test/screenshots/simple-links';
+    protected $screenshotPath = 'E:/Copy/htdocs/test/screenshots/simple-links';
     protected $screenshotUrl = 'http://test.loc/screenshots/simple-links';
     
     //Add the links to create
@@ -86,7 +85,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
   protected function setUp()
   {
     $this->setBrowser("*chrome");
-    $this->setBrowserUrl("http://wordpress.loc/wp-admin");
+    $this->setBrowserUrl("http://wordpress.loc/simple-links/wp-admin");
 
   }
   
@@ -103,7 +102,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
 
     
     //Add all the links set in the class var
-    foreach( $this->links as $link ){
+    foreach( $this->links as $k => $link ){
         $this->click("link=Add Link");
         $this->waitForPageToLoad("30000");
         $this->type("id=title", $link['title']);
@@ -112,7 +111,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
         $this->type("name=web_address", $link['web_address']);
         $this->type("name=description", $link['description']);
         $this->click("id=link_target_".$link['target']);
-        
+
         if( is_array( $link['categories'] ) ){
             foreach( $link['categories'] as $cat ){
                 $this->click("//label[contains(text(),\"".$cat."\")]");
@@ -131,7 +130,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
    * Logs into wordpress default user
    */
   protected function login(){
-      $this->open("/wp-admin/" );
+      $this->open("/simple-links/wp-admin/" );
       $this->type("id=user_login" , "test" );
       $this->type("id=user_pass" , 'test' );
       $this->click("id=wp-submit" );

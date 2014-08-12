@@ -16,7 +16,7 @@
 			// Register commands
 			ed.addCommand('mceHighlight', function() {
 				ed.windowManager.open({
-					file : userSettings.url+'?simple_links_shortcode=form',
+					file : ed.documentBaseUrl.replace( 'wp-admin/', '')+'?simple_links_shortcode=form',
 					width : 550 + parseInt(ed.getLang('highlight.delta_width', 0)),
 					height : 650 + parseInt(ed.getLang('highlight.delta_height', 0)),
 					inline : 1,

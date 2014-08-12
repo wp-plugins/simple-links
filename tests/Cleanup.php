@@ -4,7 +4,7 @@ class Cleanup extends PHPUnit_Extensions_SeleniumTestCase
   protected function setUp()
   {
     $this->setBrowser("*chrome");
-    $this->setBrowserUrl("http://wordpress.loc/wp-admin");
+    $this->setBrowserUrl("http://wordpress.loc/simple-links/wp-admin");
   }
 
   /** 
@@ -16,7 +16,7 @@ class Cleanup extends PHPUnit_Extensions_SeleniumTestCase
     self::login();  
       
       
-    $this->open("/wp-admin/edit.php?post_type=simple_link");
+    $this->open("/simple-links/wp-admin/edit.php?post_type=simple_link");
     $this->click("css=#cb > input[type=\"checkbox\"]");
     $this->select("name=action", "label=Move to Trash");
     $this->click("id=doaction");
