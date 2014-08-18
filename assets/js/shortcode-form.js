@@ -28,7 +28,7 @@ tinyMCEPopup.onInit.add(myObj.init, myObj);
 //The Jquery which grabs the form data
 jQuery(document).ready(function($) {
 
-	var fields = ['count', 'orderby', 'title'];
+	var fields = ['count', 'orderby', 'order', 'title'];
 
 	//Generate the Code
 	$('#generate').click(function() {

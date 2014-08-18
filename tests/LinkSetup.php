@@ -48,7 +48,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
                            'web_address' => 'http://paypal.com',
                            'description' => 'An online money exchange - the safest way to pay',
                            'target' => 'blank',
-                           'categories'  => 'Ecom',
+                           'categories'  => array( 'Aufsätze', 'Ecom' ),
                    ),
                    array(
                            'title'       => 'Wordpress',
@@ -66,7 +66,7 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
                          'web_address' => 'http://seleniumhq.org/',
                          'description' => 'Automated Function and Unit Testing',
                          'target' => 'blank',
-                         'categories'  => 'Mat\'s Adventures', 
+                         'categories'  => array( 'Aufsätze', 'Mat\'s Adventures' ),
                   ),
                    array(
                          'title'       => 'Amazon',
@@ -199,6 +199,9 @@ class LinkSetup extends PHPUnit_Extensions_SeleniumTestCase
           $this->type("id=tag-name", "Mat's Adventures");
           $this->type("id=tag-description", "A category meant to have a tricky name to make sure things don't break on single quotes");
           $this->click("id=submit");
+	      $this->type("id=tag-name", "Aufsätze");
+	      $this->type("id=tag-description", "A category with special characters");
+	      $this->click("id=submit");
       }
   
 

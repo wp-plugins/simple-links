@@ -61,11 +61,8 @@ class Simple_Links_Category_Checklist extends Walker_Category_Checklist {
 		} else {
 			$name = '';
 		}
-		
 
-		$class = in_array( $category->term_id, $popular_cats ) ? ' class="popular-category"' : '';
-
-		$output .= '<li' . $class . '>
+		$output .= '<li>
 						<label class="selectit">
 							<input class="cat" value="' . $category->name . '" type="checkbox" name="'. $name . '"' . checked( in_array( $category->name, $this->selected ), 1, 0 ) . ' /> ' . $category->name . '</label>
 					</li>';

@@ -44,6 +44,33 @@ class simple_links extends SL_post_type_tax{
 	}
 
 
+	/**
+	 * orderby_options
+	 *
+	 * @param string $selected
+	 *
+	 * @static
+	 * @return void
+	 */
+	public static function orderby_options( $selected = null ) {
+		?>
+		<option value="menu_order" <?php selected( $selected, 'menu_order' ); ?>>
+			<?php _e( 'Link Order', 'simple-links' ); ?>
+		</option>
+		<option value="title" <?php selected( $selected, 'title' ); ?>>
+			<?php _e( 'Title', 'simple-links' ); ?>
+		</option>
+		<option value="rand" <?php selected( $selected, 'rand' ); ?>>
+			<?php _e( 'Random', 'simple-links' ); ?>
+		</option>
+		<option value="date" <?php selected( $selected, 'date' ); ?>>
+			<?php _e( 'Date', 'simple-links' ); ?>
+		</option>
+	<?php
+
+	}
+
+
     /**
      * Retrieve the additional fields names
      * 

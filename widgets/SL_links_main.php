@@ -259,9 +259,9 @@ class SL_links_main extends WP_Widget {
         
         <strong><?php _e('Order Links By', 'simple-links');?></strong>
         <select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
-            <option value="menu_order" <?php selected($instance['orderby'],'menu_order'); ?>><?php _e('Link Order', 'simple-links');?></option>
-            <option value="title" <?php selected($instance['orderby'],'title'); ?>><?php _e('Title', 'simple-links');?></option>
-            <option value="rand" <?php selected($instance['orderby'],'rand'); ?>><?php _e('Random', 'simple-links');?></option>
+	        <?php
+	            simple_links::orderby_options( $instance[ 'orderby' ] );
+	        ?>
         </select>
         
         <br><br>
