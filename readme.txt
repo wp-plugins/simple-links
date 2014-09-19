@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.8.0
 Tested up to: 4.0.0
-Stable tag: 2.7.1
+Stable tag: 2.7.2
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -34,6 +34,8 @@ Some of the features this plugin offers:
 
 For Developers Docs See <a href="http://matlipe.com/simple-links-docs/simple-links-developer-docs/">http://matlipe.com/simple-links-docs/simple-links-developer-docs/</a> 
 
+To contribute send pull requests:
+<a href="https://github.com/lipemat/simple-links/">GitHub Repo</a>
 
 == Upgrade Notice ==
 

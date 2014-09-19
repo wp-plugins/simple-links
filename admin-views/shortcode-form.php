@@ -60,15 +60,18 @@ global $simple_links_func;
 	<p><em><?php _e( 'If no links match the options chosen, this will not display anything', 'simple-links' ); ?>.</em>
 	</p>
 
-	<label><?php _e( 'Title <small>(optional)</small>', 'simple-links' ); ?>: <br/><input type="text" id="title"
-	                                                                                      size="50"/></label>
+	<label><?php _e( 'Title <small>(optional)</small>', 'simple-links' ); ?>:
+		<br/>
+		<input type="text" id="title"
+			size="50"/>
+	</label>
 
 	<fieldset>
 		<legend><?php _e( 'Categories <small>(optional)</small>', 'simple-links' ); ?></legend>
 		<ul class="sl-categories">
 			<?php
 			$cats = Simple_Links_Categories::get_category_names();
-			if( !empty( $cats ) ){
+			if( ! empty( $cats ) ){
 				$term_args = array(
 					'walker'        => new Simple_Links_Category_Checklist(),
 					'taxonomy'      => Simple_Links_Categories::TAXONOMY,
@@ -91,7 +94,7 @@ global $simple_links_func;
 			<select id="count">
 				<option value=""><?php _e( 'All', 'simple-links' ); ?></option>
 				<?php
-				for( $i = 1; $i < 30; $i++ ){
+				for( $i = 1; $i < 30; $i ++ ){
 					printf( '<option value="%s">%s</option>', $i, $i );
 				}
 				?>
@@ -121,29 +124,38 @@ global $simple_links_func;
 	</p>
 
 	<p>
-		<label><?php _e( 'Show Description', 'simple-links' ); ?> <input type="checkbox" id="description" value="true"/></label>
+		<label><?php _e( 'Show Description', 'simple-links' ); ?>
+			<input type="checkbox" id="description" value="true"/>
+		</label>
 	</p>
 
 	<p>
-		<label><?php _e( 'Show Description Formatting', 'simple-links' ); ?> <input type="checkbox"
-		                                                                            id="description-formatting"
-		                                                                            value="true"/></label>
+		<label><?php _e( 'Include Description Paragraph Format', 'simple-links' ); ?>
+			<input type="checkbox"
+				id="description-formatting"
+				value="true"/>
+		</label>
 	</p>
 
 	<p>
-		<label><?php _e( 'Show Image', 'simple-links' ); ?> <input type="checkbox" id="show_image"
-		                                                           value="true"/></label>
+		<label><?php _e( 'Show Image', 'simple-links' ); ?>
+			<input type="checkbox" id="show_image"
+				value="true"/>
+		</label>
 	</p>
 
 	<p>
-		<label><?php _e( 'Display Image Without Title', 'simple-links' ); ?> <input type="checkbox" id="show_image_only"
-		                                                                            value="true"/></label>
+		<label><?php _e( 'Display Image Without Title', 'simple-links' ); ?>
+			<input type="checkbox" id="show_image_only"
+				value="true"/>
+		</label>
 
 	</p>
 
 	<p>
 		<label>
-			<?php _e( 'Image Size', 'simple-links' ); ?>  <select id="image-size">
+			<?php _e( 'Image Size', 'simple-links' ); ?>
+			<select id="image-size">
 				<?php
 				foreach( $simple_links_func->image_sizes() as $size ){
 					printf( '<option value="%s">%s</a>', $size, $size );
@@ -154,9 +166,11 @@ global $simple_links_func;
 	</p>
 
 	<p>
-		<label><?php _e( 'Remove Line Break Between Image and Link', 'simple-links' ); ?> <input type="checkbox"
-		                                                                                         id="line_break"
-		                                                                                         value="1"/></label>
+		<label><?php _e( 'Remove Line Break Between Image and Link', 'simple-links' ); ?>
+			<input type="checkbox"
+				id="line_break"
+				value="1"/>
+		</label>
 	</p>
 
 	<fieldset>
@@ -179,16 +193,20 @@ global $simple_links_func;
 		?>
 	</fieldset>
 
-	<label><?php _e( 'Field Separator', 'simple-links' ); ?>:<br/>
+	<label><?php _e( 'Field Separator', 'simple-links' ); ?>:
+		<br/>
 		<em>
 			<small><?php _e( 'HTML is allowed and will show up formatted in the editor', 'simple-links' ); ?>:</small>
-		</em><br/>
-		<input type="text" value="-" id="separator" size="50"/></label>
+		</em>
+		<br/>
+		<input type="text" value="-" id="separator" size="50"/>
+	</label>
 
 	<?php do_action( 'simple_links_shortcode_form' ); ?>
 
 	<?php if( get_bloginfo( 'version' ) < 3.8 ){
-		?><p>$nbsp;</p><?php
+		?>
+		<p>$nbsp;</p><?php
 	}
 	?>
 	<p>

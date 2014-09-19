@@ -3,12 +3,12 @@
 		<?php _e( 'Want More Options', 'simple-links' ); ?>
 	</legend>
 	<p>
-		<strong> 
-			<big> 
+		<strong>
+			<big>
 				<a target="blank" href="http://matlipe.com/product-category/simple-links-addons/">
 					<?php _e( 'Premium Add-Ons', 'simple-links' ); ?>!
-				</a> 
-			</big> 
+				</a>
+			</big>
 		</strong>
 	<p>
 </fieldset>

@@ -21,7 +21,7 @@
 </p>
 
 <?php
-if( isset( $this->meta_box_descriptions[ 'target' ] ) ) {
+if( isset( $this->meta_box_descriptions[ 'target' ] ) ){
 	echo '<p>' . $this->meta_box_descriptions[ 'target' ] . '</p>';
 }
 ?>
@@ -32,7 +32,7 @@ if( isset( $this->meta_box_descriptions[ 'target' ] ) ) {
 		name="link_target_nofollow"
 		value="1"
 		<?php checked( get_post_meta( $post->ID, 'link_target_nofollow', true ), 1 ); ?>
-	>
+		>
 
 	<?php _e( 'Add a', 'simple-links' ); ?>
 	<code>
