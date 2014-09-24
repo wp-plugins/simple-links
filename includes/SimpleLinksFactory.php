@@ -96,7 +96,7 @@ class SimpleLinksFactory {
 
 
 		//Merge with defaults - done this way to split to two lists
-		$this->args       = shortcode_atts( $this->args, $args );
+		$this->args       = wp_parse_args( $this->args, $args );
 		$this->query_args = shortcode_atts( $this->query_args, $args );
 
 
