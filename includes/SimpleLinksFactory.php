@@ -124,13 +124,19 @@ class SimpleLinksFactory {
 				$this->query_args[ 'category' ] = explode( ',', $this->query_args[ 'category' ] );
 			}
 
-			//Go through all the possible categories and add the ones that are set
-			foreach( $this->get_categories() as $cat ){
-				if( in_array( $cat, $this->query_args[ 'category' ] ) ){
-					$cat         = get_term_by( 'name', $cat, 'simple_link_category' );
-					$all_cats[ ] = $cat->term_id;
+			foreach( $this->query_args[ 'category' ] as $cat ){
+				$cat = get_term_by( 'name', $cat, 'simple_link_category' );
+				if( ! empty( $cat->term_id ) ){
+					$all_cats[] = $cat->term_id;
 				}
 			}
+
+
+			//the categories were invalid so zero will return nothing
+			if( empty( $all_cats ) ){
+				$all_cats = 0;
+			}
+
 			$this->query_args[ 'tax_query' ][ ] = array(
 				'taxonomy' => 'simple_link_category',
 				'fields'   => 'id',
