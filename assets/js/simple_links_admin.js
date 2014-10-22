@@ -29,31 +29,12 @@ jQuery( function( $ ){
 		}
 	} );
 
-
-	SLcatPage.init( isSimpleLinks );
 	SLsortPage.init();
 	SLsettings.init();
 
 } );
 
 var $s = jQuery.noConflict();
-
-
-/**
- * Link Categories Settings Page
- * @since 9/24/12
- */
-var SLcatPage = {
-	init : function( good ){
-		if( !good ){
-			return
-		}
-		//Remove the slug section for no conflicts later
-		$s( '#tag-slug, label[for="tag-slug"], #addtag div p' ).remove();
-		$s( '#edittag input[id="slug"], label[for="slug"], #edittag p.description' ).remove();
-	}
-
-};
 
 
 /**

@@ -125,7 +125,11 @@ class SimpleLinksFactory {
 			}
 
 			foreach( $this->query_args[ 'category' ] as $cat ){
-				$cat = get_term_by( 'name', $cat, 'simple_link_category' );
+				if( is_numeric( $cat ) ){
+					$cat = get_term_by( 'id', $cat, 'simple_link_category' );
+				} else {
+					$cat = get_term_by( 'name', $cat, 'simple_link_category' );
+				}
 				if( ! empty( $cat->term_id ) ){
 					$all_cats[] = $cat->term_id;
 				}

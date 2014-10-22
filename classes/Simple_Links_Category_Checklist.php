@@ -57,17 +57,15 @@ class Simple_Links_Category_Checklist extends Walker_Category_Checklist {
 	function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ){
 		extract( $args );
 
-		$taxonomy = Simple_Links_Categories::TAXONOMY;
-
 		if( ! empty( $this->widget ) ){
-			$name = $this->widget . "[" . $category->name . "]";
+			$name = $this->widget . "[" . $category->term_id . "]";
 		} else {
 			$name = '';
 		}
 
 		$output .= '<li>
 						<label class="selectit">
-							<input class="cat" value="' . $category->name . '" type="checkbox" name="' . $name . '"' . checked( in_array( $category->name, $this->selected ), 1, 0 ) . ' /> ' . $category->name . '</label>
+							<input class="cat" value="' . $category->term_id . '" type="checkbox" name="' . $name . '"' . checked( in_array( $category->term_id, $this->selected ), 1, 0 ) . ' /> ' . $category->name . '</label>
 					</li>';
 
 	}

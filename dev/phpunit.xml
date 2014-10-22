@@ -12,7 +12,7 @@
          bootstrap="bootstrap.php"
         >
     <testsuites>
-        <testsuite name="Simple Links Display By Category">
+        <testsuite name="Simple Links">
             <directory>./phpunit</directory>
         </testsuite>
     </testsuites>

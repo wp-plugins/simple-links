@@ -119,7 +119,6 @@ class SL_links_main extends WP_Widget {
 	function form( $instance ){
 		global $simple_links;
 
-		//backward compatibility - to allow for checkboxes to still be checked
 		$instance = $this->migrateOldData( $instance );
 
 		$instance = wp_parse_args( $instance, $this->defaults );
@@ -332,10 +331,6 @@ class SL_links_main extends WP_Widget {
 		$instance = apply_filters( 'simple_links_widget_settings_' . $widget_id, $instance );
 
 
-		//For any data which has not been resaved to the new structure
-		$instance = $this->migrateOldData( $instance );
-
-
 		//--------------- Starts the Output --------------------------------------
 
 		$output = $before_widget;
@@ -356,47 +351,28 @@ class SL_links_main extends WP_Widget {
 		echo apply_filters( 'simple_links_widget_output', $output, $links->links, $instance, $args );
 	}
 
+
 	/**
 	 * Allows for migration widgets args from an old version of data to a new one
 	 *
-	 * @uses  run pre form and pre widget
+	 * @uses run and pre widget
 	 *
-	 * @since 2.0
+	 * @since 2.7.5
 	 */
 	function migrateOldData( $instance ){
-		global $simple_links;
 
-
-		if( ! empty( $instance[ 'simple_links_version' ] ) && ( version_compare( 2, $instance[ 'simple_links_version' ] ) == - 1 ) ){
-			return $instance;
-		}
-
-
-		foreach( $simple_links->get_categories() as $cat ){
-			if( isset( $instance[ $cat ] ) && ( $instance[ $cat ] ) ){
-				$instance[ 'category' ][ ] = $cat;
+		if( !empty( $instance[ 'category' ] ) ){
+			foreach( $instance[ 'category' ] as $k => $cat ){
+				if( !is_numeric( $cat ) ){
+					$cat = get_term_by( "name", $cat, Simple_Links_Categories::TAXONOMY );
+					if( !empty( $cat->term_id ) ){
+						$instance[ 'category' ][ $k ] = $cat->term_id;
+					}
+				} else {
+					break;
+				}
 			}
 		}
-
-		if( ! empty( $instance[ 'line_break' ] ) ){
-			$instance[ 'remove_line_break' ] = $instance[ 'line_break' ];
-		}
-
-
-		if( empty( $instance[ 'orderby' ] ) ){
-			$instance[ 'orderby' ] = 'menu_order';
-		}
-
-		if( empty( $instance[ 'order' ] ) ){
-			$instance[ 'order' ] = 'ASC';
-		}
-
-		foreach( $simple_links->additional_fields as $field ){
-			if( isset( $instance[ $field ] ) && $instance[ $field ] ){
-				$instance[ 'fields' ][ ] = $field;
-			}
-		}
-
 
 		return $instance;
 	}

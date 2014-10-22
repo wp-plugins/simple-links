@@ -76,7 +76,6 @@ global $simple_links_func;
 					'walker'        => new Simple_Links_Category_Checklist(),
 					'taxonomy'      => Simple_Links_Categories::TAXONOMY,
 					'checked_ontop' => false
-
 				);
 
 				wp_terms_checklist( 0, $term_args );

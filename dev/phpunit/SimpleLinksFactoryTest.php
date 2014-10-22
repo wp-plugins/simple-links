@@ -11,9 +11,12 @@
 
 class SimpleLinksFactoryTest extends WP_UnitTestCase {
 
+	public function setUp(){
+		parent::setUp();
+		switch_to_blog( 2 );
+	}
 
 	public function test_description(){
-
 		$o = new SimpleLinksFactory( array( 'description' => true ), 'phpunit' );
 		$this->assertContains( array( 'description' => true) , $o->args, "The description arg did not retain it's value. See 89d56ae1699aa6c95075ae702d61ae039f0dc794" );
 

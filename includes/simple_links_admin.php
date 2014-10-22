@@ -253,7 +253,7 @@ if( ! class_exists( 'simple_links_admin' ) ){
 				'content' => '<h5>' . __( 'You Can add a Simple Links List anywhere on the site by using the shortcode' ) . '[simple-links]</h5>
                         <p><em>' . __( 'Look for the puzzle button on the content editors for a form that generates the shortcode for you' ) . '</em><br></p>
                                                 <strong>Supported Options:</strong><br>
-                                                category   = ' . __( '"Comma separated list of Link Category Names" - defaults to all' ) . '<br>
+                                                category   = ' . __( '"Comma separated list of Link Category Names or Ids" - defaults to all' ) . '<br>
                                                 orderby    = ' . __( '"title or random" - defaults to link order' ) . '<br>
                                                 order      = ' . __( '"DESC or ASC" - defaults to ASC' ) . '<br>
                                                 count      = ' . __( '"Number of links to show"' ) . '<br>
