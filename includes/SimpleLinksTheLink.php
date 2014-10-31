@@ -164,16 +164,20 @@ class SimpleLinksTheLink {
 
 		//The additional fields
 		if( is_array( $this->args[ 'fields' ] ) ){
+			$additional_fields = null;
 			foreach( $this->args[ 'fields' ] as $field ){
 				$data = $this->getAdditionalField( $field );
 				if( ! empty( $data ) ){
-					$output .= sprintf( '%s <span class="%s">%s</span>',
+					$additional_fields .= sprintf( '%s <span class="%s">%s</span>',
 						$this->args[ 'separator' ],
 						str_replace( ' ', '-', strtolower( $field ) ),
 						$data
 					);
 				}
 			}
+
+			$output .= apply_filters( 'simple_links_additional_fields_output', $additional_fields, $this->args[ 'fields' ], $this );
+
 		}
 
 

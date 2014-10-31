@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.8.0
 Tested up to: 4.0.0
-Stable tag: 2.8.0
+Stable tag: 2.9.0
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -13,8 +13,8 @@ Replacement for Wordpress' Link Manager with Many Additional Features. Make Mana
 
 The built in Wordpress Links Manager had become Deprecated due to many shortcomings. This plugin attempts to recreate the same concept while removing those shortcomings.
 
-<strong>Want more Options</strong>
-<a href="http://matlipe.com/product-category/simple-links-addons/">Premium Add-ons!</a>
+<h3>Want more Options?</h3>
+<big><strong><a href="http://matlipe.com/product-category/simple-links-addons/">Premium Add-ons!</a></big></strong>
 
 
 Some of the features this plugin offers:
