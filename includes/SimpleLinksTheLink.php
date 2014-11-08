@@ -229,7 +229,6 @@ class SimpleLinksTheLink {
 	 *
 	 * @param string $name - name of meta data key (defaults to all meta data );
 	 *
-	 * @since 1.17.14
 	 * @return mixed
 	 */
 	function getData( $name = false ){
@@ -247,12 +246,13 @@ class SimpleLinksTheLink {
 		}
 
 		//defaults to all data
-		if( ! $name ){
+		if( !$name ){
 			return $this->meta_data;
 		}
 
 		if( isset( $this->meta_data[ $name ][ 0 ] ) ){
-			return $this->meta_data[ $name ][ 0 ];
+			$data = apply_filters( 'simple_links_link_data_' . $name, $this->meta_data[ $name ][ 0 ], $this->link );
+			return $data;
 		}
 
 		return false;
