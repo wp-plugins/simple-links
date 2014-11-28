@@ -159,6 +159,8 @@ class Simple_Link {
 		//for the no follow checkbox
 		if( isset( $_POST[ 'link_target_nofollow' ] ) ){
 			update_post_meta( $post->ID, 'link_target_nofollow', $_POST[ 'link_target_nofollow' ] );
+		} else {
+			update_post_meta( $post->ID, 'link_target_nofollow', 0 );
 		}
 
 
