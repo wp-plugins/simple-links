@@ -142,9 +142,10 @@ class SimpleLinksFactory {
 			}
 
 			$this->query_args[ 'tax_query' ][ ] = array(
-				'taxonomy' => 'simple_link_category',
-				'fields'   => 'id',
-				'terms'    => $all_cats
+				'taxonomy'         => 'simple_link_category',
+				'fields'           => 'id',
+				'terms'            => $all_cats,
+				'include_children' => 0
 			);
 
 			unset( $this->query_args[ 'category' ] );

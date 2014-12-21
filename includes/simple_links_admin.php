@@ -190,8 +190,9 @@ if( ! class_exists( 'simple_links_admin' ) ){
 			}
 
 			if( is_admin() && $pagenow == 'edit.php' && isset( $request[ 'post_type' ] ) && $request[ 'post_type' ] == 'simple_link' ){
-				//Changes this to the slug version because the query requires slugs
-				$request[ 'simple_link_category' ] = get_term( $request[ 'simple_link_category' ], 'simple_link_category' )->slug;
+				if( !empty( $_REQUEST[ 'filter_action' ] ) ){
+					$request[ 'simple_link_category' ] = get_term( $request[ 'simple_link_category' ], 'simple_link_category' )->slug;
+				}
 			}
 
 			return $request;
