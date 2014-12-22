@@ -84,7 +84,7 @@ I also offer plugin customization services.
 
 == Changelog ==
 = 2.9.3 =
-* No longer include children categories
+* No longer include children categories automatically. Instead have the ability to select with child categories to include.
 
 = 2.9.2 =
 * Fix bug with link nofollow
