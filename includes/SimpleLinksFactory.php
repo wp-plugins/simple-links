@@ -126,9 +126,9 @@ class SimpleLinksFactory {
 
 			foreach( $this->query_args[ 'category' ] as $cat ){
 				if( is_numeric( $cat ) ){
-					$cat = get_term_by( 'id', $cat, 'simple_link_category' );
+					$cat = get_term_by( 'id', $cat, Simple_Links_Categories::TAXONOMY );
 				} else {
-					$cat = get_term_by( 'name', $cat, 'simple_link_category' );
+					$cat = get_term_by( 'name', $cat, Simple_Links_Categories::TAXONOMY );
 				}
 				if( ! empty( $cat->term_id ) ){
 					$all_cats[] = $cat->term_id;
@@ -145,7 +145,8 @@ class SimpleLinksFactory {
 				'taxonomy'         => 'simple_link_category',
 				'fields'           => 'id',
 				'terms'            => $all_cats,
-				'include_children' => 0
+				'include_children' => !empty( $this->args[ 'include_child_categories' ] ) ? 1 : 0
+
 			);
 
 			unset( $this->query_args[ 'category' ] );

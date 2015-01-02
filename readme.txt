@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.8.0
 Tested up to: 4.1.0
-Stable tag: 2.9.3
+Stable tag: 3.0.0
 License: GPLv2
 
 Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -83,8 +83,13 @@ I also offer plugin customization services.
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 3.0.0 =
+* New widget and shortcode option to include the child categories links. See help tabs of your widget and page/post screens for details
+* Cleaned up help sections a bit
+* Improved translation strings
+
 = 2.9.3 =
-* No longer include children categories automatically. Instead have the ability to select with child categories to include.
+* No longer include children categories
 
 = 2.9.2 =
 * Fix bug with link nofollow

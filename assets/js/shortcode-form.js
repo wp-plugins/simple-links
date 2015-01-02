@@ -108,6 +108,11 @@ jQuery( document ).ready( function( $ ){
 			output += ' remove_line_break="true"';
 		}
 
+		//Add the child categories to the shortcode
+		if( $( '#child-categories' ).is( ':checked' ) ){
+			output += ' include_child_categories="true"';
+		}
+
 		//add custom values here by using a $(document).on('simple-links-js-form-output', function(o){});
 		$( document ).trigger( 'simple-links-js-form-output', [output] );
 

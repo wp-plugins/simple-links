@@ -44,7 +44,8 @@ class SL_links_main extends WP_Widget {
 		'show_image_only'             => 0,
 		'image_size'                  => 'thumbnail',
 		'separator'                   => '',
-		'category'                    => array()
+		'category'                    => array(),
+		'include_child_categories'    => 0
 
 	);
 
@@ -154,34 +155,38 @@ class SL_links_main extends WP_Widget {
 		</select>
 
 		<br>
-		<br>
-		<strong><?php _e( 'Categories (optional)', 'simple-links' ); ?>:</strong>
-		<br>
-
-		<?php
-		$cats = Simple_Links_Categories::get_category_names();
-		if( ! empty( $cats ) ){
-			?>
-			<ul class="sl-categories">
-				<?php
-
-				$term_args = array(
-					'walker'        => new Simple_Links_Category_Checklist( $this->get_field_name( 'category' ), $instance[ 'category' ] ),
-					'taxonomy'      => Simple_Links_Categories::TAXONOMY,
-					'checked_ontop' => false
-
-				);
-				wp_terms_checklist( 0, $term_args );
+		<fieldset>
+		<p>
+			<strong><?php _e( 'Categories (optional)', 'simple-links' ); ?>:</strong>
+			<?php
+			$cats = Simple_Links_Categories::get_category_names();
+			if( !empty( $cats ) ){
 				?>
-			</ul>
-		<?php
-		} else {
-			_e( 'No link categories have been created yet.', 'simple-links' );
-		}
-		?>
+				<ul class="sl-categories">
+					<?php
 
-		<br>
-		<br>
+					$term_args = array(
+						'walker'        => new Simple_Links_Category_Checklist( $this->get_field_name( 'category' ), $instance[ 'category' ] ),
+						'taxonomy'      => Simple_Links_Categories::TAXONOMY,
+						'checked_ontop' => false
+
+					);
+					wp_terms_checklist( 0, $term_args );
+					?>
+				</ul>
+			<?php
+			} else {
+				_e( 'No link categories have been created yet.', 'simple-links' );
+			}
+			?>
+		</p>
+		<p>
+			<strong><?php _e( 'Include Child Categories Of Selected Categories', 'simple-links' ); ?></strong>
+			<input type="checkbox" id="<?php echo $this->get_field_id( 'include_child_categories' ); ?>" name="<?php echo $this->get_field_name( 'include_child_categories' ); ?>" <?php checked( $instance[ 'include_child_categories' ] ); ?> value="1"/>
+		</p>
+
+		<hr>
+
 		<strong><?php _e( 'Number of Links', 'simple-links' ); ?>:</strong>
 		<select id="<?php echo $this->get_field_id( 'numberposts' ); ?>" name="<?php echo $this->get_field_name( 'numberposts' ); ?>">
 			<option value="-1">All</option>
@@ -201,49 +206,58 @@ class SL_links_main extends WP_Widget {
 
 
 		<br>
-		<br>
 
-		<strong><?php _e( 'Include Description Paragraph Format', 'simple-links' ); ?></strong>
-		<input type="checkbox" id="<?php echo $this->get_field_id( 'show_description_formatting' ); ?>" name="<?php echo $this->get_field_name( 'show_description_formatting' ); ?>"
-			<?php
-			checked( $instance[ 'show_description_formatting' ] ); ?> value="1"/>
+		<p>
 
-
-		<br>
-		<br>
-
-		<strong><?php _e( 'Remove Line Break Between Image and Link', 'simple-links' ); ?></strong>
-		<input type="checkbox" id="<?php echo $this->get_field_id( 'remove_line_break' ); ?>" name="<?php echo $this->get_field_name( 'remove_line_break' ); ?>"
-			<?php
-			checked( $instance[ 'remove_line_break' ] ); ?> value="1"/>
+			<strong><?php _e( 'Include Description Paragraph Format', 'simple-links' ); ?></strong>
+			<input type="checkbox" id="<?php echo $this->get_field_id( 'show_description_formatting' ); ?>" name="<?php echo $this->get_field_name( 'show_description_formatting' ); ?>"
+				<?php
+				checked( $instance[ 'show_description_formatting' ] ); ?> value="1"/>
 
 
-		<br>
-		<br>
-		<strong><?php _e( 'Show Image', 'simple-links' ); ?></strong>
-		<input type="checkbox" id="<?php echo $this->get_field_id( 'show_image' ); ?>" name="<?php echo $this->get_field_name( 'show_image' ); ?>"
-			<?php
-			checked( $instance[ 'show_image' ] ); ?> value="1"/>
+		</p>
+
+		<hr>
+
+		<p>
+
+			<strong><?php _e( 'Show Image', 'simple-links' ); ?></strong>
+			<input type="checkbox" id="<?php echo $this->get_field_id( 'show_image' ); ?>" name="<?php echo $this->get_field_name( 'show_image' ); ?>"
+				<?php
+				checked( $instance[ 'show_image' ] ); ?> value="1"/>
 
 
-		<br>
-		<br>
+		</p>
+
+		<p>
+
+			<strong><?php _e( 'Remove Line Break Between Image and Link', 'simple-links' ); ?></strong>
+			<input type="checkbox" id="<?php echo $this->get_field_id( 'remove_line_break' ); ?>" name="<?php echo $this->get_field_name( 'remove_line_break' ); ?>"
+				<?php
+				checked( $instance[ 'remove_line_break' ] ); ?> value="1"/>
+
+
+		</p>
+
 		<strong><?php _e( 'Display Image Without Title', 'simple-links' ); ?></strong>
 		<input type="checkbox" id="<?php echo $this->get_field_id( 'show_image_only' ); ?>" name="<?php echo $this->get_field_name( 'show_image_only' ); ?>"
 			<?php
 			checked( $instance[ 'show_image_only' ] ); ?> value="1"/>
 		<br>
-		<br>
-		<strong><?php _e( 'Image Size', 'simple-links' ); ?>:</strong>
-		<select id="<?php echo $this->get_field_id( 'image_size' ); ?>" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
-			<?php
-			foreach( $simple_links->image_sizes() as $size ){
-				printf( '<option value="%s" %s>%s</option>', $size, selected( $instance[ 'image_size' ], $size ), $size );
-			}
-			?>
-		</select>
+		<p>
+			<strong><?php _e( 'Image Size', 'simple-links' ); ?>:</strong>
+			<select id="<?php echo $this->get_field_id( 'image_size' ); ?>" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
+				<?php
+				foreach( $simple_links->image_sizes() as $size ){
+					printf( '<option value="%s" %s>%s</option>', $size, selected( $instance[ 'image_size' ], $size ), $size );
+				}
+				?>
+			</select>
 
-		<br>
+		</p>
+
+		<hr>
+
 		<br>
 		<strong>
 			<?php _e( 'Include Additional Fields', 'simple-links' ); ?>:
