@@ -78,7 +78,7 @@ class SimpleLinksFactory {
 	}
 
 	/**
-	 * Turns whatever args were sent over into a usabe arguments array
+	 * Turns whatever args were sent over into a usable arguments array
 	 *
 	 * @param array $args
 	 *

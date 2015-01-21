@@ -3,7 +3,7 @@
 /**
  * Simple Links Settings
  *
- * An evolution of the setttings handling to a single class instead of within the
+ * An evolution of the settings handling to a single class instead of within the
  * large admin class
  *
  * @class   Simple_Links_Settings
@@ -11,13 +11,9 @@
  *
  *
  */
-class Simple_Links_Settings extends simple_links {
+class Simple_Links_Settings {
 
 	const SLUG = 'simple-link-settings';
-	/**
-	 * Instance of this class for use as singleton
-	 */
-	private static $instance;
 
 	/**
 	 * Construct
@@ -33,20 +29,6 @@ class Simple_Links_Settings extends simple_links {
 
 		add_action( 'admin_menu', array( $this, 'meta_boxes' ) );
 
-	}
-
-	/**
-	 * Get (and instantiate, if necessary) the instance of the class
-	 *
-	 * @static
-	 * @return Steelcase_Career_Setttings
-	 */
-	public static function get_instance(){
-		if( ! is_a( self::$instance, __CLASS__ ) ){
-			self::$instance = new self();
-		}
-
-		return self::$instance;
 	}
 
 	/**
@@ -176,8 +158,6 @@ class Simple_Links_Settings extends simple_links {
 	}
 
 
-	/********** SINGLETON FUNCTIONS **********/
-
 	/**
 	 * Additional Fields
 	 *
@@ -193,8 +173,8 @@ class Simple_Links_Settings extends simple_links {
 		</h4>
 
 		<?php
-		if( is_array( $this->getAdditionalFields() ) ){
-			foreach( $this->getAdditionalFields() as $field ){
+		if( is_array( simple_links()->getAdditionalFields() ) ){
+			foreach( simple_links()->getAdditionalFields() as $field ){
 				?>
 				<p>
 					<?php _e( 'Field Name', 'simple-links' ); ?>:
@@ -274,6 +254,41 @@ class Simple_Links_Settings extends simple_links {
 	<?php
 
 	}
+
+	//********** SINGLETON FUNCTIONS **********/
+
+	/**
+	 * Instance of this class for use as singleton
+	 */
+	private static $instance;
+
+
+	/**
+	 * Create the instance of the class
+	 *
+	 * @static
+	 * @return void
+	 */
+	public static function init(){
+		self::$instance = self::get_instance();
+	}
+
+
+	/**
+	 * Get (and instantiate, if necessary) the instance of the
+	 * class
+	 *
+	 * @static
+	 * @return self
+	 */
+	public static function get_instance(){
+		if( !is_a( self::$instance, __CLASS__ ) ){
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
 
 
 }

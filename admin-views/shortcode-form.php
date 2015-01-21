@@ -14,10 +14,6 @@
 <title>Add Simple Links</title>
 <?php
 wp_head();
-
-//The plugins functions
-global $simple_links_func;
-
 ?>
 
 <style type="text/css">
@@ -171,7 +167,7 @@ global $simple_links_func;
 			<?php _e( 'Image Size', 'simple-links' ); ?>
 			<select id="image-size">
 				<?php
-				foreach( $simple_links_func->image_sizes() as $size ){
+				foreach( simple_links()->image_sizes() as $size ){
 					printf( '<option value="%s">%s</a>', $size, $size );
 				}
 				?>
@@ -190,7 +186,7 @@ global $simple_links_func;
 	<fieldset>
 		<legend><?php _e( 'Include Additional Fields', 'simple-links' ); ?></legend>
 		<?php
-		$fields = $simple_links_func->getAdditionalFields();
+		$fields = simple_links()->getAdditionalFields();
 		if( empty( $fields ) ){
 			echo '<em>' . __( 'There have been no additional fields added', 'simple-links' ) . '</em>';
 		} else {

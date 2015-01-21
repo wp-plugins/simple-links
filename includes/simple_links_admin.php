@@ -134,9 +134,7 @@ if( ! class_exists( 'simple_links_admin' ) ){
 					echo get_post_meta( $postID, 'web_address', true );
 					break;
 				case 'category':
-					global $simple_links_func;
-
-					$cats = $simple_links_func->get_link_categories( $postID );
+					$cats = simple_links()->get_link_categories( $postID );
 					if( is_array( $cats ) ){
 						echo implode( ' , ', $cats );
 					}
