@@ -7,7 +7,7 @@ Tested up to: 4.1.0
 Stable tag: 3.0.1
 License: GPLv2
 
-Replacement for Wordpress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
+Replacement for WordPress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
 
 == Description ==
 
