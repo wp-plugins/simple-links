@@ -501,7 +501,7 @@ if( ! class_exists( 'simple_links_admin' ) ){
 		/**
 		 * Remove Links
 		 *
-		 * Removes all traces of the Wordpress Built in Links from the Admin
+		 * Removes all traces of the WordPress Built in Links from the Admin
 		 *
 		 *
 		 * @uses added to the map_meta_cap filter by self::__construct()

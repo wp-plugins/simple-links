@@ -31,20 +31,6 @@ class Simple_Link {
 
 
 	/**
-	 * register_post_type
-	 *
-	 * @static
-	 *
-	 * @uses \MVC\Custom_Post_Type
-	 *
-	 * @return void
-	 */
-	public static function register_post_type(){
-		self::$cpt = new \MVC\Custom_Post_Type( self::POST_TYPE );
-	}
-
-
-	/**
 	 * Register Post Type
 	 *
 	 * Registers the simple_link post type
