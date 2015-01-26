@@ -140,13 +140,13 @@ class Simple_Links_Settings {
 	 */
 	public function permissions(){
 		?>
-		<h4><?php _e( 'These Settings Will Effect Access to this Plugins Features', 'simple-links' ); ?></h4>
+		<h4><?php _e( 'These settings will effect access to this plugins features', 'simple-links' ); ?></h4>
 		<ul>
-			<li><?php _e( 'Hide Link Ordering From Editors', 'simple-links' ); ?>:
+			<li><?php _e( 'Hide Link Ordering from editors', 'simple-links' ); ?>:
 				<input type="checkbox" name="sl-hide-ordering" <?php checked( get_option( 'sl-hide-ordering' ) ); ?> value="1"/>
 				<?php simple_links_questions( 'SL-hide-ordering' ); ?>
 			</li>
-			<li><?php _e( 'Show Simple Link Settings to Editors', 'simple-links' ); ?>:
+			<li><?php _e( 'Show Simple Link Settings to editors', 'simple-links' ); ?>:
 				<input type="checkbox" name="sl-show-settings"
 					<?php checked( get_option( 'sl-show-settings' ) ); ?> value="1"/>
 				<?php simple_links_questions( 'SL-show-settings' ); ?>
@@ -168,8 +168,7 @@ class Simple_Links_Settings {
 	public function additional_fields(){
 		?>
 		<h4>
-			<?php _e( 'These Fields Will Be Available on All Link\'s Edit Screen, Widgets, and Shortcodes', 'simple-links' ); ?>
-			.
+			<?php _e( "These fields will be available on all link's edit screen, widgets, and shortcodes.", 'simple-links' ); ?>
 		</h4>
 
 		<?php

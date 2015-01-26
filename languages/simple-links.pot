@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple Links\n"
-"POT-Creation-Date: 2015-01-21 10:44-0500\n"
-"PO-Revision-Date: 2015-01-21 10:44-0500\n"
+"POT-Creation-Date: 2015-01-26 13:19-0500\n"
+"PO-Revision-Date: 2015-01-26 13:20-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -167,84 +167,84 @@ msgstr ""
 msgid "HTML is allowed and will show up formatted in the editor"
 msgstr ""
 
-#: classes/Simple_Link.php:58
+#: classes/Simple_Link.php:44
 msgid "Link"
 msgstr ""
 
-#: classes/Simple_Link.php:59
+#: classes/Simple_Link.php:45
 msgid "Links"
 msgstr ""
 
-#: classes/Simple_Link.php:64 classes/Simple_Link.php:81
+#: classes/Simple_Link.php:50 classes/Simple_Link.php:67
 msgid "Simple Links"
 msgstr ""
 
-#: classes/Simple_Link.php:66 classes/Simple_Links_Categories.php:120
+#: classes/Simple_Link.php:52 classes/Simple_Links_Categories.php:120
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: classes/Simple_Link.php:67 classes/Simple_Links_Categories.php:121
+#: classes/Simple_Link.php:53 classes/Simple_Links_Categories.php:121
 #, php-format
 msgid "Popular %s"
 msgstr ""
 
-#: classes/Simple_Link.php:68 classes/Simple_Links_Categories.php:122
+#: classes/Simple_Link.php:54 classes/Simple_Links_Categories.php:122
 #, php-format
 msgid "All %s"
 msgstr ""
 
-#: classes/Simple_Link.php:69 classes/Simple_Links_Categories.php:123
+#: classes/Simple_Link.php:55 classes/Simple_Links_Categories.php:123
 #, php-format
 msgid "Parent %s"
 msgstr ""
 
-#: classes/Simple_Link.php:70 classes/Simple_Links_Categories.php:124
+#: classes/Simple_Link.php:56 classes/Simple_Links_Categories.php:124
 #, php-format
 msgid "Parent %s:"
 msgstr ""
 
-#: classes/Simple_Link.php:71 classes/Simple_Links_Categories.php:125
+#: classes/Simple_Link.php:57 classes/Simple_Links_Categories.php:125
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: classes/Simple_Link.php:72 classes/Simple_Links_Categories.php:126
+#: classes/Simple_Link.php:58 classes/Simple_Links_Categories.php:126
 #, php-format
 msgid "Update %s"
 msgstr ""
 
-#: classes/Simple_Link.php:73 classes/Simple_Link.php:79
+#: classes/Simple_Link.php:59 classes/Simple_Link.php:65
 #, php-format
 msgid "Add New %s"
 msgstr ""
 
-#: classes/Simple_Link.php:74 classes/Simple_Links_Categories.php:128
+#: classes/Simple_Link.php:60 classes/Simple_Links_Categories.php:128
 #, php-format
 msgid "New %s Name"
 msgstr ""
 
-#: classes/Simple_Link.php:75 classes/Simple_Links_Categories.php:129
+#: classes/Simple_Link.php:61 classes/Simple_Links_Categories.php:129
 #, php-format
 msgid "Seperate %s with commas"
 msgstr ""
 
-#: classes/Simple_Link.php:76 classes/Simple_Links_Categories.php:130
+#: classes/Simple_Link.php:62 classes/Simple_Links_Categories.php:130
 #, php-format
 msgid "Add or remove %s"
 msgstr ""
 
-#: classes/Simple_Link.php:77 classes/Simple_Links_Categories.php:131
+#: classes/Simple_Link.php:63 classes/Simple_Links_Categories.php:131
 #, php-format
 msgid "Choose from the most used %s"
 msgstr ""
 
-#: classes/Simple_Link.php:78
+#: classes/Simple_Link.php:64
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: classes/Simple_Link.php:80
+#: classes/Simple_Link.php:66
 #, php-format
 msgid "New %s"
 msgstr ""
@@ -284,12 +284,12 @@ msgid ""
 "Values entered in these fields will be available for shortcodes and widgets"
 msgstr ""
 
-#: classes/Simple_Links_Meta_Boxes.php:205
+#: classes/Simple_Links_Meta_Boxes.php:208
 msgid ""
 "You may add additional fields which will be available for all links in the "
 msgstr ""
 
-#: classes/Simple_Links_Meta_Boxes.php:206
+#: classes/Simple_Links_Meta_Boxes.php:209
 msgid "settings"
 msgstr ""
 
@@ -310,37 +310,37 @@ msgid "Permissions"
 msgstr ""
 
 #: classes/Simple_Links_Settings.php:143
-msgid "These Settings Will Effect Access to this Plugins Features"
+msgid "These settings will effect access to this plugins features"
 msgstr ""
 
 #: classes/Simple_Links_Settings.php:145
-msgid "Hide Link Ordering From Editors"
+msgid "Hide Link Ordering from editors"
 msgstr ""
 
 #: classes/Simple_Links_Settings.php:149
-msgid "Show Simple Link Settings to Editors"
+msgid "Show Simple Link Settings to editors"
 msgstr ""
 
 #: classes/Simple_Links_Settings.php:171
 msgid ""
-"These Fields Will Be Available on All Link's Edit Screen, Widgets, and "
-"Shortcodes"
+"These fields will be available on all link's edit screen, widgets, and "
+"shortcodes."
 msgstr ""
 
-#: classes/Simple_Links_Settings.php:180 classes/Simple_Links_Settings.php:191
-#: classes/Simple_Links_Settings.php:199
+#: classes/Simple_Links_Settings.php:179 classes/Simple_Links_Settings.php:190
+#: classes/Simple_Links_Settings.php:198
 msgid "Field Name"
 msgstr ""
 
-#: classes/Simple_Links_Settings.php:208
+#: classes/Simple_Links_Settings.php:207
 msgid "Add Another"
 msgstr ""
 
-#: classes/Simple_Links_Settings.php:230
+#: classes/Simple_Links_Settings.php:229
 msgid "Simple Links Settings"
 msgstr ""
 
-#: classes/Simple_Links_Settings.php:231
+#: classes/Simple_Links_Settings.php:230
 msgid "Be sure to see the help menu for descriptions"
 msgstr ""
 
@@ -656,28 +656,44 @@ msgstr ""
 msgid "Use this icon to generate a Simple Links shortcode"
 msgstr ""
 
-#: includes/simple_links_admin.php:615
+#: includes/simple_links_admin.php:616
 msgid "Link Ordering"
 msgstr ""
 
-#: includes/simple_links_admin.php:631
+#: includes/simple_links_admin.php:632
 msgid "Keeping Your Links in Order"
 msgstr ""
 
-#: includes/simple_links_admin.php:638
+#: includes/simple_links_admin.php:639
 msgid "Select a Link Category to Sort Links in that Category Only ( optional )"
 msgstr ""
 
-#: includes/simple_links_admin.php:640
+#: includes/simple_links_admin.php:641
 msgid "All Categories"
 msgstr ""
 
-#: includes/simple_links_admin.php:651
+#: includes/simple_links_admin.php:652
 msgid "To Sort by Link Categories, you must Add Some Links to them"
 msgstr ""
 
-#: includes/simple_links_admin.php:653
+#: includes/simple_links_admin.php:654
 msgid "Follow Me"
+msgstr ""
+
+#: includes/simple_links_admin.php:783
+msgid "This will prevent editors from using the drag and drop ordering."
+msgstr ""
+
+#: includes/simple_links_admin.php:784
+msgid "This will allow editors access to this Settings Page."
+msgstr ""
+
+#: includes/simple_links_admin.php:785
+msgid "This will remove all traces of the WordPress built in links."
+msgstr ""
+
+#: includes/simple_links_admin.php:786
+msgid "This will import all existing WordPress Links into the Simple Links"
 msgstr ""
 
 #: widgets/SL_links_main.php:61

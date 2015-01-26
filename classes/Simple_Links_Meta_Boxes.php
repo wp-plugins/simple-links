@@ -77,6 +77,9 @@ class Simple_Links_Meta_Boxes {
 		//Go through the options extra fields
 		foreach( $this->{Simple_Link::POST_TYPE . '_meta_fields'} as $field ){
 			if( $field != 'additional_fields' ){
+				if( empty( $_POST[ $field ] ) ){
+					$_POST[ $field ] = null;
+				}
 				update_post_meta( $post->ID, $field, $_POST[ $field ] );
 			}
 		}

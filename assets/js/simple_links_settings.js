@@ -56,11 +56,11 @@ var SLsettingsAjax = {
 };
 
 /**
+ * SLsettingsQtips
  *
- * The Toopltips
- * @since 3.2.14
+ * Help tips for question marks on settings page
  *
- *
+ * @type {{init: Function}}
  */
 var SLsettingsQtips = {
 
@@ -68,34 +68,34 @@ var SLsettingsQtips = {
 
 		//The Hide Ordering Option
 		$s( '#SL-hide-ordering' ).qtip( {
-			'content' : 'This will prevent editors from using the drag and drop ordering.', style : {
+			'content' : SL_locale.hide_ordering, style : {
 				border : {
 					width : 1, radius : 8, color : '#21759B'
-				}, tip : 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners
+				}, tip : 'topLeft'
 			}
 		} );
 
 		//The show setting option
 		$s( '#SL-show-settings' ).qtip( {
-			'content' : 'This will allow editors access to this Settings Page.', style : {
+			'content' : SL_locale.show_settings, style : {
 				border : {
 					width : 1, radius : 8, color : '#21759B'
-				}, tip : 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners
+				}, tip : 'topLeft'
 			}
 		} );
 
 		//The remove links option
 		$s( '#SL-remove-links' ).qtip( {
-			'content' : 'This will remove all traces of the Wordpres built in links', style : {
+			'content' : SL_locale.remove_links, style : {
 				border : {
 					width : 1, radius : 8, color : '#21759B'
-				}, tip : 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners
+				}, tip : 'topLeft'
 			}
 		} );
 
 		//The import links
 		$s( '#SL-import-links' ).qtip( {
-			content : 'This will import all existing Wordpress Links into the Simple Links', style : {
+			content : SL_locale.import_links, style : {
 				border : {
 					width : 1, radius : 8, color : '#21759B'
 				}, tip : 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners

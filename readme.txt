@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.8.0
 Tested up to: 4.1.0
-Stable tag: 3.0.3
+Stable tag: 3.1.0
 License: GPLv2
 
 Replacement for WordPress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -44,21 +44,11 @@ To contribute send pull requests:
 = 2.1.0 =
 * Must upgrade to this version to use premium addons
 
-= 1.7.1 =
-* Prevent the links from showing up in search results
-
-= 1.5.5 =
-* Fixed the random order of links
-
 
 == Frequently Asked Questions ==
 
-= Where did the Replica Widget Go? =
-The widget was deprecated over a year ago and has been removed completed. If you are looking for the original WordPress links manager widget, see this plugin http://wordpress.org/plugins/link-manager/
-
-
-= Most questions can be answered by looking at the help section in the top right corner of the different pages in the Wordpress Admin. =
-*Once this plugin is activated, uou will find documentation on the "widgets", "pages", "posts", and "simple links settings" screens.
+= Most questions can be answered by looking at the help section in the top right corner of the different pages in the WordPress Admin. =
+*Once this plugin is activated, you will find documentation on the "widgets", "pages", "posts", and "simple links settings" screens.
 
 = The full documentation can be found here =
 <a href="http://lipeimagination.info/simple-links-docs/">http://lipeimagination.info/simple-links-docs/</a> which is the same as the plugin link. 
@@ -83,6 +73,12 @@ I also offer plugin customization services.
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 3.1.0 =
+* Improved translation ability
+* Improved Links Manager Import
+* Fixed bug with initial setting of hide the Links Manager
+
+
 = 3.0.0 =
 * New widget and shortcode option to include the child categories links. See help tabs of your widget and page/post screens for details
 * Cleaned up help sections a bit
