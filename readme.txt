@@ -4,7 +4,7 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal
 Tags: Link Manager, Links List, Link Organization
 Requires at least: 3.8.0
 Tested up to: 4.1.0
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv2
 
 Replacement for WordPress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -85,7 +85,7 @@ I also offer plugin customization services.
 * Improved translation strings
 
 = 2.9.3 =
-* No longer include children categories
+* No longer include children categories automatically. Instead have the ability to select with child categories to include.
 
 = 2.9.2 =
 * Fix bug with link nofollow

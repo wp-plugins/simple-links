@@ -529,7 +529,7 @@ if( ! class_exists( 'simple_links_admin' ) ){
 
 
 		/**
-		 * Imports the Wordpress links into this custom post type
+		 * Imports the WordPress links into this custom post type
 		 *
 		 * @since 8/19/12
 		 * @uses  called using ajax
@@ -542,7 +542,9 @@ if( ! class_exists( 'simple_links_admin' ) ){
 			if( is_array( $old_link_cats ) ){
 				foreach( $old_link_cats as $cat ){
 					if( !term_exists( $cat->name, Simple_Links_Categories::TAXONOMY ) ){
-						wp_insert_term( $cat->name, Simple_Links_Categories::TAXONOMY, (array)$cat );
+						$args[ 'description' ] = $cat->description;
+						$args[ 'slug' ] = $cat->slug;
+						wp_insert_term( $cat->name, Simple_Links_Categories::TAXONOMY, $args );
 					}
 				}
 			}
@@ -571,7 +573,7 @@ if( ! class_exists( 'simple_links_admin' ) ){
 				$terms = get_the_terms( $link->link_id, 'link_category' );
 				if( is_array( $terms ) ){
 					foreach( $terms as $term ){
-						if( $term_id = term_exists( $term->slug, Simple_Links_Categories::TAXONOMY ) ){
+						if( $term_id = term_exists( $term->name, Simple_Links_Categories::TAXONOMY ) ){
 							wp_set_object_terms( $id, (int)$term_id[ 'term_id' ], Simple_Links_Categories::TAXONOMY, true );
 						}
 					}
@@ -674,7 +676,7 @@ if( ! class_exists( 'simple_links_admin' ) ){
 
 				//Create a sting of cats assigned to this link
 				foreach( $all_assigned_cats as $cat ){
-					$cats .= ' ' . strtolower( str_replace( ' ', '-', $cat->name ) );
+					$cats .= ' ' . $cat->slug;
 				}
 
 
