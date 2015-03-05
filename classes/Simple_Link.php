@@ -58,13 +58,16 @@ class Simple_Link {
 				'update_item'                => sprintf( __( 'Update %s', 'simple-links' ), $single ),
 				'add_new_item'               => sprintf( __( 'Add New %s', 'simple-links' ), $single ),
 				'new_item_name'              => sprintf( __( 'New %s Name', 'simple-links' ), $single ),
-				'separate_items_with_commas' => sprintf( __( 'Seperate %s with commas', 'simple-links' ), $single ),
+				'separate_items_with_commas' => sprintf( __( 'Separate %s with commas', 'simple-links' ), $single ),
 				'add_or_remove_items'        => sprintf( __( 'Add or remove %s', 'simple-links' ), $plural ),
 				'choose_from_most_used'      => sprintf( __( 'Choose from the most used %s', 'simple-links' ), $plural ),
 				'view_item'                  => sprintf( __( 'View %s', 'simple-links' ), $single ),
 				'add_new'                    => sprintf( __( 'Add New %s', 'simple-links' ), $single ),
 				'new_item'                   => sprintf( __( 'New %s', 'simple-links' ), $single ),
-				'menu_name'                  => __( 'Simple Links', 'simple-links' )
+				'menu_name'                  => __( 'Simple Links', 'simple-links' ),
+
+				'not_found' => sprintf( __('No %s found.', 'simple-links' ), $plural ),
+				'not_found_in_trash' => sprintf( __('No %s found in Trash.', 'simple-links' ), $plural ),
 			),
 			'hierachical'          => false,
 			'supports'             => array(

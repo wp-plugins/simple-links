@@ -193,10 +193,17 @@ if( ! class_exists( 'simple_links' ) ){
 
 			$links = new SimpleLinksFactory( $atts, 'shortcode' );
 
+			$filter_params = array(
+				$links->output(),
+				$links->links,
+				$links->args,
+				$links->query_args
+			);
+			$output = apply_filters_ref_array( 'simple_links_shortcode_output', $filter_params );
 
-			$output = apply_filters( 'simple_links_shortcode_output', $links->output(), $links->links, $links->args, $links->query_args );
 			if( isset( $atts[ 'id' ] ) ){
-				$output = apply_filters( 'simple_links_shortcode_output_' . $atts[ 'id' ], $output, $links->links, $links->args, $links->query_args );
+				$filter_params[ 0 ] = $output;
+				$output = apply_filters_ref_array( 'simple_links_shortcode_output_' . $atts[ 'id' ], $filter_params );
 			}
 
 			return $output;
