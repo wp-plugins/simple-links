@@ -226,7 +226,7 @@ class Simple_Links_Meta_Boxes {
 	function target_meta_box_output( $post ){
 		$target = get_post_meta( $post->ID, 'target', true );
 		if( $post->post_status == "auto-draft" ){
-			$target = apply_filters( 'simple-links-default-target', "" );
+			$target = apply_filters( 'simple-links-default-target', get_option( 'simple-links-default-target') );
 		}
 
 		require( SIMPLE_LINKS_DIR . 'admin-views/link-target.php' );

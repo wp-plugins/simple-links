@@ -146,7 +146,6 @@ class SimpleLinksFactory {
 				'fields'           => 'id',
 				'terms'            => $all_cats,
 				'include_children' => !empty( $this->args[ 'include_child_categories' ] ) ? 1 : 0
-
 			);
 
 			unset( $this->query_args[ 'category' ] );
@@ -187,13 +186,24 @@ class SimpleLinksFactory {
 	 * @since 1.7.14
 	 */
 	protected function getLinks(){
-
-		$this->query_args[ 'post_type' ]              = 'simple_link';
+		$this->query_args[ 'post_type' ]              = Simple_Link::POST_TYPE;
 		$this->query_args[ 'posts_per_page' ]         = $this->query_args[ 'numberposts' ];
 		$this->query_args[ 'posts_per_archive_page' ] = $this->query_args[ 'numberposts' ];
 
-		//Get the links
-		$links = get_posts( $this->query_args );
+
+		// If we are retrieving a single category and ordering by menu order
+		// we need to use our special retrieval method to maintain order by that category
+		if( $this->query_args[ 'orderby' ] == 'menu_order' &&
+		    !empty( $this->query_args[ 'tax_query' ][0]['terms'] ) &&
+			count( $this->query_args[ 'tax_query' ][0]['terms'] ) == 1 ){
+					$links = Simple_Links_Categories::get_instance()->get_links_by_category(
+						$this->query_args[ 'tax_query' ][0]['terms'][0],
+						$this->query_args[ 'numberposts' ]
+					);
+		} else {
+			$links = get_posts( $this->query_args );
+
+		}
 
 		$links = apply_filters( 'simple_links_object', $links, $this->args, $this );
 
@@ -202,8 +212,8 @@ class SimpleLinksFactory {
 		$links = apply_filters( 'simple_links_' . $this->args[ 'type' ] . '_links_object', $links, $this->args );
 		$links = apply_filters( 'simple_links_' . $this->args[ 'type' ] . '_links_object_' . $this->args[ 'id' ], $links, $this->args );
 
-
 		return $this->links = $links;
+
 	}
 
 	/**

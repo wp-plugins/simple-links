@@ -3,6 +3,9 @@
  *
  * @author mat lipe <mat@matlipe.com>
  *
+ * @TODO Merge with simple_links_admin
+ * Remove Qtip and write my own lighter version see
+ * edspire common core show tip or something like that
  *
  */
 
@@ -16,6 +19,12 @@ jQuery( function( $ ){
 	$( '.link_delete_additional' ).click( function(){
 		$( this ).parent().remove();
 	} );
+
+	$s( '#simple-link-additional' ).click( function(){
+		$s( '#link-additional-placeholder' ).after( $s( '#link-extra-field' ).html() );
+		return false;
+	} );
+
 
 	SLsettingsAjax.init();
 	SLsettingsQtips.init();
@@ -98,7 +107,20 @@ var SLsettingsQtips = {
 			content : SL_locale.import_links, style : {
 				border : {
 					width : 1, radius : 8, color : '#21759B'
-				}, tip : 'topLeft' // Notice the corner value is identical to the previously mentioned positioning corners
+				}, tip : 'topLeft'
+			}
+		} );
+
+		//Default link target
+		$s( '#simple-links-default-target' ).qtip( {
+			content : SL_locale.default_target,
+			style : {
+				border : {
+					width : 1,
+					radius : 8,
+					color : '#21759B'
+				},
+				tip : 'topLeft'
 			}
 		} );
 	}

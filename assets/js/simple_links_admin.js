@@ -1,124 +1,122 @@
 /**
- * Simple links admin jquery
+ * Admin js for Simple Links Plugin
  *
- * @author Mat Lipe
- *
+ * @author Mat Lipe <mat@matlipe.com>
+ * @type {Simple_Links|*|{}}
  */
+var Simple_Links = window.Simple_Links || {};
 
-
-var isSimpleLinks = false;
-
-jQuery( function( $ ){
-
-	//A boolean to make sure we are on the right page
-	if( $( 'input[type="hidden"][name="post_type"]' ).val() == 'simple_link' ){
-		isSimpleLinks = true;
-	} else {
-		if( $( 'input[type="hidden"][name="taxonomy"]' ).val() == 'simple_link_category' ){
-			isSimpleLinks = true;
-		}
-	}
-
-	//easter egg
-	$( '.simple-links-title' ).change( function(){
-		if( $( this ).val() == "Simple Links" ){
-			for( var i = 0; i < 10; i++ ){
-				$( this ).css( {'box-shadow' : '0px 0px 10px ' + i + 'px yellow'} );
-			}
-			$( this ).after( '<h2><center>HALLELUJAH!!</center></h2>' );
-		}
-	} );
-
-	SLsortPage.init();
-	SLsettings.init();
-
-} );
-
-var $s = jQuery.noConflict();
-
-
-/**
- * The Simple Links Settings Page
- * @since 8/17/12
- */
-var SLsettings = {
-	init : function(){
-		//Add another Row for the additional fields
-		$s( '#simple-link-additional' ).click( function(){
-			$s( '#link-additional-placeholder' ).after( $s( '#link-extra-field' ).html() );
-			return false;
-		} );
-	}
-};
-
-
-/**
- * The link Sorting Page methods
- * @since 1.23.14
- */
-var SLsortPage = {
-	init : function(){
-		if( $s( '.draggable-children' ).length < 1 ){
-			return;
-		}
-
-		//Settup the Draggable list
-		$s( '.draggable-children' ).sortable( {
-			placeholder : 'sortable-placeholder menu-item-depth-1', stop : function(){
-				SLsortPage.sort( $s( this ).attr( 'id' ) );
-			}
-		} );
-
-
-		//the filter by Categories
-		$s( '#SL-sort-cat' ).change( function(){
-			SLsortPage.catFilter( $s( this ).val() );
-		} );
-	},
-
+(function( $, s, i18n, config ){
 	/**
-	 * Runs the ajax with the new link order
-	 * @param string linkID the id of the sortable list
-	 * @since 8/15/12
+	 * Simple Links Link Ordering
+	 * 
 	 */
-	sort : function( linkID ){
-		//Get the new sort order
-		var data = $s( 'ul#' + linkID ).sortable( "serialize" );
+	s.link_ordering = {
+		wrap : {},
+		list : {},
+		category : {},
 
-		$s.post( SLajaxURL.sortURL, data, function( respon ){
-		} );
-	},
+		original_list : '',
 
+		init : function(){
+			this.wrap = $( "#simple-links-ordering-wrap" );
+			if( this.wrap.length < 1 ){
+				return;
+			}
 
-	/**
-	 * Hide all items on the list that are not in the selected category
-	 * @param string slug the categories slug
-	 * @since 8/15/12
-	 */
-	catFilter : function( slug ){
+			_.bindAll( this, '_save_order', '_filter_by_cat' );
 
-		//To Reset the category sort
-		if( slug == 'Xall-catsX' ){
-			$s( '#SL-drag-ordering li' ).show( 'slow' );
-			$s( '#SL-drag-ordering li' ).each( function(){
-				cleanID = $s( this ).attr( 'id' ).replace( /x/g, '' );
-				$s( this ).attr( {'id' : cleanID} );
+			this.list = this.wrap.find( 'ul' );
+			this.original_list = this.list.clone();
+			this.category = $( '#simple-links-sort-cat' );
+
+			//Setup the Draggable list
+			this.list.sortable( {
+				placeholder : 'sortable-placeholder menu-item-depth-1',
+				stop : function(){
+					s.link_ordering._save_order( $( this ).attr( 'id' ) );
+				}
 			} );
 
-			return;
+
+			//the filter by Categories
+			this.category.on( 'change', function(){
+				s.link_ordering._filter_by_cat(  $( this ).val() );
+			} );
+		},
+
+
+		/**
+		 * Save order
+		 *
+		 * Runs the ajax with the new link order
+		 *
+		 */
+		_save_order : function(){
+			var data = this.list.sortable( "serialize" );
+			data += '&category_id=' + this.category.find( 'option:selected' ).val();
+			$.post( config.sort_url, data, function( response ){});
+
+		},
+
+
+		/**
+		 * Filter by Cat
+		 *
+		 * Retrieve the latest 200 links within a category
+		 * Then convert the sortable list to these links.
+		 *
+		 * This fires when a category is selected
+		 *
+		 * @param int cat_id
+		 */
+		_filter_by_cat : function( cat_id ){
+			if( cat_id == 0 ){
+				this.list.html( this.original_list.html() );
+				return;
+			}
+
+			var data = {
+				'category_id' : cat_id
+			};
+
+			$.post( config.get_by_category_url, data, function( response ){
+				s.link_ordering.wrap.html( response );
+				s.link_ordering.list = s.link_ordering.wrap.find( 'ul' );
+				s.link_ordering.list.sortable( {
+					placeholder : 'sortable-placeholder menu-item-depth-1',
+					stop : function(){
+						s.link_ordering._save_order( $( this ).attr( 'id' ) );
+					}
+				} );
+			});
 		}
+	};
 
-		//Show and fix the id of all list items in this category by slug
-		$s( '#SL-drag-ordering li.' + slug ).show( 'slow' );
-		$s( '#SL-drag-ordering li.' + slug ).each( function(){
-			cleanID = $s( this ).attr( 'id' ).replace( /x/g, '' );
-			$s( this ).attr( {'id' : cleanID} );
-		} );
 
-		//Hide and break the id of all the list items not in this category
-		$s( '#SL-drag-ordering li' ).not( '.' + slug ).hide( 'slow' );
-		$s( '#SL-drag-ordering li' ).not( '.' + slug ).each( function(){
-			$s( this ).attr( {'id' : 'x' + $s( this ).attr( 'id' )} );
-		} );
-	}
-};
+	/**
+	 * Easter Egg
+	 *
+	 * @type {{init: Function}}
+	 */
+	s.easter = {
+		init : function(){
+			$( '.simple-links-title' ).change( function(){
+				if( $( this ).val() == "Simple Links" ){
+					for( var i = 0; i < 10; i++ ){
+						$( this ).css( {'box-shadow' : '0px 0px 10px ' + i + 'px yellow'} );
+					}
+					$( this ).after( '<h2><center>HALLELUJAH!!</center></h2>' );
+				}
+			} );
+		}
+	};
+
+
+	$( function(){
+		s.link_ordering.init();
+		s.easter.init();
+	} );
+
+
+})( jQuery, Simple_Links, SL_locale, simple_links_sort );

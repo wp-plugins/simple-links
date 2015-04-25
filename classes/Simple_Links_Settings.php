@@ -54,6 +54,7 @@ class Simple_Links_Settings {
 		register_setting( self::SLUG, 'sl-show-settings' );
 		register_setting( self::SLUG, 'link_additional_fields', 'array_filter' );
 		register_setting( self::SLUG, 'sl-remove-links' );
+		register_setting( self::SLUG, 'simple-links-default-target' );
 
 
 	}
@@ -114,6 +115,15 @@ class Simple_Links_Settings {
 			'core'
 		);
 
+		add_meta_box(
+			'sl-defaults',
+			__( 'Defaults', 'simple-links' ),
+			array( $this, 'defaults' ),
+			'sl-settings-boxes',
+			'advanced',
+			'core'
+		);
+
 	}
 
 	/**
@@ -130,6 +140,50 @@ class Simple_Links_Settings {
 		require( SIMPLE_LINKS_DIR . 'admin-views/settings-wordpress-links.php' );
 
 	}
+
+
+	/**
+	 * defaults
+	 *
+	 * The output of the defaults settings box
+	 *
+	 * @return void
+	 */
+	public function defaults(){
+		$target = get_option( 'simple-links-default-target' );
+		?>
+		<h4>
+			<?php _e( 'These settings will effect this plugins defaults', 'simple-links' ); ?>
+		</h4>
+		<ul>
+			<li>
+				<?php _e( 'Default Link Target', 'simple-links' ); ?>: <?php simple_links_questions( 'simple-links-default-target' ); ?>
+				<p>
+					<label for="link_target_blank" class="selectit">
+						<input type="radio" name="simple-links-default-target" value="_blank" <?php checked( $target, '_blank' ); ?>>
+						<code>
+							_blank</code> &minus; <?php _e( 'new window or tab', 'simple-links' ); ?>.
+					</label>
+				</p>
+				<p>
+					<label for="link_target_top" class="selectit">
+						<input type="radio" name="simple-links-default-target" value="_top" <?php checked( $target, '_top' ); ?>>
+						<code>
+							_top</code> &minus; <?php _e( 'current window or tab, with no frames', 'simple-links' ); ?>.
+					</label>
+				</p>
+				<p>
+					<label for="link_target_none" class="selectit">
+						<input type="radio" name="simple-links-default-target" value="" <?php checked( $target, "" ); ?>>
+						<code>
+							_none</code> &minus; <?php _e( 'same window or tab', 'simple-links' ); ?>.
+					</label>
+				</p>
+			</li>
+		</ul>
+		<?php
+	}
+
 
 	/**
 	 * Permissions

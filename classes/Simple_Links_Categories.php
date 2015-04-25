@@ -14,6 +14,8 @@
 class Simple_Links_Categories {
 
 	const TAXONOMY = 'simple_link_category';
+	const SORTED_OPTION = 'simple_links_terms_sorted';
+
 	/**
 	 * Instance of this class for use as singleton
 	 */
@@ -87,26 +89,52 @@ class Simple_Links_Categories {
 	}
 
 
-	/********** SINGLETON FUNCTIONS **********/
-
 	/**
-	 * Get (and instantiate, if necessary) the instance of the class
+	 * Get Links By Category
 	 *
-	 * @static
-	 * @return Steelcase_Career_Setttings
+	 * Retrieve links in a specified category ordered by the meta values
+	 * set within the Link Ordering screen.
+	 * If a link has not been sorted there yet by this category but is still
+	 * in the category, it will be appended to the bottom of the list by menu_order.
+	 *
+	 *
+	 * @param $category_id
+	 *
+	 * @return array
 	 */
-	public static function get_instance(){
-		if( ! is_a( self::$instance, __CLASS__ ) ){
-			self::$instance = new self();
-		}
+	public function get_links_by_category( $category_id, $count = 200 ){
+		$args                  = array(
+			'post_type'   => Simple_Link::POST_TYPE,
+			'numberposts' => $count,
+			'posts_per_page' => $count,
+			'posts_per_archive_page' => $count,
+			'order'       => 'ASC',
+			'meta_key'    => sprintf( Simple_Links_Sort::META_KEY, $category_id ),
+			'orderby'     => 'meta_value_num menu_order',
+		);
+		$args[ 'tax_query' ][ ] = array(
+			'taxonomy' => 'simple_link_category',
+			'fields'   => 'id',
+			'terms'    => array( (int) $category_id )
+		);
 
-		return self::$instance;
+		$args = apply_filters( 'simple-links-links-by-category-args', $args, $category_id );
+
+		$links = get_posts( $args );
+
+		//set the ones which do not have the order set
+		$args[ 'meta_compare' ] = 'NOT EXISTS';
+		$args[ 'orderby' ] = 'menu_order';
+		$extra_links = get_posts( $args );
+		$links = array_merge( $links, $extra_links );
+
+		return $links;
 	}
+
 
 	/**
 	 * Adds the link categories taxonomy
 	 *
-	 * @todo Make independent of silly old class
 	 */
 	function link_categories(){
 
@@ -145,6 +173,23 @@ class Simple_Links_Categories {
 
 		register_taxonomy( self::TAXONOMY, Simple_Link::POST_TYPE, $args );
 
+	}
+
+
+	/********** SINGLETON FUNCTIONS **********/
+
+	/**
+	 * Get (and instantiate, if necessary) the instance of the class
+	 *
+	 * @static
+	 * @return $this
+	 */
+	public static function get_instance(){
+		if( ! is_a( self::$instance, __CLASS__ ) ){
+			self::$instance = new self();
+		}
+
+		return self::$instance;
 	}
 
 

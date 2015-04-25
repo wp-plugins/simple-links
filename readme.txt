@@ -2,16 +2,16 @@
 Contributors: Mat Lipe
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Simple%20Links%20&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: Link Manager, Links List, Link Organization
-Requires at least: 3.8.0
-Tested up to: 4.1.1
-Stable tag: 3.1.2
+Requires at least: 4.2
+Tested up to: 4.2
+Stable tag: 4.0.0
 License: GPLv2
 
-Replacement for WordPress' Link Manager with Many Additional Features. Make Managing Links Simple and Robust
+Replacement for WordPress Link Manager with Many Additional Features. Make Managing Links Simple and Robust
 
 == Description ==
 
-The built in WordPress Links Manager had become Deprecated due to many shortcomings. This plugin attempts to recreate the same concept while removing those shortcomings.
+The built in WordPress Links Manager had become deprecated due to many shortcomings. This plugin attempts to recreate the same concept while removing those shortcomings.
 
 <h3>Want more Options?</h3>
 <big><strong><a href="http://matlipe.com/product-category/simple-links-addons/">Premium Add-ons!</a></big></strong>
@@ -73,11 +73,14 @@ I also offer plugin customization services.
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 4.0.0 =
+* Ability to order each category individually
+* Create setting for default link target
+
 = 3.1.0 =
 * Improved translation ability
 * Improved Links Manager Import
 * Fixed bug with initial setting of hide the Links Manager
-
 
 = 3.0.0 =
 * New widget and shortcode option to include the child categories links. See help tabs of your widget and page/post screens for details
@@ -85,7 +88,7 @@ I also offer plugin customization services.
 * Improved translation strings
 
 = 2.9.3 =
-* No longer include children categories
+* No longer include children categories automatically. Instead have the ability to select with child categories to include.
 
 = 2.9.2 =
 * Fix bug with link nofollow
