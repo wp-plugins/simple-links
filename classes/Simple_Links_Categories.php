@@ -102,7 +102,7 @@ class Simple_Links_Categories {
 	 *
 	 * @return array
 	 */
-	public function get_links_by_category( $category_id, $count = 200 ){
+	public function get_links_by_category( $category_id, $count = 200, $include_children = false ){
 		$args                  = array(
 			'post_type'   => Simple_Link::POST_TYPE,
 			'numberposts' => $count,
@@ -115,6 +115,7 @@ class Simple_Links_Categories {
 		$args[ 'tax_query' ][ ] = array(
 			'taxonomy' => 'simple_link_category',
 			'fields'   => 'id',
+			'include_children' => $include_children,
 			'terms'    => array( (int) $category_id )
 		);
 

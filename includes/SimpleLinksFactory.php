@@ -27,7 +27,8 @@ class SimpleLinksFactory {
 		'show_description_formatting' => false,
 		'separator'                   => '-',
 		'id'                          => '',
-		'remove_line_break'           => false
+		'remove_line_break'           => false,
+		'include_child_categories'    => false
 
 	);
 
@@ -145,7 +146,7 @@ class SimpleLinksFactory {
 				'taxonomy'         => 'simple_link_category',
 				'fields'           => 'id',
 				'terms'            => $all_cats,
-				'include_children' => !empty( $this->args[ 'include_child_categories' ] ) ? 1 : 0
+				'include_children' => $this->args[ 'include_child_categories' ]
 			);
 
 			unset( $this->query_args[ 'category' ] );
@@ -198,7 +199,8 @@ class SimpleLinksFactory {
 			count( $this->query_args[ 'tax_query' ][0]['terms'] ) == 1 ){
 					$links = Simple_Links_Categories::get_instance()->get_links_by_category(
 						$this->query_args[ 'tax_query' ][0]['terms'][0],
-						$this->query_args[ 'numberposts' ]
+						$this->query_args[ 'numberposts' ],
+						$this->args[ 'include_child_categories' ]
 					);
 		} else {
 			$links = get_posts( $this->query_args );
