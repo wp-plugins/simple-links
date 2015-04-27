@@ -123,11 +123,21 @@ class Simple_Links_Categories {
 
 		$links = get_posts( $args );
 
-		//set the ones which do not have the order set
-		$args[ 'meta_compare' ] = 'NOT EXISTS';
-		$args[ 'orderby' ] = 'menu_order';
-		$extra_links = get_posts( $args );
-		$links = array_merge( $links, $extra_links );
+		if( count( $links ) != $count ){
+			$count = $count - count( $links );
+			//add the ones which do not have the order set
+			$args[ 'meta_compare' ] = 'NOT EXISTS';
+			$args[ 'orderby' ] = 'menu_order';
+			$args[ 'numberposts' ] = $count;
+			$args[ 'posts_per_page' ] = $count;
+			$args[ 'posts_per_archive_page' ] = $count;
+
+			$extra_links = get_posts( $args );
+
+			$links = array_merge( $links, $extra_links );
+		}
+
+
 
 		return $links;
 	}
