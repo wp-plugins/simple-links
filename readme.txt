@@ -2,9 +2,9 @@
 Contributors: Mat Lipe
 Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Simple%20Links%20&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: Link Manager, Links List, Link Organization
-Requires at least: 4.2
-Tested up to: 4.2
-Stable tag: 4.0.2
+Requires at least: 4.2.1
+Tested up to: 4.2.1
+Stable tag: 4.0.3
 License: GPLv2
 
 Replacement for WordPress Link Manager with Many Additional Features. Make Managing Links Simple and Robust
@@ -76,6 +76,9 @@ I also offer plugin customization services.
 2. The Shortcode Generating Form
 
 == Changelog ==
+= 4.0.3 =
+* Fix bug with importing categories from WP Links
+
 = 4.0.2 =
 * Fix bug with count of links when some links not sorted by category
 

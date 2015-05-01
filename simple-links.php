@@ -3,14 +3,14 @@
 Plugin Name: Simple Links
 Plugin URI: http://matlipe.com/simple-links-docs/
 Description: Replacement for WordPress Links Manager with many added features.
-Version: 4.0.2
+Version: 4.0.3
 Author: Mat Lipe
 Author URI: http://matlipe.com/
 Contributors: Mat Lipe
 */
 
 
-define( 'SIMPLE_LINKS_VERSION', '4.0.2' );
+define( 'SIMPLE_LINKS_VERSION', '4.0.3' );
 
 define( 'SIMPLE_LINKS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SIMPLE_LINKS_URL', plugin_dir_url( __FILE__ ) );
@@ -43,6 +43,8 @@ if( is_admin() ){
 
 function simple_links_load(){
 	Simple_Links_Categories::get_instance();
+	Simple_Links_WP_Links::init();
+
 	add_action( 'init', array( 'Simple_Link', 'register_sl_post_type' ) );
 
 	if( is_admin() ){
