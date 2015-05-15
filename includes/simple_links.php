@@ -82,7 +82,7 @@ if( ! class_exists( 'simple_links' ) ){
 			$fields = get_option( 'link_additional_fields' );
 
 			if( !is_string( $fields ) ){
-				return (array)$fields;
+				return $fields = (array)$fields;
 			}
 
 			//pre version 2.0
