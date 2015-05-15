@@ -73,20 +73,20 @@ if( ! class_exists( 'simple_links' ) ){
 		 * @since 2.0
 		 */
 		function getAdditionalFields(){
-			static $fields = false;
+			static $fields = null;
 
-			if( $fields ){
+			if( $fields !== null ){
 				return $fields;
 			}
 
 			$fields = get_option( 'link_additional_fields' );
 
-			if( ! is_string( $fields ) ){
-				return $fields;
+			if( !is_string( $fields ) ){
+				return (array)$fields;
 			}
 
 			//pre version 2.0
-			return $fields = json_decode( $fields, true );
+			return $fields = (array)json_decode( $fields, true );
 
 		}
 
