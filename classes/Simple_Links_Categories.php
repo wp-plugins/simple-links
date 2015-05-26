@@ -113,7 +113,7 @@ class Simple_Links_Categories {
 			'orderby'     => 'meta_value_num menu_order',
 		);
 		$args[ 'tax_query' ][ ] = array(
-			'taxonomy' => 'simple_link_category',
+			'taxonomy' => self::TAXONOMY,
 			'fields'   => 'id',
 			'include_children' => $include_children,
 			'terms'    => array( (int) $category_id )

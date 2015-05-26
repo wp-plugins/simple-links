@@ -163,21 +163,24 @@ class SimpleLinksFactory {
 
 	}
 
+
 	/**
 	 * Retrieves all link categories
 	 *
-	 * @since 9.21.13
+	 * @param string [ $fields ] = ids,names (defaults to names )
+	 *
 	 * @return object
 	 */
-	function get_categories(){
+	function get_categories( $fields = 'names' ){
 
 		$args = array(
 			'hide_empty' => false,
-			'fields'     => 'names'
+			'fields'     => $fields
 		);
 
-		return get_terms( 'simple_link_category', $args );
+		return get_terms( Simple_Links_Categories::TAXONOMY, $args );
 	}
+
 
 	/**
 	 * Retrieve the proper links based on argument set earlier
