@@ -350,6 +350,7 @@ class SL_links_main extends WP_Widget {
 		$output = $before_widget;
 		//Add the title
 		if( ! empty( $instance[ 'title' ] ) ){
+			$instance[ 'title' ] = apply_filters( 'widget_title', $instance[ 'title' ], $instance, $args );
 			$output .= $before_title . $instance[ 'title' ] . $after_title;
 		}
 
