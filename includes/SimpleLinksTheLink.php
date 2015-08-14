@@ -179,7 +179,7 @@ class SimpleLinksTheLink {
 			foreach( $this->args[ 'fields' ] as $field ){
 				$data = $this->getAdditionalField( $field );
 				if( ! empty( $data ) ){
-					$additional_fields .= sprintf( '%s <span class="%s">%s</span>',
+					$additional_fields .= sprintf( '%s <span class="%s additional-field">%s</span>',
 						$this->args[ 'separator' ],
 						str_replace( ' ', '-', strtolower( $field ) ),
 						$data
